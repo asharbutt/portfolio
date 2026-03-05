@@ -1,0 +1,51 @@
+<!-- knowledge/_TEMPLATE.html -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- TEMPLATE: Copy this file and rename it to match the sidebar ID -->
+<!-- e.g. risk-neutral.html, greeks.html, sabr.html               -->
+<!--                                                                -->
+<!-- This file contains ONLY the inner content that gets loaded     -->
+<!-- into the Knowledge Base content area. Do NOT include <html>,   -->
+<!-- <head>, or <body> tags.                                        -->
+<!--                                                                -->
+<!-- LaTeX:                                                         -->
+<!--   Inline:  $ x^2 + y^2 = z^2 $                               -->
+<!--   Display: $$ \int_0^T f(t) \, dt $$                          -->
+<!--                                                                -->
+<!-- Code blocks:                                                   -->
+<!--   <pre>your code here</pre>                                   -->
+<!--                                                                -->
+<!-- Subheadings:                                                   -->
+<!--   <h3>Section Title</h3>                                      -->
+<!--                                                                -->
+<!-- The CSS classes are inherited from index.html — just use the   -->
+<!-- structure below and everything will be styled automatically.   -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<div class="kb-content-header">
+    <div class="kb-content-category">CATEGORY NAME</div>
+    <div class="kb-content-title">NOTE TITLE</div>
+    <div class="kb-content-meta">Last updated — Month Year</div>
+</div>
+<div class="kb-content-body">
+
+    <h3>Introduction</h3>
+    <p>Your introductory text here. You can use inline LaTeX like $\sigma$ or $\Delta$.</p>
+
+    <h3>Key Concepts</h3>
+    <p>Explain the core ideas. Use display equations for important formulas:</p>
+    <p>$$ E[X] = \int_{-\infty}^{\infty} x \, f(x) \, dx $$</p>
+
+    <h3>Practical Considerations</h3>
+    <p>Discuss implementation details, common pitfalls, or how this applies in a real-world context (e.g. disputes, valuations).</p>
+
+    <h3>Implementation</h3>
+    <pre>
+# Your Python or C++ code example here
+def example():
+    pass
+    </pre>
+
+    <h3>Further Reading</h3>
+    <p>References to textbooks, papers, or related notes in the knowledge base.</p>
+
+</div>
