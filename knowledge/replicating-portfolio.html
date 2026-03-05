@@ -19,7 +19,7 @@
 
 <h2> Equivalent Martingale Measure </h2>
 
-<p>For a measure $\mathbb{P}$ on a probability space ($$\Omega , \mathscr{F}$$), a measure $$\mathbb{P}_{0}$$ is equivalent if they are mutually absolutely continious with respect to each other. This means: </p>
+<p>For a measure $\mathbb{P}$ on a probability space ($\Omega , \mathscr{F}$), a measure $$\mathbb{P}_{0}$$ is equivalent if they are mutually absolutely continious with respect to each other. This means: </p>
 
 <p>$$ \mathbb{P}_{0} (A) = 0 \ \text{when} \  \mathbb{P} (A) = 0 \ \forall \ \text{A} \ \in \Omega $$ </p>
 
@@ -37,9 +37,10 @@
 
 
 <h2> Replicating Portfolio for options <h2>
-<p>We create a replicating portfolio $$\Pi$$ consisting of long one option V and short $$\Delta$$ shares S: $$\Pi = V - \Delta \ S$$ .
+    
+<p>We create a replicating portfolio $$\Pi$$ consisting of long one option V and short $$\Delta$$ shares S: $\Pi = V - \Delta \ S$ .
 
-This is a delta hedged portfolio such that for small changes in S, the overall value of $$\Pi$$ does not change. S is governed by a Geometric Brownian Motion SDE of the form: </p>
+This is a delta hedged portfolio such that for small changes in S, the overall value of $\Pi$ does not change. S is governed by a Geometric Brownian Motion SDE of the form: </p>
 
 <p>$$dS = r \ dt + \sigma dW^{P}$$ </p>
 
@@ -47,7 +48,7 @@ This is a delta hedged portfolio such that for small changes in S, the overall v
 
 <p>$$dV = \frac{\partial V}{\partial t}dt + \frac{\partial V}{\partial S} dS + \frac{1}{2} \frac{\partial^{2} V}{\partial S^{2}} dS^{2}$$ </p>
 
-<p>We know that $$dS = r \ dt + \sigma dW$$, and we know $$dS^{2} = \sigma^{2} dt$$ due to $$dWdW = dt$$
+<p>We know that $dS = r \ dt + \sigma dW$, and we know $dS^{2} = \sigma^{2} dt$ due to $dWdW = dt$
 
 The above expansion can then be written as: </p>
 
@@ -61,7 +62,7 @@ The above expansion can then be written as: </p>
 
 <p>$$\Delta \Pi = r (V - \frac{\partial V}{\partial S} S)dt$$ </p>
 
-<p>And we also know that the portfolio change is given by: $$\Delta \Pi = dV - \frac{\partial V}{\partial S}dS$$. Once we substitute in our Ito expansion of the option value, and equate to the risk-free return, we get the Black-Scholes PDE: </p>
+<p>And we also know that the portfolio change is given by: $\Delta \Pi = dV - \frac{\partial V}{\partial S}dS$. Once we substitute in our Ito expansion of the option value, and equate to the risk-free return, we get the Black-Scholes PDE: </p>
 
 <p>$$\frac{\partial V}{\partial t} + \frac{\partial V}{\partial S} rS + \frac{1}{2} \sigma^2 S^{2} \frac{\partial^{2}V}{\partial S^{2}} \ - rV \ = \ 0$$ </p>
 
