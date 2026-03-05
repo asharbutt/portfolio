@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio</title>
+    <title>Quantitative Finance Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <script>
         MathJax = {
@@ -406,7 +406,7 @@
         <div class="container">
             <div class="hero-label">Quantitative Finance &amp; Derivatives</div>
             <h1>Pricing, Valuation<br>&amp; <em>Quantitative Analysis</em></h1>
-            <p class="hero-desc">Experienced Associate with quantitative knowledge and experience spanning financial advisory, Disputes and Investigations advisory, financial derivatives pricing and the energy industry. I build tools that bridge quantitative methods with practical applications..</p>
+            <p class="hero-desc">Quantitative finance professional with experience across derivatives pricing, portfolio valuations, and disputes advisory. Building tools that bridge rigorous quantitative methods with practical application.</p>
             <div class="hero-line"></div>
         </div>
     </header>
@@ -415,9 +415,9 @@
         <div class="container">
             <div class="cred-grid">
                 <div class="cred-item"><div class="cred-value">MSc</div><div class="cred-label">Quantitative Finance</div></div>
-                <div class="cred-item"><div class="cred-value">5 yrs</div><div class="cred-label">YoE Experience</div></div>
-                <div class="cred-item"><div class="cred-value">C++ / Python / VBA / SQL</div><div class="cred-label">Core Languages</div></div>
-                <div class="cred-item"><div class="cred-value">Financial Derivatives</div><div class="cred-label">Specialisation</div></div>
+                <div class="cred-item"><div class="cred-value">5 yrs</div><div class="cred-label">Industry Experience</div></div>
+                <div class="cred-item"><div class="cred-value">C++ / Python</div><div class="cred-label">Core Languages</div></div>
+                <div class="cred-item"><div class="cred-value">Derivatives</div><div class="cred-label">Specialisation</div></div>
             </div>
         </div>
     </div>
@@ -747,115 +747,81 @@ function toggleGroup(el) {
     el.parentElement.classList.toggle('collapsed');
 }
 
-// ── Load note into content area ──
-function loadNote(noteId, linkEl) {
+// ── Load note into content area via fetch ──
+async function loadNote(noteId, linkEl) {
     document.querySelectorAll('.kb-link-item a').forEach(a => a.classList.remove('active'));
     if (linkEl) linkEl.classList.add('active');
-    document.getElementById('kb-content-area').innerHTML = getNoteContent(noteId);
-    // Re-render any LaTeX in the newly loaded content
-    if (window.MathJax && MathJax.typesetPromise) {
-        MathJax.typesetPromise([document.getElementById('kb-content-area')]);
-    }
-}
 
-// ── Note content ──
-// To add a completed note, add its ID as a key below with full HTML content.
-// Use $ ... $ for inline LaTeX and $$ ... $$ for display LaTeX.
-// All unmapped IDs fall through to the "coming soon" template.
-function getNoteContent(noteId) {
-    const completed = {
-        // ── Example note with LaTeX ──
-        'bs-derivation': `
+    const contentArea = document.getElementById('kb-content-area');
+    contentArea.innerHTML = '<div class="kb-placeholder"><p style="color:var(--text-dim);">Loading...</p></div>';
+
+    try {
+        const response = await fetch('knowledge/' + noteId + '.html');
+        if (!response.ok) throw new Error('Not found');
+        const html = await response.text();
+        contentArea.innerHTML = html;
+    } catch (e) {
+        // Fallback for notes that don't have a file yet
+        const t = {
+            'bs-derivation': ['Options Theory', 'Black-Scholes: Derivation & Intuition'],
+            'risk-neutral': ['Options Theory', 'Risk-Neutral Pricing'],
+            'put-call-parity': ['Options Theory', 'Put-Call Parity & No-Arbitrage'],
+            'greeks': ['Options Theory', 'The Greeks: Sensitivities & Hedging'],
+            'american-options': ['Options Theory', 'American Options & Early Exercise'],
+            'barrier-options': ['Options Theory', 'Barrier Options & Monitoring'],
+            'brownian-motion': ['Stochastic Calculus', 'Brownian Motion & Random Walks'],
+            'itos-lemma': ['Stochastic Calculus', "Itô's Lemma"],
+            'girsanov': ['Stochastic Calculus', "Girsanov's Theorem & Measure Change"],
+            'sdes': ['Stochastic Calculus', 'SDEs: GBM, Mean-Reversion & Beyond'],
+            'feynman-kac': ['Stochastic Calculus', 'Feynman-Kac Formula'],
+            'implied-vol': ['Volatility & Smile Modelling', 'Implied Volatility & the Smile'],
+            'local-vol': ['Volatility & Smile Modelling', 'Local Volatility (Dupire)'],
+            'sabr': ['Volatility & Smile Modelling', 'SABR Model & Calibration'],
+            'stoch-vol': ['Volatility & Smile Modelling', 'Stochastic Vol: Heston & Beyond'],
+            'vol-surface': ['Volatility & Smile Modelling', 'Building a Vol Surface'],
+            'discount-factors': ['Interest Rates & Curves', 'Discount Factors & Present Value'],
+            'bootstrapping': ['Interest Rates & Curves', 'Curve Bootstrapping in Practice'],
+            'interpolation': ['Interest Rates & Curves', 'Interpolation Methods & Impact'],
+            'multi-curve': ['Interest Rates & Curves', 'Multi-Curve Framework Post-LIBOR'],
+            'ois-discounting': ['Interest Rates & Curves', 'OIS Discounting & Collateral'],
+            'rate-models': ['Interest Rates & Curves', 'Short Rate & HJM Models'],
+            'autocallables': ['Structured Products', 'Autocallables: Mechanics & Pricing'],
+            'reverse-convertibles': ['Structured Products', 'Reverse Convertibles'],
+            'capital-protected': ['Structured Products', 'Capital Protected Notes'],
+            'worst-of': ['Structured Products', 'Worst-Of & Correlation Products'],
+            'sp-disputes': ['Structured Products', 'Valuation Disputes in Structured Products'],
+            'mc-fundamentals': ['Numerical Methods', 'Monte Carlo Fundamentals'],
+            'variance-reduction': ['Numerical Methods', 'Variance Reduction Techniques'],
+            'finite-diff': ['Numerical Methods', 'Finite Difference Methods'],
+            'binomial-trinomial': ['Numerical Methods', 'Binomial & Trinomial Trees'],
+            'quasi-random': ['Numerical Methods', 'Quasi-Random Sequences (Sobol)'],
+            'cva-overview': ['Credit & Counterparty Risk', 'CVA, DVA & FVA Overview'],
+            'exposure-profiles': ['Credit & Counterparty Risk', 'Exposure Profiles: EPE, PFE, EE'],
+            'wrong-way-risk': ['Credit & Counterparty Risk', 'Wrong-Way Risk'],
+            'cds-pricing': ['Credit & Counterparty Risk', 'CDS Pricing & Hazard Rates'],
+            'netting-collateral': ['Credit & Counterparty Risk', 'Netting, Collateral & CSA'],
+            'mark-to-market': ['Valuation & Disputes', 'Mark-to-Market vs Mark-to-Model'],
+            'model-risk': ['Valuation & Disputes', 'Model Risk & Validation'],
+            'valuation-disputes': ['Valuation & Disputes', 'Sources of Valuation Disputes'],
+            'close-out': ['Valuation & Disputes', 'Close-Out & Termination Payments'],
+        };
+        const [cat, title] = t[noteId] || ['Topic', 'Note'];
+        contentArea.innerHTML = `
             <div class="kb-content-header">
-                <div class="kb-content-category">Options Theory</div>
-                <div class="kb-content-title">Black-Scholes: Derivation & Intuition</div>
-                <div class="kb-content-meta">Example note — demonstrates LaTeX rendering</div>
+                <div class="kb-content-category">${cat}</div>
+                <div class="kb-content-title">${title}</div>
+                <div class="kb-content-meta">Coming soon</div>
             </div>
             <div class="kb-content-body">
-                <h3>The Setup</h3>
-                <p>We assume the underlying asset follows geometric Brownian motion under the physical measure:</p>
-                <p>$$ dS_t = \\mu S_t \\, dt + \\sigma S_t \\, dW_t $$</p>
-                <p>where $\\mu$ is the drift, $\\sigma$ is the volatility, and $W_t$ is a standard Brownian motion.</p>
-
-                <h3>The Black-Scholes PDE</h3>
-                <p>By constructing a self-financing replicating portfolio consisting of the option $V(S,t)$ and $\\Delta$ units of the underlying, and requiring the portfolio to be riskless, we arrive at the Black-Scholes PDE:</p>
-                <p>$$ \\frac{\\partial V}{\\partial t} + \\frac{1}{2} \\sigma^2 S^2 \\frac{\\partial^2 V}{\\partial S^2} + r S \\frac{\\partial V}{\\partial S} - rV = 0 $$</p>
-                <p>Notice the drift $\\mu$ has vanished entirely — the option price depends only on $\\sigma$, $r$, and the boundary conditions. This is the essence of risk-neutral pricing.</p>
-
-                <h3>The Closed-Form Solution</h3>
-                <p>For a European call with strike $K$ and maturity $T$, the solution is:</p>
-                <p>$$ C(S,t) = S_t \\, \\Phi(d_1) - K e^{-r(T-t)} \\, \\Phi(d_2) $$</p>
-                <p>where</p>
-                <p>$$ d_1 = \\frac{\\ln(S/K) + (r + \\sigma^2/2)(T-t)}{\\sigma \\sqrt{T-t}}, \\qquad d_2 = d_1 - \\sigma \\sqrt{T-t} $$</p>
-                <p>and $\\Phi(\\cdot)$ is the standard normal CDF.</p>
-
-                <h3>Intuition for $d_1$ and $d_2$</h3>
-                <p>$\\Phi(d_2)$ is the risk-neutral probability that the option finishes in the money, i.e. $\\mathbb{Q}(S_T > K)$. Meanwhile, $\\Phi(d_1)$ represents the delta of the option — the sensitivity of the option price to the underlying — and can be interpreted as $\\mathbb{Q}^S(S_T > K)$ under the share measure.</p>
-
-                <h3>Implementation Note</h3>
-                <p>In C++, the key numerical consideration is the implementation of $\\Phi(\\cdot)$. Using the rational approximation from Abramowitz &amp; Stegun (error $< 7.5 \\times 10^{-8}$) avoids the need for external libraries while maintaining sufficient precision for pricing.</p>
+                <p>This note is currently being written. Check back soon for a detailed explanation covering theory, practical considerations, and implementation examples.</p>
             </div>
-        `,
-    };
+        `;
+    }
 
-    if (completed[noteId]) return completed[noteId];
-
-    // Title map for coming-soon fallback
-    const t = {
-        'bs-derivation': ['Options Theory', 'Black-Scholes: Derivation & Intuition'],
-        'risk-neutral': ['Options Theory', 'Risk-Neutral Pricing'],
-        'put-call-parity': ['Options Theory', 'Put-Call Parity & No-Arbitrage'],
-        'greeks': ['Options Theory', 'The Greeks: Sensitivities & Hedging'],
-        'american-options': ['Options Theory', 'American Options & Early Exercise'],
-        'barrier-options': ['Options Theory', 'Barrier Options & Monitoring'],
-        'brownian-motion': ['Stochastic Calculus', 'Brownian Motion & Random Walks'],
-        'itos-lemma': ['Stochastic Calculus', "Itô's Lemma"],
-        'girsanov': ['Stochastic Calculus', "Girsanov's Theorem & Measure Change"],
-        'sdes': ['Stochastic Calculus', 'SDEs: GBM, Mean-Reversion & Beyond'],
-        'feynman-kac': ['Stochastic Calculus', 'Feynman-Kac Formula'],
-        'implied-vol': ['Volatility & Smile Modelling', 'Implied Volatility & the Smile'],
-        'local-vol': ['Volatility & Smile Modelling', 'Local Volatility (Dupire)'],
-        'sabr': ['Volatility & Smile Modelling', 'SABR Model & Calibration'],
-        'stoch-vol': ['Volatility & Smile Modelling', 'Stochastic Vol: Heston & Beyond'],
-        'vol-surface': ['Volatility & Smile Modelling', 'Building a Vol Surface'],
-        'discount-factors': ['Interest Rates & Curves', 'Discount Factors & Present Value'],
-        'bootstrapping': ['Interest Rates & Curves', 'Curve Bootstrapping in Practice'],
-        'interpolation': ['Interest Rates & Curves', 'Interpolation Methods & Impact'],
-        'multi-curve': ['Interest Rates & Curves', 'Multi-Curve Framework Post-LIBOR'],
-        'ois-discounting': ['Interest Rates & Curves', 'OIS Discounting & Collateral'],
-        'rate-models': ['Interest Rates & Curves', 'Short Rate & HJM Models'],
-        'autocallables': ['Structured Products', 'Autocallables: Mechanics & Pricing'],
-        'reverse-convertibles': ['Structured Products', 'Reverse Convertibles'],
-        'capital-protected': ['Structured Products', 'Capital Protected Notes'],
-        'worst-of': ['Structured Products', 'Worst-Of & Correlation Products'],
-        'sp-disputes': ['Structured Products', 'Valuation Disputes in Structured Products'],
-        'mc-fundamentals': ['Numerical Methods', 'Monte Carlo Fundamentals'],
-        'variance-reduction': ['Numerical Methods', 'Variance Reduction Techniques'],
-        'finite-diff': ['Numerical Methods', 'Finite Difference Methods'],
-        'binomial-trinomial': ['Numerical Methods', 'Binomial & Trinomial Trees'],
-        'quasi-random': ['Numerical Methods', 'Quasi-Random Sequences (Sobol)'],
-        'cva-overview': ['Credit & Counterparty Risk', 'CVA, DVA & FVA Overview'],
-        'exposure-profiles': ['Credit & Counterparty Risk', 'Exposure Profiles: EPE, PFE, EE'],
-        'wrong-way-risk': ['Credit & Counterparty Risk', 'Wrong-Way Risk'],
-        'cds-pricing': ['Credit & Counterparty Risk', 'CDS Pricing & Hazard Rates'],
-        'netting-collateral': ['Credit & Counterparty Risk', 'Netting, Collateral & CSA'],
-        'mark-to-market': ['Valuation & Disputes', 'Mark-to-Market vs Mark-to-Model'],
-        'model-risk': ['Valuation & Disputes', 'Model Risk & Validation'],
-        'valuation-disputes': ['Valuation & Disputes', 'Sources of Valuation Disputes'],
-        'close-out': ['Valuation & Disputes', 'Close-Out & Termination Payments'],
-    };
-
-    const [cat, title] = t[noteId] || ['Topic', 'Note'];
-    return `
-        <div class="kb-content-header">
-            <div class="kb-content-category">${cat}</div>
-            <div class="kb-content-title">${title}</div>
-            <div class="kb-content-meta">Coming soon</div>
-        </div>
-        <div class="kb-content-body">
-            <p>This note is currently being written. Check back soon for a detailed explanation covering theory, practical considerations, and implementation examples.</p>
-        </div>
-    `;
+    // Re-render LaTeX
+    if (window.MathJax && MathJax.typesetPromise) {
+        MathJax.typesetPromise([contentArea]);
+    }
 }
 
 // ── Scroll reveal ──
