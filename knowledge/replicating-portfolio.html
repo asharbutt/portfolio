@@ -65,7 +65,7 @@
 
     
     <h3>C++ Example</h3>
-    <pre>
+    <pre><code>
 template <typename T> T norm_cdf(T x){ //templated to allow double or ints or floats as input
     return 0.5 * std::erfc(-x / std::sqrt(2)); //Use gauss error function to approximate the normal cdf, divided by sqrt(2) to include it into the denominator of the CDF fraction
     }
@@ -86,6 +86,7 @@ int main(){
     std::cout << bs_call<double>(100, 101, 0.3, 0.05, 0.0, 1) << std::endl;
     std::cout << bs_put<double>(100, 101, 0.3, 0.05, 0.0, 1) << std::endl;
     }
+                                                                  </code>
     </pre>
 
     <h3> Python Example </h3>
