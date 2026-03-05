@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects — Quantitative Finance Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav>
+    <div class="container">
+        <a class="nav-logo" href="index.html">Portfolio</a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="projects.html" class="active">Projects</a>
+            <a href="knowledge.html">Knowledge</a>
+            <div class="nav-divider"></div>
+            <a href="https://github.com/yourusername" target="_blank">GitHub</a>
+            <a href="https://linkedin.com/in/yourprofile" target="_blank">LinkedIn</a>
+        </div>
+    </div>
+</nav>
+
+<section style="padding-top: 8rem;">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-num">01</span>
+            <h2 class="section-title">Projects</h2>
+            <div class="section-line"></div>
+        </div>
+        <div class="projects-grid">
+
+            <div class="project-card reveal">
+                <div class="project-top">
+                    <div class="project-title">Options Pricing Library</div>
+                    <div class="project-tags"><span class="tag tag-cpp">C++</span></div>
+                </div>
+                <p class="project-desc">A modular derivatives pricing engine implementing analytical, Monte Carlo, and lattice-based methods for vanilla and exotic options. Includes a Greeks calculation framework with finite difference and pathwise sensitivity methods.</p>
+                <div class="project-features"><span class="feature">Black-Scholes</span><span class="feature">Monte Carlo</span><span class="feature">Binomial Trees</span><span class="feature">Greeks Engine</span><span class="feature">Exotic Payoffs</span></div>
+                <a href="#" class="project-link">View Repository <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+            </div>
+
+            <div class="project-card reveal">
+                <div class="project-top">
+                    <div class="project-title">Yield Curve Construction</div>
+                    <div class="project-tags"><span class="tag tag-cpp">C++</span></div>
+                </div>
+                <p class="project-desc">Bootstraps discount curves from market instruments (deposits, futures, swaps) with multiple interpolation schemes. Supports OIS and LIBOR/RFR-based curve construction with forward rate extraction and sensitivity analysis.</p>
+                <div class="project-features"><span class="feature">Bootstrapping</span><span class="feature">Cubic Spline</span><span class="feature">Log-Linear Interp</span><span class="feature">OIS Curves</span><span class="feature">DV01</span></div>
+                <a href="#" class="project-link">View Repository <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+            </div>
+
+            <div class="project-card reveal">
+                <div class="project-top">
+                    <div class="project-title">Structured Product Valuation — Autocallables</div>
+                    <div class="project-tags"><span class="tag tag-py">Python</span></div>
+                </div>
+                <p class="project-desc">End-to-end valuation framework for autocallable structured notes. Monte Carlo simulation of underlying paths with barrier monitoring, coupon trigger evaluation, and early redemption logic. Includes comprehensive sensitivity analysis showing how valuation diverges under different market assumptions.</p>
+                <div class="project-features"><span class="feature">Autocallables</span><span class="feature">Monte Carlo</span><span class="feature">Barrier Options</span><span class="feature">Sensitivity Analysis</span><span class="feature">Visualization</span></div>
+                <a href="#" class="project-link">View Repository <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+            </div>
+
+            <div class="project-card reveal">
+                <div class="project-top">
+                    <div class="project-title">Implied Volatility Surface Construction</div>
+                    <div class="project-tags"><span class="tag tag-py">Python</span></div>
+                </div>
+                <p class="project-desc">Constructs and calibrates implied volatility surfaces from market option data. Implements SABR model calibration alongside non-parametric interpolation methods. Visualises smile dynamics, term structure, and arbitrage-free conditions.</p>
+                <div class="project-features"><span class="feature">SABR Calibration</span><span class="feature">Vol Surface</span><span class="feature">Smile Dynamics</span><span class="feature">Arbitrage Checks</span></div>
+                <a href="#" class="project-link">View Repository <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+            </div>
+
+            <div class="project-card reveal">
+                <div class="project-top">
+                    <div class="project-title">Counterparty Credit Risk &amp; CVA</div>
+                    <div class="project-tags"><span class="tag tag-py">Python</span></div>
+                </div>
+                <p class="project-desc">Calculates Credit Valuation Adjustment for a portfolio of derivatives using simulation-based expected exposure profiles. Models default probabilities from CDS spreads and computes CVA, DVA, and exposure metrics (EPE, PFE).</p>
+                <div class="project-features"><span class="feature">CVA / DVA</span><span class="feature">Exposure Profiles</span><span class="feature">CDS Bootstrapping</span><span class="feature">Netting &amp; Collateral</span></div>
+                <a href="#" class="project-link">View Repository <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+            </div>
+
+            <div class="project-card reveal">
+                <div class="project-top">
+                    <div class="project-title">Pricing Engine with Python Bindings</div>
+                    <div class="project-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-py">Python</span></div>
+                </div>
+                <p class="project-desc">High-performance C++ pricing core exposed to Python via pybind11. Demonstrates real-world architecture: performant computation in C++ with flexible analysis and visualisation in Jupyter notebooks. Includes benchmarks comparing pure Python vs bound C++ performance.</p>
+                <div class="project-features"><span class="feature">pybind11</span><span class="feature">CMake Build</span><span class="feature">Jupyter Integration</span><span class="feature">Performance Benchmarks</span></div>
+                <a href="#" class="project-link">View Repository <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-text">&copy; 2026 — Quantitative Finance Portfolio</div>
+            <div class="footer-links">
+                <a href="https://github.com/yourusername" target="_blank">GitHub</a>
+                <a href="https://linkedin.com/in/yourprofile" target="_blank">LinkedIn</a>
+                <a href="mailto:your@email.com">Email</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
