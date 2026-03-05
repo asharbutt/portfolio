@@ -1,0 +1,51 @@
+<!-- knowledge/bs-derivation.html -->
+<!-- This file is loaded into the KB content area via fetch. -->
+<!-- It contains ONLY the inner content — no <html>, <head>, or <body> tags. -->
+<!-- LaTeX: use $ ... $ for inline and $$ ... $$ for display math. -->
+
+<div class="kb-content-header">
+    <div class="kb-content-category">Options Theory</div>
+    <div class="kb-content-title">Black-Scholes: Derivation & Intuition</div>
+    <div class="kb-content-meta">Last updated — March 2026</div>
+</div>
+<div class="kb-content-body">
+
+    <h3>The Setup</h3>
+    <p>We assume the underlying asset follows geometric Brownian motion under the physical measure:</p>
+    <p>$$ dS_t = \mu S_t \, dt + \sigma S_t \, dW_t $$</p>
+    <p>where $\mu$ is the drift, $\sigma$ is the volatility, and $W_t$ is a standard Brownian motion.</p>
+
+    <h3>The Black-Scholes PDE</h3>
+    <p>By constructing a self-financing replicating portfolio consisting of the option $V(S,t)$ and $\Delta$ units of the underlying, and requiring the portfolio to be riskless, we arrive at the Black-Scholes PDE:</p>
+    <p>$$ \frac{\partial V}{\partial t} + \frac{1}{2} \sigma^2 S^2 \frac{\partial^2 V}{\partial S^2} + r S \frac{\partial V}{\partial S} - rV = 0 $$</p>
+    <p>Notice the drift $\mu$ has vanished entirely — the option price depends only on $\sigma$, $r$, and the boundary conditions. This is the essence of risk-neutral pricing.</p>
+
+    <h3>The Closed-Form Solution</h3>
+    <p>For a European call with strike $K$ and maturity $T$, the solution is:</p>
+    <p>$$ C(S,t) = S_t \, \Phi(d_1) - K e^{-r(T-t)} \, \Phi(d_2) $$</p>
+    <p>where</p>
+    <p>$$ d_1 = \frac{\ln(S/K) + (r + \sigma^2/2)(T-t)}{\sigma \sqrt{T-t}}, \qquad d_2 = d_1 - \sigma \sqrt{T-t} $$</p>
+    <p>and $\Phi(\cdot)$ is the standard normal CDF.</p>
+
+    <h3>Intuition for $d_1$ and $d_2$</h3>
+    <p>$\Phi(d_2)$ is the risk-neutral probability that the option finishes in the money, i.e. $\mathbb{Q}(S_T > K)$. Meanwhile, $\Phi(d_1)$ represents the delta of the option — the sensitivity of the option price to the underlying — and can be interpreted as $\mathbb{Q}^S(S_T > K)$ under the share measure.</p>
+
+    <h3>Implementation Note</h3>
+    <p>In C++, the key numerical consideration is the implementation of $\Phi(\cdot)$. Using the rational approximation from Abramowitz &amp; Stegun (error $&lt; 7.5 \times 10^{-8}$) avoids the need for external libraries while maintaining sufficient precision for pricing.</p>
+
+    <h3>Python Example</h3>
+    <pre>
+import numpy as np
+from scipy.stats import norm
+
+def black_scholes_call(S, K, T, r, sigma):
+    d1 = (np.log(S / K) + (r + 0.5 * sigma**2) * T) / (sigma * np.sqrt(T))
+    d2 = d1 - sigma * np.sqrt(T)
+    return S * norm.cdf(d1) - K * np.exp(-r * T) * norm.cdf(d2)
+
+# Example: S=100, K=100, T=1, r=0.05, sigma=0.2
+price = black_scholes_call(100, 100, 1, 0.05, 0.2)
+print(f"Call price: {price:.4f}")  # ~10.4506
+    </pre>
+
+</div>
