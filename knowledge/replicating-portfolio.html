@@ -1,0 +1,84 @@
+<!-- knowledge/bs-derivation.html -->
+<!-- This file is loaded into the KB content area via fetch. -->
+<!-- It contains ONLY the inner content — no <html>, <head>, or <body> tags. -->
+<!-- LaTeX: use $ ... $ for inline and $$ ... $$ for display math. -->
+
+<div class="kb-content-header">
+    <div class="kb-content-category">Options Theory</div>
+    <div class="kb-content-title">Black-Scholes: Derivation & Intuition</div>
+    <div class="kb-content-meta">Last updated — March 2026</div>
+</div>
+<div class="kb-content-body">
+
+    <h3>The Setup</h3>
+
+<h3> No arbitrage theory </h3>
+<p>A contingent claim is a payoff under certain circumstances based on the movement of an underlying asset. A contingent claim is said to be attainable if the payoff can be replicated using a self-financing portfolio or trading strategy.</p>
+
+<p>A market is made of contingent claims, and is said to be complete if a Equivalent Martingale Measure exists. The no-arbitrage condition is then fulfilled if the Equivalent Martingale Measure is unique.</p>
+
+<h2> Equivalent Martingale Measure </h2>
+
+<p>For a measure $\mathbb{P}$ on a probability space ($$\Omega , \mathscr{F}$$), a measure $$\mathbb{P}_{0}$$ is equivalent if they are mutually absolutely continious with respect to each other. This means: </p>
+
+<p>$$ \mathbb{P}_{0} (A) = 0 \ \text{when} \  \mathbb{P} (A) = 0 \ \forall \ \text{A} \ \in \Omega $$ </p>
+
+<p>If the equivalent martingale measure exists, then the ratio of the two measures can be described by the Radon-Nikodym derivative $\mathscr{L}$, given by: </p>
+
+<p>$$ \mathscr{L} = \frac{d\mathbb{P}_{0}}{d\mathbb{P}} $$ </p>
+
+<p>This comes from the relationship between the two measures: </p>
+
+<p>$$  \text{E}^{\mathbb{P}_{0}} [\text{A}] = \int_{\omega \in \Omega} X (\omega) d \mathbb{P}_{0} (\omega)  $$ </p>
+
+<p>which can be re-written as: </p>
+
+<p> $$  \text{E}^{\mathbb{P}_{0}} [\text{A}] = \int_{\omega \in \Omega} X (\omega) \mathscr{L} d \mathbb{P} (\omega)  $$ </p>
+
+
+<h2> Replicating Portfolio for options <h2>
+<p>We create a replicating portfolio $$\Pi$$ consisting of long one option V and short $$\Delta$$ shares S: $$\Pi = V - \Delta \ S$$ .
+
+This is a delta hedged portfolio such that for small changes in S, the overall value of $$\Pi$$ does not change. S is governed by a Geometric Brownian Motion SDE of the form: </p>
+
+<p>$$dS = r \ dt + \sigma dW^{P}$$ </p>
+
+<p>We can use Ito's lemma to show the evolution of the option value itself: </p>
+
+<p>$$dV = \frac{\partial V}{\partial t}dt + \frac{\partial V}{\partial S} dS + \frac{1}{2} \frac{\partial^{2} V}{\partial S^{2}} dS^{2}$$ </p>
+
+<p>We know that $$dS = r \ dt + \sigma dW$$, and we know $$dS^{2} = \sigma^{2} dt$$ due to $$dWdW = dt$$
+
+The above expansion can then be written as: </p>
+
+<p>$$dV = \frac{\partial V}{\partial t}dt + \frac{\partial V}{\partial S} r \ dt + \frac{\partial V}{\partial S} \sigma dW + \frac{1}{2} \frac{\partial^{2} V}{\partial S^{2}} dt$$ </p>
+
+<p>Which we can simplify to: </p>
+
+<p>$$dV = (\frac{\partial V}{\partial t} + \frac{\partial V}{\partial S} r + \frac{1}{2} \frac{\partial^{2} V}{\partial S^{2}}) dt + \frac{\partial V}{\partial S} \sigma dW$$ </p>
+
+<p>The delta hedged portfolio will grow by the risk free rate r, and we know that we have shorted delta amounts of the share, such that: </p>
+
+<p>$$\Delta \Pi = r (V - \frac{\partial V}{\partial S} S)dt$$ </p>
+
+<p>And we also know that the portfolio change is given by: $$\Delta \Pi = dV - \frac{\partial V}{\partial S}dS$$. Once we substitute in our Ito expansion of the option value, and equate to the risk-free return, we get the Black-Scholes PDE: </p>
+
+<p>$$\frac{\partial V}{\partial t} + \frac{\partial V}{\partial S} rS + \frac{1}{2} \sigma^2 S^{2} \frac{\partial^{2}V}{\partial S^{2}} \ - rV \ = \ 0$$ </p>
+
+    
+    <h3>Python Example</h3>
+    <pre>
+import numpy as np
+from scipy.stats import norm
+
+def black_scholes_call(S, K, T, r, sigma):
+    d1 = (np.log(S / K) + (r + 0.5 * sigma**2) * T) / (sigma * np.sqrt(T))
+    d2 = d1 - sigma * np.sqrt(T)
+    return S * norm.cdf(d1) - K * np.exp(-r * T) * norm.cdf(d2)
+
+# Example: S=100, K=100, T=1, r=0.05, sigma=0.2
+price = black_scholes_call(100, 100, 1, 0.05, 0.2)
+print(f"Call price: {price:.4f}")  # ~10.4506
+    </pre>
+
+</div>
