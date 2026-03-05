@@ -64,19 +64,28 @@
 <p>$$\frac{\partial V}{\partial t} + \frac{\partial V}{\partial S} rS + \frac{1}{2} \sigma^2 S^{2} \frac{\partial^{2}V}{\partial S^{2}} \ - rV \ = \ 0$$ </p>
 
     
-    <h3>Python Example</h3>
+    <h3>C++ Example</h3>
     <pre>
-import numpy as np
-from scipy.stats import norm
+template <typename T> T norm_cdf(T x){ //templated to allow double or ints or floats as input
+    return 0.5 * std::erfc(-x / std::sqrt(2)); //Use gauss error function to approximate the normal cdf, divided by sqrt(2) to include it into the denominator of the CDF fraction
+    }
 
-def black_scholes_call(S, K, T, r, sigma):
-    d1 = (np.log(S / K) + (r + 0.5 * sigma**2) * T) / (sigma * np.sqrt(T))
-    d2 = d1 - sigma * np.sqrt(T)
-    return S * norm.cdf(d1) - K * np.exp(-r * T) * norm.cdf(d2)
+template <typename T> T bs_call(T S, T K, T vol, T r, T q, T time){
+    T d_1 = (log(S/K) + (r - q + 0.5*vol*vol)*time)/(vol * sqrt(time));
+    T d_2 = d_1 - vol*sqrt(time);
+    return S*norm_cdf(d_1) - K*exp(-r*time)*norm_cdf(d_2);
+    }
 
-# Example: S=100, K=100, T=1, r=0.05, sigma=0.2
-price = black_scholes_call(100, 100, 1, 0.05, 0.2)
-print(f"Call price: {price:.4f}")  # ~10.4506
+template <typename T> T bs_put(T S, T K, T vol, T r, T q, T time){
+    T d_1 = (log(S/K) + (r - q + 0.5*vol*vol)*time)/(vol * sqrt(time));
+    T d_2 = d_1 - vol*sqrt(time);
+    return -S*norm_cdf(-d_1) + K*exp(-r*time)*norm_cdf(-d_2);
+    }
+    
+int main(){
+    std::cout << bs_call<double>(100, 101, 0.3, 0.05, 0.0, 1) << std::endl;
+    std::cout << bs_put<double>(100, 101, 0.3, 0.05, 0.0, 1) << std::endl;
+    }
     </pre>
 
 </div>
