@@ -77,7 +77,7 @@
             <h2 class="section-title">Projects</h2>
             <div class="section-line"></div>
         </div>
-        <p class="section-desc">A structured progression through derivatives pricing, numerical methods, and quantitative advisory tools. Each project is implemented with C++ pricing engines and Python frontends for analysis and visualisation.</p>
+        <p class="section-desc">A structured progression through derivatives pricing, numerical methods, and quantitative advisory tools. Primarily implemented in Python with Streamlit dashboards and Plotly visualisations, with selected projects featuring C++ pricing engines for performance-critical computation.</p>
 
         <!-- ═══════════════════════════════════════ -->
         <!-- FOUNDATIONS                              -->
@@ -92,7 +92,7 @@
             <div class="project-card reveal">
                 <div class="project-top">
                     <div class="project-title">Black-Scholes Pricer &amp; Greeks Dashboard</div>
-                    <div class="project-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-py">Python</span><span class="tier-label tier-foundations">Foundations</span></div>
+                    <div class="project-tags"><span class="tag tag-py">Python</span><span class="tier-label tier-foundations">Foundations</span></div>
                 </div>
                 <p class="project-desc">Closed-form Black-Scholes implementation for European calls and puts, computing all first- and second-order Greeks. Python frontend for interactive price surfaces and Greek sensitivity visualisation.</p>
                 <div class="project-features"><span class="feature">Black-Scholes</span><span class="feature">Greeks</span><span class="feature">Price Surfaces</span><span class="feature">Interactive Plots</span></div>
@@ -102,9 +102,7 @@
             <div class="project-card reveal">
                 <div class="project-top">
                     <div class="project-title">Binomial Tree Pricer (CRR Model)</div>
-                    <div class="project-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-py">Python</span><span class="tier-label tier-foundations">Foundations</span></div>
-                </div>
-                <p class="project-desc">Cox-Ross-Rubinstein binomial tree supporting European and American options. Visualises tree structure, convergence to Black-Scholes as step count increases, and early exercise boundaries for American puts.</p>
+                    <div class="project-tags"><span class="tag tag-py">Python</span><span class="tier-label tier-foundations">Foundations</span></div>
                 <div class="project-features"><span class="feature">CRR Model</span><span class="feature">American Options</span><span class="feature">Convergence Analysis</span><span class="feature">Early Exercise</span></div>
                 <a href="#" class="project-link">View Repository <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
             </div>
@@ -112,7 +110,7 @@
             <div class="project-card reveal">
                 <div class="project-top">
                     <div class="project-title">Implied Volatility Solver</div>
-                    <div class="project-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-py">Python</span><span class="tier-label tier-foundations">Foundations</span></div>
+                    <div class="project-tags"><span class="tag tag-py">Python</span><span class="tier-label tier-foundations">Foundations</span></div>
                 </div>
                 <p class="project-desc">Root-finding engine (Newton-Raphson and Brent's method) to extract implied volatility from market prices. Plots volatility smile and surface across strikes and maturities using real or synthetic data.</p>
                 <div class="project-features"><span class="feature">Newton-Raphson</span><span class="feature">Brent's Method</span><span class="feature">Vol Smile</span><span class="feature">Surface Plots</span></div>
@@ -122,7 +120,7 @@
             <div class="project-card reveal">
                 <div class="project-top">
                     <div class="project-title">Put-Call Parity Arbitrage Detector</div>
-                    <div class="project-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-py">Python</span><span class="tier-label tier-foundations">Foundations</span></div>
+                    <div class="project-tags"><span class="tag tag-py">Python</span><span class="tier-label tier-foundations">Foundations</span></div>
                 </div>
                 <p class="project-desc">Engine that checks put-call parity across option chains and flags violations. Visualises deviations from theoretical parity and computes theoretical arbitrage P&amp;L.</p>
                 <div class="project-features"><span class="feature">Put-Call Parity</span><span class="feature">Arbitrage Detection</span><span class="feature">Option Chains</span><span class="feature">P&amp;L Analysis</span></div>
@@ -164,7 +162,7 @@
             <div class="project-card reveal">
                 <div class="project-top">
                     <div class="project-title">Implied Probability Density Extractor</div>
-                    <div class="project-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-py">Python</span><span class="tier-label tier-intermediate">Intermediate</span></div>
+                    <div class="project-tags"><span class="tag tag-py">Python</span><span class="tier-label tier-intermediate">Intermediate</span></div>
                 </div>
                 <p class="project-desc">Applies the Breeden-Litzenberger result: numerically differentiates call prices twice with respect to strike on a fine grid. Plots the risk-neutral density and compares to lognormal, highlighting skew and kurtosis.</p>
                 <div class="project-features"><span class="feature">Breeden-Litzenberger</span><span class="feature">Risk-Neutral Density</span><span class="feature">Skew Analysis</span><span class="feature">Numerical Differentiation</span></div>
@@ -174,7 +172,7 @@
             <div class="project-card reveal">
                 <div class="project-top">
                     <div class="project-title">Local Volatility Surface (Dupire)</div>
-                    <div class="project-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-py">Python</span><span class="tier-label tier-intermediate">Intermediate</span></div>
+                    <div class="project-tags"><span class="tag tag-py">Python</span><span class="tier-label tier-intermediate">Intermediate</span></div>
                 </div>
                 <p class="project-desc">Implements Dupire's formula to extract the local volatility surface from market implied vols. 3D surface visualisation and comparison of local vol prices to market prices for exotic products.</p>
                 <div class="project-features"><span class="feature">Dupire</span><span class="feature">Local Vol</span><span class="feature">3D Surfaces</span><span class="feature">Exotic Repricing</span></div>
@@ -204,7 +202,7 @@
             <div class="project-card reveal">
                 <div class="project-top">
                     <div class="project-title">Delta Hedging Simulator</div>
-                    <div class="project-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-py">Python</span><span class="tier-label tier-intermediate">Intermediate</span></div>
+                    <div class="project-tags"><span class="tag tag-py">Python</span><span class="tier-label tier-intermediate">Intermediate</span></div>
                 </div>
                 <p class="project-desc">Simulates daily delta-hedging of a short option position under Black-Scholes and real-world dynamics (jumps, stochastic vol). Shows P&amp;L distributions, hedging error vs rebalancing frequency, and model misspecification impact.</p>
                 <div class="project-features"><span class="feature">Delta Hedging</span><span class="feature">P&amp;L Simulation</span><span class="feature">Model Misspecification</span><span class="feature">Rebalancing Analysis</span></div>
@@ -246,7 +244,7 @@
             <div class="project-card reveal">
                 <div class="project-top">
                     <div class="project-title">Multi-Asset Basket &amp; Rainbow Option Pricer</div>
-                    <div class="project-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-py">Python</span><span class="tier-label tier-advanced">Advanced</span></div>
+                    <div class="project-tags"><span class="tag tag-py">Python</span><span class="tier-label tier-advanced">Advanced</span></div>
                 </div>
                 <p class="project-desc">Monte Carlo with correlated GBM paths (Cholesky decomposition). Prices baskets, best-of, worst-of, and spread options. Visualises correlation sensitivity and comparison to single-asset hedges.</p>
                 <div class="project-features"><span class="feature">Cholesky</span><span class="feature">Basket Options</span><span class="feature">Worst-Of</span><span class="feature">Correlation Sensitivity</span></div>
@@ -256,7 +254,7 @@
             <div class="project-card reveal">
                 <div class="project-top">
                     <div class="project-title">Interest Rate Derivatives: Hull-White / LGM</div>
-                    <div class="project-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-py">Python</span><span class="tier-label tier-advanced">Advanced</span></div>
+                    <div class="project-tags"><span class="tag tag-py">Python</span><span class="tier-label tier-advanced">Advanced</span></div>
                 </div>
                 <p class="project-desc">Trinomial tree and Monte Carlo for the Hull-White one-factor model. Prices caps, floors, swaptions, and callable bonds. Plots short-rate distributions and calibration to yield curve and vol surface.</p>
                 <div class="project-features"><span class="feature">Hull-White</span><span class="feature">Trinomial Tree</span><span class="feature">Swaptions</span><span class="feature">Callable Bonds</span></div>
@@ -266,7 +264,7 @@
             <div class="project-card reveal">
                 <div class="project-top">
                     <div class="project-title">XVA Engine (CVA / DVA / FVA)</div>
-                    <div class="project-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-py">Python</span><span class="tier-label tier-advanced">Advanced</span></div>
+                    <div class="project-tags"><span class="tag tag-py">Python</span><span class="tier-label tier-advanced">Advanced</span></div>
                 </div>
                 <p class="project-desc">Exposure simulation engine generating future portfolio paths and computing expected positive/negative exposure profiles. Calculates CVA and DVA under wrong-way risk scenarios. Dashboard shows exposure profiles, CVA term structure, and credit spread sensitivity.</p>
                 <div class="project-features"><span class="feature">CVA / DVA / FVA</span><span class="feature">Exposure Simulation</span><span class="feature">Wrong-Way Risk</span><span class="feature">Dashboard</span></div>
@@ -307,6 +305,16 @@
 
             <div class="project-card reveal">
                 <div class="project-top">
+                    <div class="project-title">Structured Products Pricing Engine</div>
+                    <div class="project-tags"><span class="tag tag-py">Python</span><span class="tier-label tier-advisory">Advisory</span></div>
+                </div>
+                <p class="project-desc">Monte Carlo pricing framework for common structured products: memory coupon autocallables, Phoenix notes, reverse convertibles, and capital-protected notes. Models path-dependent features including memory coupon accumulation, discrete barrier monitoring, and multi-asset worst-of mechanics. Streamlit dashboard lets users define product terms, select underlying(s), and visualise payoff profiles, coupon probability, and early redemption likelihood across market scenarios.</p>
+                <div class="project-features"><span class="feature">Memory Coupon Autocallable</span><span class="feature">Phoenix Notes</span><span class="feature">Reverse Convertibles</span><span class="feature">Barrier Monitoring</span><span class="feature">Payoff Visualisation</span><span class="feature">Streamlit</span></div>
+                <a href="#" class="project-link">View Repository <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+            </div>
+
+            <div class="project-card reveal">
+                <div class="project-top">
                     <div class="project-title">Autocallable Structured Note Valuation &amp; Dispute Analysis</div>
                     <div class="project-tags"><span class="tag tag-py">Python</span><span class="tier-label tier-advisory">Advisory</span></div>
                 </div>
@@ -320,8 +328,8 @@
                     <div class="project-title">Interactive Yield Curve &amp; Forward Rate Visualiser</div>
                     <div class="project-tags"><span class="tag tag-py">Python</span><span class="tier-label tier-advisory">Advisory</span></div>
                 </div>
-                <p class="project-desc">GUI tool for visualising yield curves, forward curves, and discount factors across dates and currencies. Supports overlay of historical curves, spread analysis, and curve shift scenarios. Built with Plotly/Dash for interactive use in advisory and report preparation.</p>
-                <div class="project-features"><span class="feature">Yield Curves</span><span class="feature">Forward Rates</span><span class="feature">Historical Overlay</span><span class="feature">Dash GUI</span></div>
+                <p class="project-desc">Streamlit app for visualising yield curves, forward curves, and discount factors across dates and currencies. Supports overlay of historical curves, spread analysis, and curve shift scenarios. Built with Streamlit and Plotly for interactive use in advisory and report preparation.</p>
+                <div class="project-features"><span class="feature">Yield Curves</span><span class="feature">Forward Rates</span><span class="feature">Historical Overlay</span><span class="feature">Streamlit Dashboard</span></div>
                 <a href="#" class="project-link">View Repository <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
             </div>
 
@@ -330,7 +338,7 @@
                     <div class="project-title">Volatility Surface Explorer</div>
                     <div class="project-tags"><span class="tag tag-py">Python</span><span class="tier-label tier-advisory">Advisory</span></div>
                 </div>
-                <p class="project-desc">Interactive 3D volatility surface visualisation tool. Loads market data, fits parametric models (SABR, SVI), and lets users rotate, slice, and compare surfaces across dates. Designed for use in valuation reports and client presentations.</p>
+                <p class="project-desc">Interactive 3D volatility surface visualisation tool built with Streamlit and Plotly. Loads market data, fits parametric models (SABR, SVI), and lets users rotate, slice, and compare surfaces across dates. Designed for use in valuation reports and client presentations.</p>
                 <div class="project-features"><span class="feature">3D Vol Surface</span><span class="feature">SABR / SVI Fit</span><span class="feature">Date Comparison</span><span class="feature">Interactive</span></div>
                 <a href="#" class="project-link">View Repository <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
             </div>
@@ -360,7 +368,7 @@
                     <div class="project-title">Energy Market Data Explorer</div>
                     <div class="project-tags"><span class="tag tag-py">Python</span><span class="tier-label tier-advisory">Advisory</span></div>
                 </div>
-                <p class="project-desc">Interactive dashboard for exploring energy commodity price data — spot and forward curves for gas hubs (TTF, NBP, JKM), crude benchmarks, and LNG indices. Time-series analysis, seasonal decomposition, hub spread analysis, and historical volatility computation. Built for the kind of energy market research used in investigations and advisory reports.</p>
+                <p class="project-desc">Streamlit dashboard for exploring energy commodity price data — spot and forward curves for gas hubs (TTF, NBP, JKM), crude benchmarks, and LNG indices. Time-series analysis, seasonal decomposition, hub spread analysis, and historical volatility computation. Built for the kind of energy market research used in investigations and advisory reports.</p>
                 <div class="project-features"><span class="feature">TTF / NBP / JKM</span><span class="feature">Forward Curves</span><span class="feature">Seasonal Analysis</span><span class="feature">Hub Spreads</span><span class="feature">Dashboard</span></div>
                 <a href="#" class="project-link">View Repository <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
             </div>
