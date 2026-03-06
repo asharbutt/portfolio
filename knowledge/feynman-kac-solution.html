@@ -1,1 +1,75 @@
+<!-- knowledge/bs-derivation.html -->
+<!-- This file is loaded into the KB content area via fetch. -->
+<!-- It contains ONLY the inner content — no <html>, <head>, or <body> tags. -->
+<!-- LaTeX: use $ ... $ for inline and $$ ... $$ for display math. -->
 
+<div class="kb-content-header">
+    <div class="kb-content-category">Options Theory</div>
+    <div class="kb-content-title">Black-Scholes: Replicating Portfolio</div>
+    <div class="kb-content-meta">Last updated — March 2026</div>
+</div>
+<div class="kb-content-body">
+
+    <h3>The Feynman-Kac Theorem</h3>
+    <p>The Feynman-Kac theorem provides a a probabilistic expectation as a solution to the backward PDE related to the Ito diffusion process: </p>
+
+<p>$$dX = \mu (X,t) dt + \sigma dW^{Q}$$ </p>
+
+<p>and its related PDE: </p>
+
+<p>$$\frac{\partial u}{\partial t} + \mu (X,t) \frac{\partial u}{\partial x} + \frac{1}{2} \sigma (X,t) \frac{\partial^{2} u}{\partial x^{2}}$$ </p>
+
+<p>with a final condition $$u(X_{T}, T) = H(S,T)$$
+
+Then the Feynman-Kac theorem states that the solution to this PDE can be provided by the expectation: </p>
+
+<p>$$\frac{u(X,t)}{M(t)} = E^{P}[\frac{H(X,T)}{M(T)}| \mathbb{F}_{t}]$$ </p>
+
+<p>Where M(T) is the numeraire under the Q measure, in this case the bank account. We can then evaluate this expectation by splitting up the payoff, for example, for a call option: </p>
+
+<p>$$E^{Q}[H(X,T)P(0,T)| \mathbb{F}_{t}] => P(0,T) E^{P}[max(S-K,0)| \mathbb{F}_{t}]$$ </p>
+
+<p>This expectation is under the same measure as the original diffusion process, in this case the risk-neutral measure. Given the numeraire is the bank account, we know that $$M(T) = e^{rT}$$, and so $$\frac{M(t)}{M(T)} = e^{-r(T-t)} = P(T,t)$$ or P(0,T)  We can use indicator functions to get rid of the maximum operator: </p>
+
+<p>$$P(0,T) E^{P}[max(S-K,0)| \mathbb{F}_{t}] => P(0,T) (E^{P}[S1_{S \geq K}| \mathbb{F}_{t}] - E^{P}[K1_{S \geq K}| \mathbb{F}_{t}])$$ </p>
+
+<p>Even though S is lognormally distributed, through a change of variable in the derivation, we change to a standard normal distribution, and the closed form solution is then provided: </p>
+
+<p>$$V(t, S_{0} = S \ N(d_{1}) - \ K \ e^{-rT} \ N(d_{2})$$ </p>
+
+<p>where $$d_{1} = \frac{ln(\frac{S_{0}}{K} + (r-q-\frac{1}{2} \ \sigma^{2})T}{\sigma \sqrt{T}}$$ and $$d_{2} = d_{1} - \sigma \sqrt{T}$$ </p>
+
+<h3> Digital Options </h3>
+<p>We can evaluate digital options using the Feynman-Kac theorem. For the same asset and PDE, the terminal condition, or payoff, can be written as: $$H(X,T) = max(S,0)$$ for an asset-or-nothing option, and $$H(X,T) = max(K,0)$$ for a cash-or-nothing option. 
+
+Then, the option expectation for an asset-or-nothing can be written as: </p>
+
+<p>$$V(X,t) = P(0,T) E^{P}[max(S) | \mathbb{F}_{t}] = P(0,T) E^{P}[S1_{S \geq K} | \mathbb{F}_{t}]$$  </p>
+
+<p>Thus the closed form solution for an asset-or-nothing call can be written as $$S_{0}N(d_{1})$$, and a cash-or-nothing call can similarly be written as $$Ke^{-rT}N(d_{2})$$ </p>
+    
+    <h3>C++ Example of a BS implementation</h3>
+    <pre>script type="text/plain">
+template <typename T> T norm_cdf(T x){ //templated to allow double or ints or floats as input
+    return 0.5 * std::erfc(-x / std::sqrt(2)); //Use gauss error function to approximate the normal cdf, divided by sqrt(2) to include it into the denominator of the CDF fraction
+    }
+
+template <typename T> T bs_call(T S, T K, T vol, T r, T q, T time){
+    T d_1 = (log(S/K) + (r - q + 0.5*vol*vol)*time)/(vol * sqrt(time));
+    T d_2 = d_1 - vol*sqrt(time);
+    return S*norm_cdf(d_1) - K*exp(-r*time)*norm_cdf(d_2);
+    }
+
+template <typename T> T bs_put(T S, T K, T vol, T r, T q, T time){
+    T d_1 = (log(S/K) + (r - q + 0.5*vol*vol)*time)/(vol * sqrt(time));
+    T d_2 = d_1 - vol*sqrt(time);
+    return -S*norm_cdf(-d_1) + K*exp(-r*time)*norm_cdf(-d_2);
+    }
+    
+int main(){
+    std::cout << bs_call<double>(100, 101, 0.3, 0.05, 0.0, 1) << std::endl;
+    std::cout << bs_put<double>(100, 101, 0.3, 0.05, 0.0, 1) << std::endl;
+    }
+
+    </script></pre>
+</div>
