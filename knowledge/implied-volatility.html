@@ -8,4 +8,10 @@
     <h3>Black Scholes Volatility</h3>
 <p>The Black Scholes model assumes that a constant volatility is used when pricing options across the strike and maturity range. This is a misspecification in the model, as in reality, market prices exhibit a smile/skew behaviour. We can use the Black Scholes model to invert the market prices (which is standard practice in quoting the implied volatility) to find the implied volatility across the strike and maturity range, and we find that for a given maturity, your options exhibit a volatility smile/skew. The smile behaviour shows that the volatility on either side of the ATM (at-the-money) is higher than ATM. This is natural as OTM options are popular for both hedging and speculation purposes. Some assets exhibit a skew, which means that the volatility is higher on one side of the ATM than on the other. Most commonly, you see a negative skew, i.e. the implied volatility on the lower strikes is higher than on the higher strikes. This is due to the demand of deep OTM puts, which are used for protection against crashes. Some stocks exhibit a positive skew, where speculative demand pushes prices higher than protection.  </p>
 
+<p>The BS implied vol can be found by trying to find the volatility $\sigma_{BS}:C_{BS}=C_{mkt}$. For this we can employ a root finding method, where we are trying to find the root for the function: $C_{BS}-C_{mkt}=0$. The simplest root finding method we can employ is the Newton-Raphson method.</p>
+    
+<h2>Newton Raphson</h2>
+
+<p>We know the analytical closed form solution for the option price, which is the BS equation. We need to vary the volatility input until we can match the BS option price to the market price.</p>
+    
 </div>
