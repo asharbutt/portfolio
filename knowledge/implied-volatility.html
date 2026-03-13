@@ -5,7 +5,7 @@
 </div>
 <div class="kb-content-body">
 
-    <h3>Implied Volatility</h3>
-<p> </p>
+    <h3>Black Scholes Volatility</h3>
+<p>The Black Scholes model assumes that a constant volatility is used when pricing options across the strike and maturity range. This is a misspecification in the model, as in reality, market prices exhibit a smile/skew behaviour. We can use the Black Scholes model to invert the market prices (which is standard practice in quoting the implied volatility) to find the implied volatility across the strike and maturity range, and we find that for a given maturity, your options exhibit a volatility smile/skew. The smile behaviour shows that the volatility on either side of the ATM (at-the-money) is higher than ATM. This is natural as OTM options are popular for both hedging and speculation purposes. Some assets exhibit a skew, which means that the volatility is higher on one side of the ATM than on the other. Most commonly, you see a negative skew, i.e. the implied volatility on the lower strikes is higher than on the higher strikes. This is due to the demand of deep OTM puts, which are used for protection against crashes. Some stocks exhibit a positive skew, where speculative demand pushes prices higher than protection.  </p>
 
 </div>
