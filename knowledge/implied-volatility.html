@@ -14,9 +14,22 @@
 
 <p>We know the analytical closed form solution for the option price, which is the BS equation. We need to vary the volatility input until we can match the BS option price to the market price.</p>
 
-<p>We start with the simple approximation for the point derivative of a curve, estimated by: </p>
+<p>We start with the simple approximation for the point derivative of a curve at $x_{0}$, estimated by: </p>
 
 <p> $$f'(x_{0}) = \frac{f(x_{0}+h) -f(_{x_0})}{h}$$</p>
 
-<p>  </p>
+<p>If we say that the next step is $x_{n+1}=x_{0}+h$, then the above equation becomes: </p>
+
+<p> $$f'(x_{0}) = \frac{f(x_{n+1}) -f(_{x_0})}{h}$$</p>
+
+<p>Given we are trying to approximate the root i.e. the value of $x_{n+1}$ where $f(x_{n+1})=0$, then: $f'(x_{0}) = \frac{-f(_{x_0})}{h}$. We can rearrange this for h:</p>
+
+<p> $$h = -\frac{f(_{x_0})}{f'(x_{0})}$$</p>    
+
+<p>If we recall, our original formula is $x_{n+1} = x_{0} + h$, and substituting the above for h in give us:</p>
+<p>$$ x_{n+1} = x_{0} -\frac{f(_{x_0})}{f'(x_{0})}$$ </p>
+
+<p>This is the Newton-Raphson Iterative root finding method, and converges to the solution IF our original guess for $x_{0}$ is in proximity of the solution, otherwise it diverges. We have a simple c++ implementation for this below:</p>
+
+    
 </div>
