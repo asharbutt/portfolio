@@ -49,7 +49,7 @@ Then, the option expectation for an asset-or-nothing can be written as: </p>
 <p>Thus the closed form solution for an asset-or-nothing call can be written as $$S_{0}N(d_{1})$$, and a cash-or-nothing call can similarly be written as $$Ke^{-rT}N(d_{2})$$ </p>
     
     <h3>C++ Example of a BS implementation</h3>
-    <pre>script type="text/plain">
+    <pre><script type="text/plain">
 template <typename T> T norm_cdf(T x){ //templated to allow double or ints or floats as input
     return 0.5 * std::erfc(-x / std::sqrt(2)); //Use gauss error function to approximate the normal cdf, divided by sqrt(2) to include it into the denominator of the CDF fraction
     }
