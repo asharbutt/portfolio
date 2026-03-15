@@ -32,7 +32,7 @@
 <p>This is the Newton-Raphson Iterative root finding method, and converges to the solution IF our original guess for $x_{0}$ is in proximity of the solution, otherwise it diverges. We have a simple c++ implementation for this below:</p>
 
     <h3>C++ Example of a Newton Raphson implementation</h3>
-<pre><script type="text/plain">
+<pre>script type="text/plain">
 template <typename F, typename DF>
 double newton_raphson(F f, DF df, double x0, double tol, int max_iter) {
 	double x = x0;
@@ -57,7 +57,7 @@ double newton_raphson(F f, DF df, double x0, double tol, int max_iter) {
      </script></pre>
 <p>Our original black scholes implementation is a class, so in order to evaluate the function which is $f(x)=C_{BS}-C_{mkt}$, we need to pass lambda functions as proxies into the template function, as we cannot pass class objects and members into template functions: </p>    
 			 <h3>Lambda functions to pass into Newton-Raphson function/h3>
-<pre><script type="text/plain">
+<pre>script type="text/plain">
 auto f = [&opt, &x0](double vol) {
 	return opt.price_call(vol) - x0;
 };
