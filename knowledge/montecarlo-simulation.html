@@ -1,0 +1,21 @@
+<div class="kb-content-header">
+    <div class="kb-content-category">Options Theory</div>
+    <div class="kb-content-title">Implied Volatility</div>
+    <div class="kb-content-meta">Last updated — March 2026</div>
+</div>
+<div class="kb-content-body">
+
+       </script></pre>
+<p>Our original black scholes implementation is a class, so in order to evaluate the function which is $f(x)=C_{BS}-C_{mkt}$, we need to pass lambda functions as proxies into the template function, as we cannot pass class objects and members into template functions: </p>    
+			 <h3>Lambda functions to pass into Newton-Raphson function/h3>
+<pre>script type="text/plain">
+auto f = [&opt, &x0](double vol) {
+	return opt.price_call(vol) - x0;
+};
+auto df = [&opt](double vol) {
+	return opt.vega(vol);
+};
+
+
+     </script></pre>
+</div>
