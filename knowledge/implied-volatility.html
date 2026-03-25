@@ -28,7 +28,7 @@
 
 <p>If we recall, our original formula is $x_{n+1} = x_{0} + h$, and substituting the above for h in give us:</p>
 <p>$$ x_{n+1} = x_{0} -\frac{f(_{x_0})}{f'(x_{0})}$$ </p>
-
+<p>Given we are trying to find the value of x_0 that makes the difference between our BS value and the market value 0, then $f(x) = V_{mkt} - V_{BS}(\sigma)$. Then, $f'(x) = -\frac{\partial V_{BS}(\sigma)}{\partial \sigma}$</p>
 <p>This is the Newton-Raphson Iterative root finding method, and converges to the solution IF our original guess for $x_{0}$ is in proximity of the solution, otherwise it diverges. We have a simple c++ implementation for this below:</p>
 
     <h3>C++ Example of a Newton Raphson implementation</h3>
@@ -62,9 +62,11 @@ auto f = [&opt, &x0](double vol) {
 	return opt.price_call(vol) - x0;
 };
 auto df = [&opt](double vol) {
-	return opt.vega(vol);
+	return -opt.vega(vol);
 };
 
 
      </script></pre>
+
+<p>The Newton-Raphson method converges quadratically, meaning that if we plot the sequence of iterations from the above algorithm, itll form a part of a quadratic equation. We have plotted one below: </p>
 </div>
