@@ -46,30 +46,4 @@ Then, the option expectation for an asset-or-nothing can be written as: </p>
 
 <p>$$V(X,t) = P(0,T) E^{P}[max(S) | \mathbb{F}_{t}] = P(0,T) E^{P}[S1_{S \geq K} | \mathbb{F}_{t}]$$  </p>
 
-<p>Thus the closed form solution for an asset-or-nothing call can be written as $$S_{0}N(d_{1})$$, and a cash-or-nothing call can similarly be written as $$Ke^{-rT}N(d_{2})$$ </p>
-    
-    <h3>C++ Example of a BS implementation</h3>
-    <pre><script type="text/plain">
-template <typename T> T norm_cdf(T x){ //templated to allow double or ints or floats as input
-    return 0.5 * std::erfc(-x / std::sqrt(2)); //Use gauss error function to approximate the normal cdf, divided by sqrt(2) to include it into the denominator of the CDF fraction
-    }
-
-template <typename T> T bs_call(T S, T K, T vol, T r, T q, T time){
-    T d_1 = (log(S/K) + (r - q + 0.5*vol*vol)*time)/(vol * sqrt(time));
-    T d_2 = d_1 - vol*sqrt(time);
-    return S*norm_cdf(d_1) - K*exp(-r*time)*norm_cdf(d_2);
-    }
-
-template <typename T> T bs_put(T S, T K, T vol, T r, T q, T time){
-    T d_1 = (log(S/K) + (r - q + 0.5*vol*vol)*time)/(vol * sqrt(time));
-    T d_2 = d_1 - vol*sqrt(time);
-    return -S*norm_cdf(-d_1) + K*exp(-r*time)*norm_cdf(-d_2);
-    }
-    
-int main(){
-    std::cout << bs_call<double>(100, 101, 0.3, 0.05, 0.0, 1) << std::endl;
-    std::cout << bs_put<double>(100, 101, 0.3, 0.05, 0.0, 1) << std::endl;
-    }
-
-    </script></pre>
 </div>
