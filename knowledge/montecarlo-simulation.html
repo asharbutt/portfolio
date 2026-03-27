@@ -7,18 +7,14 @@
 
 	<h3>Monte Carlo Simulation</h3>
 
-	<p></p>
-       </script></pre>
-<p>Our original black scholes implementation is a class, so in order to evaluate the function which is $f(x)=C_{BS}-C_{mkt}$, we need to pass lambda functions as proxies into the template function, as we cannot pass class objects and members into template functions: </p>    
-			 <h3>Lambda functions to pass into Newton-Raphson function/h3>
-<pre>script type="text/plain">
-auto f = [&opt, &x0](double vol) {
-	return opt.price_call(vol) - x0;
-};
-auto df = [&opt](double vol) {
-	return opt.vega(vol);
-};
+	<p>Where closed form solutions are not available, or the contract value is more path dependent, a Monte-Carlo simulation technique can be used instead. We use the underlying SDE to evaluate N paths of the asset, calculate our payoffs and then average across to get our option value.</p>
 
+	<p>The algorithm for using MC is simple: </p>
 
-     </script></pre>
+	<ol>
+  <li>Partition the time interval [0,T] into m points, giving us m+1 time steps (including the start). </li>
+  <li>Generate the underlying asset values using the related SDE under its measure (risk-neutral for the GBM)</li>
+  <li>Calculate the payoffs at maturity and average them, i.e. $E^{Q}[H(T,S)]=\frac{1}{N} \Sum^{N}_{i=1} H(s_{i}$ for a call option</li>
+</ol>
+      
 </div>
