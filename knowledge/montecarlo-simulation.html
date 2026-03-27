@@ -14,7 +14,7 @@
 	<ol>
   <li>Partition the time interval [0,T] into m points, giving us m+1 time steps (including the start). </li>
   <li>Generate the underlying asset values using the related SDE under its measure (risk-neutral for the GBM)</li>
-  <li>Calculate the payoffs at maturity and average them, i.e. $E^{Q}[H(T,S)]=\frac{1}{N} \sum^{N}_{i=1} H(s_{i}$</li>
+  <li>Calculate the payoffs at maturity and average them, i.e. $E^{Q}[H(T,S)]=\frac{1}{N} \sum^{N}_{i=1} H_{i}$</li>
   <li>Evaluate the option value by discounting back to today</li>
   <li>Calculate the standard error of your estimation</li>
 </ol>
