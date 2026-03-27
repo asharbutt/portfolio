@@ -18,5 +18,12 @@
   <li>Evaluate the option value by discounting back to today</li>
   <li>Calculate the standard error of your estimation</li>
 </ol>
-      
+
+	<p>By the strong law of large numbers, we know that as N approaches $\infinite$, the average payoff calculated above will aproach the expected value of the payoff at maturity with probability 1. The standard error can be calculated as follows:</p>
+
+	<p>$$Var^{Q}[H_{N}(T,S)] = Var^{Q}[\frac{1}{N}\sum{H_{j}}]$$</p>
+
+	<p>We can evaluate the standard error of the payoff using a sample variance estimator: </p>
+
+	<p>v^{2} = \frac{1}{N-1}\sum^{N}_{i=1} (H_{i} - H_{N})^{2}</p>
 </div>
