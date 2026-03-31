@@ -33,7 +33,7 @@
 
 	<h2>Simulation of Stochastic Differential Equations</h2>
 
-	<p>For a general SDE of the form $dX(t)=\mu (t,X(t))+\sigma (t,X(t))dW(t)$, an integrated form exists: $X(t_{i+1})=X(t_{i}) + \int^{t_{i+1}-{t_{i}}} \mu(t,X(t))dt + \int^{t_{i}_{t_{i-1}}} \sigma(t,X(t))dW(t)$. We can then approximate this function using a scheme such as the Eurler scheme, which approxmates the integrals on the left side of the boundary as such:</p>
+	<p>For a general SDE of the form $dX(t)=\mu (t,X(t))+\sigma (t,X(t))dW(t)$, its integrated form is of the form: $X(t_{i+1})=X(t_{i}) + \int^{t_{i+1}^{t_{i}}} \mu(t,X(t))dt + \int^{t_{i}^{t_{i-1}}} \sigma(t,X(t))dW(t)$. We can then approximate this function using a scheme such as the Eurler scheme, which approxmates the integrals on the left side of the boundary as such:</p>
 
 	<p>$$\boxed{x_{i+1}=x_{i}+\mu(t_{i},x_{i})(t_{i+1}-t_{i})+\sigma(t_{i},x_{i})W(t_{i+1}-t_{i})}$$</p>
 
