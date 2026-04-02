@@ -8,4 +8,14 @@
   	<h3>Binomial Model</h3>
 
     <p>Under the Binomial process, the underlying follows a Binomial model. In this case, the underlying asset S, at every time step has two possible outcomes. We start off by assuming that the asset has a value of $S_{0}$ at $t_{0}$, and for every time step has two potential outcomes of $uS_{0}$ and $dS_{0}$ with a probability $p_{u}$ and $p_{d}$. We construct a replicating portfolio made up of $\delta$ amounts of S and a risk-less bond with a notional value of n, which grows at a rate of $e^{rT}$. This means that at the end of the time step, the value of the portfolio will either be $C_{u} = \delta uS_{0} + ne^{r\DeltaT}$ or $C_{u} = \delta dS_{0} + ne^{r\DeltaT}$</p>
+    <p>We can solve these two equations to get the value of $\delta$ and n, simply by substitution:</p>
+
+    <p>$$\delta uS_{0} - C_{u} = ne^{r\DeltaT}$$</p>
+    <p>$$\delta dS_{0} - C_{d} = ne^{r\DeltaT}$$</p>
+
+    <p>Therfore:</p>
+    
+    <p>$$\delta dS_{0} - C_{d} = \delta uS_{0} - C_{u}$$</p>
+
+    <p>\delta = \frac{C_{u}-C_{d}}{(u-d)S_{0}}</p>
 </div>
