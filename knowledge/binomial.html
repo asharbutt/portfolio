@@ -20,4 +20,16 @@
     <p>$$\delta = \frac{C_{u}-C_{d}}{(u-d)S_{0}}$$</p>
 
     <p>We do the same for n to get: $\frac{uC_{d}-dC_{u}}{(u-d)e^{r\Delta T}}$</p>
+
+    <p>Because this is a replicating portfolio, we expect that the value of the option at the start, V(0), is equal to the value of the portfolio at the start: $V(0) = \delta S_{0} + n$. Because the bond is a riskless bond, it is worth 1 at the start, and grows at the bank account rate. We can then substitute in our values derived above, such that:</p>
+
+    <p>$$V(0)=\delta S_{0}+n=S_{0}\frac{C_{u}-C_{d}}{(u-d)S_{0}} + \frac{uC_{d}-dC_{u}}{(u-d)e^{r\Delta T}}$$</p>
+
+    <p>$$V(0)=\frac{C_{u}-C_{d}}{(u-d)} + \frac{uC_{d}-dC_{u}}{(u-d)e^{r\Delta T}}$$</p>
+
+    <p>$$V(0)=e^{-r\DeltaT}(\frac{e^{r\DeltaT}C_{u}-e^{r\DeltaT}C_{d}}{(u-d)} + \frac{uC_{d}-dC_{u}}{(u-d)})$$</p>
+    <p>We rearrange to collect the up and down option values on either side: </p>
+    <p>$$V(0)=e^{-r\DeltaT}(\frac{e^{r\DeltaT}C_{u}-dC_{u}}{(u-d)} + \frac{uC_{d}e^{r\DeltaT}C_{d}}{(u-d)})$$</p>
+
+    <p>$$V(0)=e^{-r\DeltaT}(\frac{e^{r\DeltaT}-d}{(u-d)}C_{u} + \frac{u-e^{r\DeltaT}}{(u-d)}C_{d})$$</p>
 </div>
