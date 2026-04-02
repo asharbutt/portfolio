@@ -40,4 +40,12 @@
    <p>We can consider p as the probability here under a certain measure, meaning that \(0 < p < 1\), and in order for that to hold, \(d < e^{r\Delta T} < u\)</p>
     <p>Given that under the risk neutral measure, $E^{Q}[S_{\Delta T} \vert F_{t}]=S_{t}e^{r\Delta T}$. Given that under the Binomial process, the expected value is given by $puS_{0} + (1-p)dS_{0}$, we know that p is the probability of an up move under the risk neutral measure, and p is the associated probability measure. You can find a simple binomial pricer for European and American Options under the projects tab, but the idea is that we create a lattice of asset prices, starting from the initial price, computed to T, and then we compute the option price backwards. We first compute the payoffs at maturity, then work our way back using the above equation for option prices. WE discount until we get back to t=0.</p>
     <p>We can make a simple adjustment to price American options, where at each node, we compare the computed option value against the intrinsic value i.e. the payoff at that point. Whichever is higher is used as the value of the option at that node. The Binomial model is the discrete time version of the continious equation, where as the number of steps approach infinite, the option price approaches that of Black-Scholes</p>
+
+    <h3>Selections of u and d</h3>
+    <p>The choice of u and d can alter the convergence rate and error rate of the option value to the Black Scholes model. </p>
+    <h2>Cox-Ross_Rubinstein</h2>
+    <p>An additional constraint of ud=1, and a moment matching condition for the equations $puS_{0} + (1-p)dS_{0}$ and $pu^{2}S_{0}^2 + (1-p)d^{2}S_{0}^2 = e^{(2r+\sigma ^{2})\Delta T}S_{0}$ gives us the following conditions in the form of the CRR model:</p>
+
+    <p>$$u = e^{\sigma \sqrt{\Delta T}}$$, $$d = e^{-\sigma \sqrt{\Delta T}}$$</p>
+
 </div>
