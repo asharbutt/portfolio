@@ -38,4 +38,5 @@
     <p>$$V(0)=e^{-r\Delta T}(pC_{u} + (1-p)C_{d})$$</p>
 
    <p>We can consider p as the probability here under a certain measure, meaning that \(0 < p < 1\), and in order for that to hold, \(d < e^{r\Delta T} < u\)</p>
+    <p>Given that under the risk neutral measure, $E^{Q}[S_{\Delta T}\mvert F_{t}]=S_{t}e^{r\Delta T}$. Given that under the Binomial process, the expected value is given by $puS_{0} + (1-p)dS_{0}$, we know that p is the probability of an up move under the risk neutral measure, and p is the associated probability measure. You can find a simple binomial pricer for European and American Options under the projects tab, but the idea is that we create a lattice of asset prices, starting from the initial price, computed to T, and then we compute the option price backwards. We first compute the payoffs at maturity, then work our way back using the above equation for option prices. WE discount until we get back to t=0.</p>
 </div>
