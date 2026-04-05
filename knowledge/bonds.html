@@ -9,12 +9,13 @@
 
   <p>A Bond is a financial instrument issued in order to raise capital through debt. The issuer will issue a bond at "Face Value" and sell to a buyer, who is essentially "lending" money to the issuer. The issuer will then repay the face value of the bond back to the buyer at maturity, usually with a periodic coupon payment, serving as interest on the loan. The current value of the bond is then the sum of the present value of all the cashflows (which includes the repayment of the face value of the loan at maturity). We can represent the value of the bond therefore as: </p>
 
-  <p>$$\boxed{B = \Sum c_{i} D(0,t_{i})}$$</p>
+  <p>$$\boxed{B = \sum c_{i} D(0,t_{i})}$$</p>
 
   <p>Where $D(0,t_{i})$ is the discount factor from today (or valuation date) to the date of the cashflow payment. The bond yield is the current annualised rate used to discount all the cashflows back to get todays Bond price. Under continious compounding, the yield is some constant y such that: </p>
 
-  <p>$$\boxed{B = \Sum c_{i} e^{yt_{i}}}$$</p>
+  <p>$$\boxed{B = \sum c_{i} e^{-yt_{i}}}$$</p>
 
-<p>We can use an iterative method such as Newton Raphson where $f(y)=B_{mkt} - B_{calc}(y)$ to find the yield. </p>
+<p>We can use an iterative method such as Newton Raphson where $f(y)=B_{mkt} - B_{calc}(y)$ to find the yield. We can see this yield as the annual return that the market or investors demand to hold that bond. The bond gets issued at the coupon rate, which the issuer pays, but when the bond trades on the secondary market, its price changes away from its original face value. The yield is the new rate that the buyers think the bond will yield if bought now. There is an inverse relationship between the bond yield and the bond price. As we see in the above 
+yield equation, as the bond price goes up, the yield goes down. If the yield goes up, the bond price goes down. As we are using an exponential here, the bond price exhibits convexity (i.e the bond price is an increasing function of the yield). This mean</p>
 
   </div>
