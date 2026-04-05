@@ -19,6 +19,14 @@
 yield equation, as the bond price goes up, the yield goes down. If the yield goes up, the bond price goes down. As we are using an exponential here, the bond price exhibits convexity (i.e the bond price is an increasing function of the yield). </p>
 
     <h2>Bond Sensitivities</h2>
-<p></p>
+<p>We are interested in seeing how the bond price reacts to underlying changes in the yield curve. The first order sensitivity is the Bond Duration. There are two types of Duration: The Macaulay duration, and the modified duration. </p>
+
+    <p>The Macaulay duration measures on average how many years it takes to recoup your investment by weighting the present value of the cashflows by their payment dates, and then dividing by the Bond Price:</p>
+
+    <p>$$D_{Mac} = \frac{\sum t_{i} PV_{i}}{\sum PV_{i}}$$</p>
+<p>For a zero coupon bond, given that there are no payments in between now and the maturity, the Duration is equal to the years left to maturity of the bond. For coupon paying bonds, given you get payments in the interim, you are able to recoup your investments before maturity. If the bond pays higher coupons than another bond with the same maturity, then we know that the first bond will recoup its initial investment sooner than the second bond</p>
+
+    <p>How does this measure sensitivity? If your bond has a higher duration i.e. it will take longer to recoup your investment, then you have a longer period of exposure to interest rates. This means that you are more exposed to interest rates changing, and therefore your bond value has a higher chance of losing value. If rates go up, the discounting compounds and the PV of your coupon payments will be less, hence your bond with a 
+    longer maturity is more sensitive i.e. has a higher duration. Bonds with shorter maturities or higher coupon rates have a lower duration, as you are able to recoup your invesment earlier than their counterparts. </p>
 
   </div>
