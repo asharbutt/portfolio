@@ -17,5 +17,5 @@
 <p>Where $\tau _{i}$ is the daycount from period i-1 to i, i-1 is the fixing date or FRA start date, and i is the settlement date. We can replace the denominator with any discounting function $P(T_{i-1}, T_{i})$. The value of this FRA at any point before this can be written as: </p>
 
     <p>$$FRA^{REC}(t) = N\tau _{i}[K - L(t;T_{i-1}, T_{i})]P(t, T_{i})$$</p>
-    <p>Where the floating rate now is a forward rate, or an expectation of the reference rate at a future date under the T-Forward measure. </p>
+    <p>Where the floating rate now is a forward rate, or an expectation of the reference rate at a future date under the T-Forward measure. The FRA settlement can be the usual in-advance (which is usually the case for LIBOR or other in-advance rates) or in-arrears (which is the case for RFRs). The difference is that the in-advance rate is fixed on the fixing date and paid on settlement. The in-arrears rate for RFRs actually gets obsevred daily over the FRA period after the fixing start date and before the FRA start date (this is usually due to an observation shift added on, typically 2 days) and compounded until it is realised at the end of the fixing period, when it is paid out. </p>
   </div>
