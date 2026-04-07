@@ -11,6 +11,10 @@
 
     <p>FRAs are quoted by Start x End, for example 3 month x 6 month, meaning that in 3 months time, we observe or start the fixing of the reference rate, and then 3 months after we settle. For LIBOR, the way this works is that n days (usually 2 business days) before your FRA start, you observe the fixing. You then exchange the difference between the fixing rate and the fixed rate on the settlement date, which tends to be at the end of the reference period (3 months for a 3M-LIBOR, 6M for 6M-LIBOR). If not, compounding is usually involved.</p>
 
+<p>For LIBOR, the value of a FRA at fixing date $T_{i-1}$ can be written as: </p>
 
+    <p>$$FRA^{REC}(T_{i-1}) = \frac{N\tau _{i}[K - L(T_{i-1};T_{i-1}, T_{i})]}{1+\tau _{i}L(T_{i-1};T_{i-1}}$$</p>
+<p>Where $\tau _{i}$ is the daycount from period i-1 to i, i-1 is the fixing date or FRA start date, and i is the settlement date. We can replace the denominator with any discounting function $P(T_{i-1}, T_{i})$. The value of this FRA at any point before this can be written as: </p>
 
+    <p>$$FRA^{REC}(t) = N\tau _{i}[K - L(t;T_{i-1}, T_{i})]P(t, T_{i})$$</p>
   </div>
