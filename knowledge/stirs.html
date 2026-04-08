@@ -18,4 +18,8 @@
   <li>3. Due to FRAs being OTC and more bespoke, they are not as liquid, and can be difficult and costly to close out, whereas given Futures are on exchange, they are cheap to enter, easy to close out and usually have tighter bid/ask spreads</li>
 </ul>
 
+    <p>Futures are quoted by their price (100-R), and their contract specification will have a tick size and tick value. The tick size is the smallest measurement in the change of the futures contract. For SOFR futures, the smallest tick size is 1 basis point. This makes it easier for margin calculations as well. </p>
+    <p>The tick value will then be calculated as follows:</p>
+
+    <p>$$Tick Value = Tick size * Daycount(T_{1}, T_{2})*Notional$$</p>
 </div>
