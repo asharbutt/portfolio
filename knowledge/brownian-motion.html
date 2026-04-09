@@ -50,4 +50,13 @@
     <p>By using the substitution $y = \frac{x}{\sqrt{t}}$:</p>
 
     <p>$$P(\tau _{m} \leq t) =  \frac{2}{\sqrt{2\pi}} \int _{\frac{|m|}{\sqrt{t}}}^{\infty} e^{-\frac{y^{2}}{2}}dy$$</p>
+
+    <h2>Distribution of max W(t)</h2>
+    <p>As part of pricing exotic and barrier options, we are interested in seeing the distribution of the function M(t) = max W(t). We can use the reflection principle to see whether $M(t) \geq m$, where m is some level greater than 0. We can write: </p>
+
+    <p>$$P(M(t) \geq m, W(t) \leq \omega) = P(W(t) \geq 2m-\omega)$$</p>
+
+    <p>We can then write the joint distribution of W(t) and M(t) as: </p>
+
+    <p>$$f_{W(t), M(t)}(w,m) = \frac{2(2m-\omega )}{t\sqrt{2\pi t}}e^{-\frac{(2m-\omega )^{2}}{2t}}$$</p>
 </div>
