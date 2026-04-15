@@ -18,7 +18,18 @@
     <p>Where $\kappa$ is the speed of mean reversion, $\bar{\sigma}$ is the long run volatility and $\gamma$ is the vol of vol. The issue with this process is that it allows for the volatility process to go negative, which cannot happen. We therefore introduce the CIR process, which avoids negative vols under a Feller condition: </p>
 
     <p>$$\boxed{\begin{cases}
-   dS(t) =  rS(t)dt + \nu S(t) dW \\
    d\nu (t) = \kappa (\bar{\nu} - \nu)dt + \gamma \sqrt{\nu} dW
 \end{cases}}$$</p>
+
+    <p>Here, we model the variance rather than the volatility, and having $\sqrt{\nu}$ in the process avoids the process entering negative territory. The Feller condition ($2\kappa \bar{\nu} \geq \gamma ^{2}$) guarantees that the variance will not become negative. If this condition is not satisied, then the CDF will exhibit a massive spike near the origin, i.e. the left tail of the density will grow extremely fast around 0. </p>
+
+    <p>We then introduce the Heston Stochastic Vol Model below: </p>
+
+     <p>$$\boxed{\begin{cases}
+   dS(t) =  rS(t)dt + \sqrt{\nu} S(t) dW^{Q} \\
+   d\nu (t) = \kappa (\bar{\nu} - \nu)dt + \gamma \sqrt{\nu} dW^{Q}
+\end{cases}}$$</p>
+
+
+    <p></p>
   </div>
