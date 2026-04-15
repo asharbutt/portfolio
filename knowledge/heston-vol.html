@@ -43,8 +43,16 @@
 
     <p>Where $dW_{S}^{P}, dW_{\nu}^{P}$ are two correlated Brownian motions with $dW_{S}^{P}dW_{\nu}^{P} = \rho_{S,\nu}dt$. We know that the Cholesky decomposed correlation matrix applied to the uncorrelated Brownian motions to arrive at the correlated processes is as follows: </p>
 
-    <p>\begin{pmatrix}
+    <p>$$\begin{pmatrix}
    1 & 0 \\
    \rho_{S, \nu} & \sqrt{1-\rho_{S, \nu}^2}
-\end{pmatrix}</p>
+\end{pmatrix}$$</p>
+
+    <p>Recall that the correlated Brownian motion can then be written as the following vector (which is just the decomposed correlation matrix above multiplied by a vector of the two independent brownian motions):</p>
+
+    <p>$$\begin{pmatrix}
+   d\sim{W}_{S}^{P} \\
+   \rho_{S, \nu} d\sim{W}_{S}^{P} &  d\sim{W}_{\nu}^{P}\sqrt{1-\rho_{S, \nu}^2}
+\end{pmatrix}$$</p>
+    
   </div>
