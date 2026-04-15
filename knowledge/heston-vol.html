@@ -4,6 +4,15 @@
     <div class="kb-content-meta">Last updated — March 2026</div>
 </div>
 <div class="kb-content-body">
+<h3>Heston Volatility</h3>
+<h2>Introduction</h2>
+    <p>Black Scholes model assumes that the volatility is constant across all strikes and maturities. The implied volatilities from the market say otherwise, and show that there is a skew present. The Local Volatility model is great for vanilla options as it is able to replicate and reproduce the market implied surface perfectly, given it is just a transformation of the surface. However, if we are to simulate some option prices to the future, and then imply the volatility back towards another point in the future (such as a forward start option), we note that the implied skew is actually much flatter than what we would expect. This is a limitation of the local vol mdoel, and thus it is not a good vol model to use for products which rely on forward skews.</p>
 
+    <p>We therefore introduce a stochastic volatility model under which the variance process itself is stochastic. We start of with the Schobel-Zhu process, which is the adapted Ohrnstein-Uhlenbeck process from interest rates:</p>
 
+    <p>$$\boxed{\begin{cases}
+   dS(t) =  rS(t)dt + \sigma S(t) dW \\
+   d\sigma (t) = \kappa (\={\sigma} - \sigma)dt + \gamma dW
+\end{cases}}$$</p>
+    
   </div>
