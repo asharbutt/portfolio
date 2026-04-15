@@ -37,7 +37,7 @@
     <p>We begin with the real world probability process: </p>
 
     <p>$$\boxed{\begin{cases}
-   dS(t) =  rS(t)dt + \sqrt{\nu} S(t) dW_{S}^{P} \\
+   dS(t) =  \mu S(t)dt + \sqrt{\nu} S(t) dW_{S}^{P} \\
    d\nu (t) = \kappa (\bar{\nu} - \nu)dt + \gamma \sqrt{\nu} dW_{\nu}^{P}
 \end{cases}}$$</p>
 
@@ -58,9 +58,16 @@
     <p>We can then rewrite the above Heston system as the following: </p>
 
       <p>$$\boxed{\begin{cases}
-   dS(t) =  rS(t)dt + \sqrt{\nu} S(t)  d\tilde{W}_{S}^{P} \\
+   dS(t) =  \mu S(t)dt + \sqrt{\nu} S(t)  d\tilde{W}_{S}^{P} \\
    d\nu (t) = \kappa (\bar{\nu} - \nu)dt + \gamma \sqrt{\nu} (\rho_{S, \nu} d\tilde{W}_{S}^{P} + d\tilde{W}_{\nu}^{P}\sqrt{1-\rho_{S, \nu}^2})
 \end{cases}}$$</p>
 
-    
-  </div>
+    <p>Given that this is in the real world measure at the moment, we want to use Girsanovs theorem to change the measure to risk neutral. We need to find some process $\theta$ such that $d\tilde{W}_{S}^{Q} = \theta (t)dt + d\tilde{W}_{S}^{P}$. Under this change of measure, the price process $\bar{S(t)}=\frac{S(t)}{M(t)}$ where M(t) is the numeraire associated with the risk neutral measure (the bank account) is a martingale. To find this, we use Ito's Lemma on thsi process, which gives us: </p>
+  
+<p>$$d\bar{S(t)} = d\bar{S(t)}_{t}dt + d\bar{S(t)}_{S}dS + d\bar{S(t)}_{SS}dSdS$$</p>
+
+    <p>Given that $dM(t) = r(t)M(t)dt$, the solution is given by $M(t)=M(0)e^{rt}$, and so $d\bar{S(t)}_{t} = -r\frac{S(t)}{M(t)}$, or just $d\bar{S(t)}_{t} = -r\bar{S(t)}$. $d\bar{S(t)}_{S} = \frac{1}{M(t)}$ and $d\bar{S(t)}_{SS} = 0$. We therefore get the following: </p>
+
+    <p>$$d\bar{S(t)} = $-r\bar{S(t)}dt + \frac{1}{M(t)}(\mu S(t)dt + \sqrt{\nu}S(t) d\tilde{W}_{S}^{P})$</p>
+
+</div>
