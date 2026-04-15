@@ -14,5 +14,11 @@
    dS(t) =  rS(t)dt + \sigma S(t) dW \\
    d\sigma (t) = \kappa (\bar{\sigma} - \sigma)dt + \gamma dW
 \end{cases}}$$</p>
-    
+
+    <p>Where $\kappa$ is the speed of mean reversion, $\bar{\sigma}$ is the long run volatility and $\gamma$ is the vol of vol. The issue with this process is that it allows for the volatility process to go negative, which cannot happen. We therefore introduce the CIR process, which avoids negative vols under a Feller condition: </p>
+
+    <p>$$\boxed{\begin{cases}
+   dS(t) =  rS(t)dt + \nu S(t) dW \\
+   d\nu (t) = \kappa (\bar{\nu} - \nu)dt + \gamma \sqrt{\nu} dW
+\end{cases}}$$</p>
   </div>
