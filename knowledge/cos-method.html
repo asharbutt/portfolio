@@ -9,4 +9,7 @@
 <p>Like the moment generating function, the characteristic function is a function which fully defines the distribution of a variable, and can be used to evaluate all moments of a random variable. Unlike a moment generating function, the characteristic function always exists. We can define the CF as the Fourier transformation of the PDF:</p>
 <p>$$\phi _{X} (u) = \int _{-\infty}^{\infty} e^{iux}f_{X}(x)dx = E[e^{iuX}]$$</p>
 
+    <p>Given the imaginary bit, the CF always exists. The above is a relation, meaning we can write the characteristic function as the Fourier transform, however, we do not need to have the PDF to derive the CF. We can use the Fourier inversion method to retrieve the PDF once we have the CF:</p>
+
+    <p>f_{X}(y) = \frac{1}{2\pi} \int _{-\infty}^{\infty} e^{-iuy}\phi _{X} (u)du</p>
 </div>
