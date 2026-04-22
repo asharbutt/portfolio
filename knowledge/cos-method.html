@@ -15,7 +15,7 @@
 
     <p>The CF allows us to calculate the kth moment via the following differential:</p>
 
-    <p>$$E[X^{k}] = \frac{1}{i^{k}} \frac{d}{du^{}} \phi _{X} (u) \Big|_{u=0}$$</p>
+    <p>$$E[X^{k}] = \frac{1}{i^{k}} \frac{d}{du^{k}} \phi _{X} (u) \Big|_{u=0}$$</p>
 
     <h2>Normal Random Variable CF</h2>
 
@@ -26,4 +26,15 @@
 
     <p>$$ e^{iu \mu}E[e^{iu\sigma}Z] = e^{iu \mu} e^{\frac{1}{2}i^{2} u^{2}\sigma ^{2}}=e^{iu \mu - \frac{1}{2}u^{2} \sigma ^{2}} $$</p>
 
+    <p>We can do a quick sanity check by evaluating one of the moments, such as the second moment. We do this by taking the second derivative such that: </p>
+
+    <p>$$E[X^{2}]=\frac{1}{i^{2}} \frac{d}{du^{2}} \phi _{X} (u) \Big|_{u=0}$$</p>
+
+    <p>$$E[X^{2}]= \frac{1}{-1} \frac{d}{du^} (i \mu - u\sigma ^{2})(e^{iu \mu - \frac{1}{2}u^{2} \sigma ^{2}}) \Big|_{u=0}$$</p>
+
+    <p>$$E[X^{2}]= \frac{1}{-1} (-\sigma ^{2})(e^{iu \mu - \frac{1}{2}u^{2} \sigma ^{2}}) + (i \mu - u\sigma ^{2})^{2} e^{iu \mu - \frac{1}{2}u^{2} \sigma ^{2}}) \Big|_{u=0}$$</p>
+
+    <p>$$E[X^{2}]= \frac{1}{-1} (-\sigma ^{2})(e^{iu \mu - \frac{1}{2}u^{2} \sigma ^{2}}) + (-\mu ^{2} + u^{2}\sigma ^{4})^{2} - 2i\mu u \sigma^{2} e^{iu \mu - \frac{1}{2}u^{2} \sigma ^{2}}) \Big|_{u=0}$$</p>
+
+    <p>$$E[X^{2}] = \mu ^{2} + \sigma ^{2} = Var(X) = E[X^{2}]-E[X]^{2}$$</p>
 </div>
