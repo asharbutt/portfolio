@@ -16,4 +16,14 @@
     <p>The CF allows us to calculate the kth moment via the following differential:</p>
 
     <p>$$E[X^{k}] = \frac{1}{i^{k}} \frac{d}{du^{}} \phi _{X} (u) \Big|_{u=0}$$</p>
+
+    <h2>Normal Random Variable CF</h2>
+
+    <p>We can find the characteristic function of the Normal Random Variable using the standard normal variable. Let X be some variable s.t. $X \sim N(\mu , \sigma ^{2})$. If we define X in terms of a Standard normal random variable, then $X = \mu + \sigma Z$, where $Z \sim N(0 , 1)$. Therefore: </p>
+<p>$$E[e^{uiX}] = E[e^{iu(\mu + \sigma Z)}] = e^{iu \mu}E[e^{iu\sigma}Z]$$</p>
+
+    <p>We know the MFG for a standard normal variable can be given by: $E[e^{tX}]=e^{\frac{1}{2}t^{2}}$, so if we make the substitution: $t = iu\sigma$, then:</p>
+
+    <p>$$ e^{iu \mu}E[e^{iu\sigma}Z] = e^{iu \mu} e^{\frac{1}{2}i^{2} u^{2}\sigma ^{2}}=e^{iu \mu - \frac{1}{2}u^{2} \sigma ^{2}} $$</p>
+
 </div>
