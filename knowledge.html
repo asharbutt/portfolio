@@ -54,7 +54,13 @@
                 <li class="kb-link-item"><a onclick="loadNote('heston-vol', this)">Heston Stochastic Volatility</a></li>
             </ul>
         </div>
-
+        <div class="kb-group">
+            <div class="kb-group-title" onclick="this.parentElement.classList.toggle('collapsed')"><span class="chevron">&#9662;</span>Volatility Modelling</div>
+            <ul class="kb-link-list">
+                <li class="kb-link-item"><a onclick="loadNote('market-vol', this)">The Market Implied Volatility</a></li>
+                <li class="kb-link-item"><a onclick="loadNote('local-vol', this)">Local Volatility</a></li>
+            </ul>
+        </div>
         <div class="kb-group">
             <div class="kb-group-title" onclick="this.parentElement.classList.toggle('collapsed')"><span class="chevron">&#9662;</span> Stochastic Calculus</div>
             <ul class="kb-link-list">
