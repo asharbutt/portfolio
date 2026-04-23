@@ -51,6 +51,7 @@
 <pre>script type="text/plain">
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy.stats import norm
 
 def cos_density(char_func, integration_low_bound, integration_upper_bound, summation_count):
     i = complex(0.0,1.0)
@@ -71,7 +72,7 @@ if __name__=="__main__":
     a = -15 # Lower bound for integration interval
     b = 15 # Upper bound for integration interval
 
-    N = np.linspace(10,100,10) # The expansion limit for the COS sum
+    N = [10,15,20] # The expansion limit for the COS sum
 
     # Create the figure
     plt.figure(1)
@@ -84,14 +85,25 @@ if __name__=="__main__":
 
     y = np.linspace(-10,10,1000) # Interval over which we calculate the densities
     density_value = np.zeros((len(N),len(y))) # Create a matrix to hold all the values
-    
+
+    actual_norm_dens = []
+
     for index, n in enumerate(N):
         f_y = cos_density(normal_charFunc, a, b, n)
         for index_2, x in enumerate(y):
             density_value[index, index_2] = f_y(x)
         plt.plot(y, density_value[index, :], label=f"N={n}")
 
+    for i in y:
+        actual_norm_dens.append(norm.pdf(i, mu, sigma))
+    plt.plot(y, actual_norm_dens, label="Actual Density")
     plt.legend()
     plt.show()
+
+
+
+
+
+
      </script></pre>
 </div>
