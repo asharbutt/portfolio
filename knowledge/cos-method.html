@@ -46,5 +46,52 @@
 
     <p>$$\bar{F} _{k} = \frac{2}{b-a}Re(\phi _{X}(\frac{k\pi}{b-a}) e^{-i\frac{ka\pi}{b-a}})$$</p>
 
-    <p>The first term of this sum has to be weighted by a half. </p>
+    <p>The first term of this sum has to be weighted by a half. We show this in the following python code: </p>
+
+<pre>script type="text/plain">
+import numpy as np
+import matplotlib.pyplot as plt
+
+def cos_density(char_func, integration_low_bound, integration_upper_bound, summation_count):
+    i = complex(0.0,1.0)
+    a = integration_low_bound
+    b = integration_upper_bound
+    k = np.arange(0, summation_count)
+    u = (k * np.pi) / (b-a)
+    # we create a matrix of F_k values:
+    F_k =  2 / (b-a) * np.real(char_func(u)*np.exp(-i*u*a))
+    F_k[0] *= 0.5 # We ensure the first value is weighted by a half
+
+    f_x = lambda y: np.sum(F_k*np.cos(k*np.pi*(y-a)/(b-a)))
+    return f_x
+
+
+if __name__=="__main__":
+    i = complex(0.0,1.0)
+    a = -15 # Lower bound for integration interval
+    b = 15 # Upper bound for integration interval
+
+    N = np.linspace(10,100,10) # The expansion limit for the COS sum
+
+    # Create the figure
+    plt.figure(1)
+    plt.grid()
+    plt.xlabel("x")
+
+    mu = 0 # Standard Normal mean
+    sigma = 1 # Standard Normal variance
+    normal_charFunc = lambda x : np.exp(i*x*mu - 0.5 * x * x * sigma * sigma) # Characteristic function as defined in the above text
+
+    y = np.linspace(-10,10,1000) # Interval over which we calculate the densities
+    density_value = np.zeros((len(N),len(y))) # Create a matrix to hold all the values
+    
+    for index, n in enumerate(N):
+        f_y = cos_density(normal_charFunc, a, b, n)
+        for index_2, x in enumerate(y):
+            density_value[index, index_2] = f_y(x)
+        plt.plot(y, density_value[index, :], label=f"N={n}")
+
+    plt.legend()
+    plt.show()
+     </script></pre>
 </div>
