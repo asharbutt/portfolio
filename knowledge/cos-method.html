@@ -66,7 +66,6 @@ def cos_density(char_func, integration_low_bound, integration_upper_bound, summa
     f_x = lambda y: np.sum(F_k*np.cos(k*np.pi*(y-a)/(b-a)))
     return f_x
 
-
 if __name__=="__main__":
     i = complex(0.0,1.0)
     a = -15 # Lower bound for integration interval
@@ -99,11 +98,9 @@ if __name__=="__main__":
     plt.plot(y, actual_norm_dens, label="Actual Density")
     plt.legend()
     plt.show()
-
-
-
-
-
-
      </script></pre>
+
+    <p>This gives us the following plot: </p>
+
+    <img src="assets/cos_norm_density_approximation.png"/>
 </div>
