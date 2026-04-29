@@ -48,9 +48,7 @@
 
     <p>The first term of this sum has to be weighted by a half. We show this in the following python code: </p>
 
-The issue is <script type="text/plain"> inside <pre> — that's the wrong approach. Just use <pre><code> directly, but you need to escape the special HTML characters. The < and > characters in your code are being interpreted as HTML tags.
-Replace < with &lt; and > with &gt;:
-html<pre><code>import numpy as np
+<pre><code>import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import norm
 
