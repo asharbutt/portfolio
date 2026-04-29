@@ -32,7 +32,7 @@
 <p>This is the Newton-Raphson Iterative root finding method, and converges to the solution IF our original guess for $x_{0}$ is in proximity of the solution, otherwise it diverges. We have a simple c++ implementation for this below:</p>
 
     <h3>C++ Example of a Newton Raphson implementation</h3>
-<pre>script type="text/plain">
+<pre>
 template <typename F, typename DF>
 double newton_raphson(F f, DF df, double x0, double tol, int max_iter) {
 	double x = x0;
@@ -54,7 +54,7 @@ double newton_raphson(F f, DF df, double x0, double tol, int max_iter) {
 	throw std::runtime_error("Newton-Raphson did not converge");
 }
 
-     </script></pre>
+    </pre>
 <p>Our original black scholes implementation is a class, so in order to evaluate the function which is $f(x)=C_{mkt}-C_{BS}$, we need to pass lambda functions as proxies into the template function, as we cannot pass class objects and members into template functions: </p>    
 			 <h3>Lambda functions to pass into Newton-Raphson function</h3>
 <pre>script type="text/plain">
@@ -80,7 +80,7 @@ auto df = [&opt](double vol) {
 <p>However, if the market price is less, lets say 5 (which means that the option vol is extremely low, and it is most likely deep OTM), then our convergence fails due to the vega being extremely small.</p>
 			<p>We can also recreate this in python, though libraries such as scipy already have functions for both newton-raphson and bisection that will be far cleaner or easier to use: </p>
 
-			<pre>script type="text/plain">
+			<pre><code>
 def newton_raphson(df, f, x_0, max_iterations):
     tol = 1e-5
     for i in range(max_iterations):
@@ -122,11 +122,11 @@ def build_implied_vol_surface(option_price_grid, strike_array, expiry_array, sto
             else:
                 continue
     return implied_vol_matrix
-     </script></pre>
+  </code></pre>
 
 			<p>We can pass the following function to this with a sample option price matrix: </p>
 
-			<pre>script type="text/plain">
+			<pre><code>
 def main():
     option_price_matrix = np.array([
         [41.2276, 31.6289, 22.4875, 14.2641, 7.6286, 3.1819, 0.9391, 0.1760, 0.0189],
@@ -157,5 +157,5 @@ def main():
             else:
                 continue
     print(implied_vol_matrix)
-     </script></pre>
+     </code></pre>
 </div>
