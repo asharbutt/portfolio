@@ -77,5 +77,85 @@ auto df = [&opt](double vol) {
   <tr><td>0.146151</td></tr>
 </table>
 
-<p>However, if the market price is less, lets say 5 (which means that the option vol is extremely low, and it is most likely deep OTM), then our convergence fails due to the vega being extremely small.</p>			
+<p>However, if the market price is less, lets say 5 (which means that the option vol is extremely low, and it is most likely deep OTM), then our convergence fails due to the vega being extremely small.</p>
+			<p>We can also recreate this in python, though libraries such as scipy already have functions for both newton-raphson and bisection that will be far cleaner or easier to use: </p>
+
+			<pre>script type="text/plain">
+def newton_raphson(df, f, x_0, max_iterations):
+    tol = 1e-5
+    for i in range(max_iterations):
+        x_1 = x_0 - f(x_0) / df(x_0)
+        if abs(f(x_1)) < tol:
+            return x_1
+        x_0 = x_1
+
+    return None
+
+def vega(S, K, T, r):
+    vega = lambda x: S * norm._pdf(
+        (np.log(S / K) + (r + 0.5 * x ** 2) * T) / (x * np.sqrt(T))) * np.sqrt(T)
+    return vega
+
+
+def bs_price(type_flag, S, k, t, r, vol, q):
+    if type_flag == 'call':
+        type_val = 1
+    else:
+        type_val = -1
+
+    d1 = (np.log(S / k) + (r - q + vol * vol * 0.5) * t) / (vol * np.sqrt(t))
+    d2 = d1 - vol * np.sqrt(t)
+
+    return type_val * S * ndtr(type_val * d1) - type_val * k * np.exp(-r * t) * ndtr(type_val * d2)
+
+def build_implied_vol_surface(option_price_grid, strike_array, expiry_array, stock_price, r, initial_guess, max_iteration):
+    implied_vol_matrix = np.zeros((option_price_grid.shape[0], option_price_grid.shape[1]))
+    for index_i, i in enumerate(expiry_array):
+        for index_j, j in enumerate(strike_array):
+            f = lambda x, k=j, t=i / 365, index_i=index_i, index_j=index_j: bs_price("call", stock_price, k, t, r, x, 0) - \
+                                                                            option_price_grid[index_i, index_j]
+            df = vega(stock_price, j, i / 365, r)
+
+            imp_vol = newton_raphson(df, f, initial_guess, max_iteration)
+            if imp_vol is not None:
+                implied_vol_matrix[index_i, index_j] = imp_vol
+            else:
+                continue
+    return implied_vol_matrix
+     </script></pre>
+
+			<p>We can pass the following function to this with a sample option price matrix: </p>
+
+			<pre>script type="text/plain">
+def main():
+    option_price_matrix = np.array([
+        [41.2276, 31.6289, 22.4875, 14.2641, 7.6286, 3.1819, 0.9391, 0.1760, 0.0189],
+        [42.0251, 32.6736, 23.8686, 15.9903, 9.5079, 4.8135, 1.9752, 0.6225, 0.1428],
+        [43.1157, 34.0330, 25.5432, 17.9462, 11.5738, 6.6921, 3.3775, 1.4456, 0.5097],
+        [44.9805, 36.2431, 28.1117, 20.8011, 14.5281, 9.4626, 5.6720, 3.0854, 1.5019],
+        [46.8339, 38.3541, 30.4668, 23.3359, 17.1192, 11.9393, 7.8534, 4.8321, 2.7580],
+        [50.4191, 42.3026, 34.7354, 27.8252, 21.6711, 16.3500, 11.9041, 8.3319, 5.5845],
+        [53.8271, 45.9599, 38.6000, 31.8256, 25.7069, 20.2989, 15.6347, 11.7202, 8.5321],
+    ])
+    implied_vol_matrix = np.zeros((option_price_matrix.shape[0], option_price_matrix.shape[1]))
+    s = 500
+    r = 0.05
+    x_0 = 0.2
+    max_iter = 1000
+    strikes = np.array([460, 470, 480, 490, 500, 510, 520, 530, 540])
+    expiries = np.array([14, 21, 30, 45, 60, 90, 120])  # days
+
+    for index_i, i in enumerate(expiries):
+        for index_j, j in enumerate(strikes):
+            f = lambda x, k=j, t=i / 365, index_i=index_i, index_j=index_j: bs_price("call", s, k, t, r, x, 0) - \
+                                                                            option_price_matrix[index_i, index_j]
+            df = vega(s, j, i / 365, r)
+
+            imp_vol = newton_raphson(df, f, x_0, max_iter)
+            if imp_vol is not None:
+                implied_vol_matrix[index_i, index_j] = imp_vol
+            else:
+                continue
+    print(implied_vol_matrix)
+     </script></pre>
 </div>
