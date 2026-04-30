@@ -91,4 +91,12 @@ if __name__ == "__main__":
     <p>This gives us the following plot: </p>
 
     <img src="assets/cos_norm_density_approximation.PNG"/>
+
+    <h1>Lognormal Density</h1>
+    <p>We can also use this method to estimate the lognormal density. A lognormal variable Y is such that: $Ln(Y) = X$, where X is some normal variable. We can also rewrite this as: $Y=e^{\mu + \sigma Z}$, where Z is a standard normal random variable. We can estimate the density of the lognormal variable via the following:</p>
+
+    <p>$$$$\begin{cases}
+        CDF = P[Y \leq y] = P[X \leq Ln(y)] = F_{X} (ln(y)) \\
+        PDF = \frac{dF_{X} (ln(y))}{dx} = \frac{1}{y}f_{X}(ln(y))
+        \end{cases}$$</p>
 </div>
