@@ -30,4 +30,8 @@
 <p>This can maintain arbitrage conditions, but tends to be computationally more intensive as you need to calibrate the model to the surface, and doing this for a number of surfaces can become expensive. </p>
 <h2>Volatility surface arbitrage conditions</h2>
 
+    <h1>Calender Spread Arbitrage</h1>
+    <p>Any option with a longer time to expiry must be worth more than the same option with less time to expiry such that: </p>
+    <p>$$V(S,t+h)-V(S,t) > 0$$</p>
+    <p>This makes sense as having a longer expiry means that there is a higher probability of option moves which could lead to the option ending ITM. This is more impactful on options that are ATM and less on option deep OTM</p>
 </div>
