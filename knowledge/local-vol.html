@@ -1,0 +1,24 @@
+<div class="kb-content-header">
+    <div class="kb-content-category">Volatility Modelling</div>
+    <div class="kb-content-title">Local Volatility</div>
+    <div class="kb-content-meta">Last updated — April 2026</div>
+</div>
+<div class="kb-content-body">
+
+    <h3>Local Volatility</h3>
+<p>The issue with the classic Black-Scholes model is the assumption of a constant volatility to price options within all strike and expiry ranges. Market implied volatilities show that per expiry slice, the volatilities exhibit a skew (or smile), and the volatilities increase as the expiry increases. Naturally, we would expect the same option with a longer expiry to be pricier, as there is a longer window for potential movements.</p>
+<p>A classic non-parameterisation model is the local volatility model, where the volatility is a function of the spot and expiry, and thus the resulting BS-PDE uses a local volatility term rather than a fixed constant. We start off with the standard Black Scholes results: </p>
+
+<p>$$\begin{cases}
+  \frac{\partial V}{\partial t} + rS \frac{\partial V}{partial S} + \frac{1}{2} \frac{\partial ^{2}V}{\partial S^{2}}S^{2}\sigma ^{2} - rV = 0 \\
+   H(T,S) = max(\plusmn 1(S-K),0)
+\end{cases}$$</p>
+
+  <p>Where $\plusmn 1$ represents whether the option is a call or a put. This is a backward Kolmogorov equation, as the condition is a terminal condition, and we evaluate the PDE backwards. </p>
+  <p>The local volatility model makes the connection between market implied densities and the associated SDE for the underlying process. The evolution of the probability density function is shown by the forward Kolmogorov PDE with an initial condition:</p>
+<p>$$\begin{cases}
+ \frac{\partial}{\partial t}f_{S(T)}(y) + \frac{\partial}{\partial y}[\mu (y,t)f_{S(T)}(y)] - \frac{1}{2}\frac{\partial ^{2}}{\partial y^{2}}[\sigma ^{2}(y,t)f_{S(T)}(y)] = 0 \\
+  f_{S(t_{0})}(y) = \delta (y=S_{0})
+\end{cases}$$</p>  
+
+</div>
