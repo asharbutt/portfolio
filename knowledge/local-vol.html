@@ -24,4 +24,8 @@
     <p>The derivation process of the local volatility function uses the Fokker-Planck PDE, building the connection between the volatility surface (as the density function can be extracted from the volatility surface via Breeden-Litzenberger). A common formulation is given as Dupires formula, which can be written in terms of option prices:</p>
 
 <p>$$\sigma _{LV}(K,t) = \frac{\frac{\partial V}{\partial t} + qV + \frac{\partial V}{\partial K} (r-q)K}{\frac{1}{2}K^{2}\frac{\partial ^{2}V}{\partial K^{2}}}$$</p>
+<p>The formula can also be given in terms of implied volatility, which tends to be a lot more numerically stable due vol surfaces being more stable and also due to the computation of the first derivative having less room for error than a second derivative:</p>
+
+    <p>An issue with using the Dupires formula is the calculation of the derivatives. This requires us to have a smooth volatiltiy surface available in order to compute accurate derivatives, however, the market tends to have few liquid quotes for specific points. This means that we need to smooth the surface without allowing for arbitrage. There are some simple methods which CAN exhibit arbitrage, such as linear interpolation in strike, cubic in time with constraints, however, attaching constraints removes the dynamics of the actual volatility, and the resulting surface can be less realistic. Other methods include fitting some form of parametric model to the market surface, such as using Hagans formula from SABR. </p>
+
 </div>
