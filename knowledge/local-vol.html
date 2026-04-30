@@ -11,10 +11,10 @@
 
 <p>$$\begin{cases}
   \frac{\partial V}{\partial t} + rS \frac{\partial V}{partial S} + \frac{1}{2} \frac{\partial ^{2}V}{\partial S^{2}}S^{2}\sigma ^{2} - rV = 0 \\
-   H(T,S) = max(\plusmn 1(S-K),0)
+   H(T,S) = max(\pm 1(S-K),0)
 \end{cases}$$</p>
 
-  <p>Where $\plusmn 1$ represents whether the option is a call or a put. This is a backward Kolmogorov equation, as the condition is a terminal condition, and we evaluate the PDE backwards. </p>
+  <p>Where $\pm 1$ represents whether the option is a call or a put. This is a backward Kolmogorov equation, as the condition is a terminal condition, and we evaluate the PDE backwards. </p>
   <p>The local volatility model makes the connection between market implied densities and the associated SDE for the underlying process. The evolution of the probability density function is shown by the forward Kolmogorov PDE with an initial condition:</p>
 <p>$$\begin{cases}
  \frac{\partial}{\partial t}f_{S(T)}(y) + \frac{\partial}{\partial y}[\mu (y,t)f_{S(T)}(y)] - \frac{1}{2}\frac{\partial ^{2}}{\partial y^{2}}[\sigma ^{2}(y,t)f_{S(T)}(y)] = 0 \\
