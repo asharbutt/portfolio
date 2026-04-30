@@ -15,10 +15,13 @@
 \end{cases}$$</p>
 
   <p>Where $\pm 1$ represents whether the option is a call or a put. This is a backward Kolmogorov equation, as the condition is a terminal condition, and we evaluate the PDE backwards. </p>
-  <p>The local volatility model makes the connection between market implied densities and the associated SDE for the underlying process. The evolution of the probability density function is shown by the forward Kolmogorov PDE with an initial condition:</p>
+  <p>The local volatility model makes the connection between market implied densities and the associated SDE for the underlying process. The evolution of the probability density function is described by the Fokker-Plank PDE, which is a Kolmogorov forward PDE with an initial condition:</p>
 <p>$$\begin{cases}
  \frac{\partial}{\partial t}f_{S(T)}(y) + \frac{\partial}{\partial y}[\mu (y,t)f_{S(T)}(y)] - \frac{1}{2}\frac{\partial ^{2}}{\partial y^{2}}[\sigma ^{2}(y,t)f_{S(T)}(y)] = 0 \\
   f_{S(t_{0})}(y) = \delta (y=S_{0})
 \end{cases}$$</p>  
 
+    <p>The derivation process of the local volatility function uses the Fokker-Planck PDE, building the connection between the volatility surface (as the density function can be extracted from the volatility surface via Breeden-Litzenberger). A common formulation is given as Dupires formula, which can be written in terms of option prices:</p>
+
+<p>$$\sigma _{LV}(K,t) = \frac{\frac{\partial V}{\partial t} + qV + \frac{\partial V}{\partial K} (r-q)K}{\frac{1}{2}K^{2}\frac{\partial ^{2}V}{\partial K^{2}}}$$</p>
 </div>
