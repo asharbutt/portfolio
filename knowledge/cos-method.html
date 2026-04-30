@@ -95,8 +95,43 @@ if __name__ == "__main__":
     <h1>Lognormal Density</h1>
     <p>We can also use this method to estimate the lognormal density. A lognormal variable Y is such that: $Ln(Y) = X$, where X is some normal variable. We can also rewrite this as: $Y=e^{\mu + \sigma Z}$, where Z is a standard normal random variable. We can estimate the density of the lognormal variable via the following:</p>
 
-    <p>$$$$\begin{cases}
+    <p>$$\begin{cases}
         CDF = P[Y \leq y] = P[X \leq Ln(y)] = F_{X} (ln(y)) \\
         PDF = \frac{dF_{X} (ln(y))}{dx} = \frac{1}{y}f_{X}(ln(y))
         \end{cases}$$</p>
+<p>This means we can use our COS estimator for the normal density function and extend it to the lognormal density. We use the adjustment to the above main function:</p>
+<pre><code>
+if __name__=="__main__":
+    i = complex(0.0,1.0)
+    a = -15 # Lower bound for integration interval
+    b = 15 # Upper bound for integration interval
+
+    N = [10,15,20,128] # The expansion limit for the COS sum
+
+    # Create the figure
+    fig_1 = make_subplots(rows=1, cols=1)
+    fig_2 = make_subplots(rows=1, cols=1)
+
+    mu = 0 # Standard Normal mean
+    sigma = 1 # Standard Normal variance
+    normal_charFunc = lambda x : np.exp(i*x*mu - 0.5 * x * x * sigma * sigma) # Characteristic function as defined in the above text
+
+    y = np.linspace(-10,10,1000) # Interval over which we calculate the densities
+    log_y = np.linspace(0.05,5,1000)
+    density_value_normal = np.zeros((len(N),len(y))) # Create a matrix to hold all the values
+    density_value_lognormal = np.zeros((len(N),len(log_y))) # Create a matrix to hold all the values
+
+    actual_norm_dens = []
+    actual_lognormal_dens = []
+
+    for index, n in enumerate(N):
+        f_y = cos_density(normal_charFunc, a, b, n)
+        for index_2, x in enumerate(y):
+            density_value_normal[index, index_2] = f_y(x)
+            density_value_lognormal[index, index_2] = 1/log_y[index_2] * (f_y(np.log(log_y[index_2])))
+</code></pre>
+
+    <p>This gives us the following figure:</p>
+
+    <img src="assets/cos_lognorm_density_approximation.PNG"/>
 </div>
