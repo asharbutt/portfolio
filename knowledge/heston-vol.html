@@ -82,4 +82,18 @@
     d\tilde{W}_{\nu}^{P} =  d\tilde{W}_{\nu}^{Q}
 \end{cases}}$$</p>
 
+    <p>Once we have our measure adjustment, if we also substitute the long run variance with: $\bar{\nu} = \bar{\nu}^{P} - \rho _{x,\nu}\gamma (\mu - r) / \kappa$, then we arrive back to the Heston SDE under the risk neutral measure. </p>
+
+    <p>The Heston model has 5 parameters that need to be calibrated: $\nu _{0}, \kappa, \gamma, \bar{\nu}, \rho$. Each parameter has a different effect on the implied vol skew:</p>
+    <h1>$\kappa$</h1>
+    <p>$\kappa$ is the speed of mean reversion for the volatility, and has a limited effect on the implied vol skew. However, as DTE approaches 0, the volatility of the process will converge to the long run mean far faster with a higher $\kappa$. Practioners will usually fix this 0.5.</p>
+
+    <h1>$\nu _{0}$</h1>
+    <p>$\nu _{0}$ is the initial variance, or the instantaneous variance. Given that as T approaches 0, the underlying will behave as descicrbed under Black-Scholes, an approximate estimation to this is the square of the implied volatility of an ATM option with the shortest maturity.</p>
+
+    <h1>$\gamma$</h1>
+    <p>$\gamma$ is the vol-of-vol, or the volatility of the variance process, and is to the variance process what the variance is to the stock process. This affects the implied vol skew by adjusting the curvature of the implied vol skew, meaning a higher $\gamma$ will lead to more curvature. This is usually one of the parameters that will be optimised for</p>
+
+    <h1>$\rho$</h1>
+    <p>This is the correlation between the Brownian motions in the two SDEs, and this impacts the steepeness or the slope of the skew. A more negative correlation will lead to a steeper skew within the implied volatility. </p>
 </div>
