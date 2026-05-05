@@ -22,4 +22,7 @@
     <p>$$\frac{d^{k}}{dt^{k}}E[e^{tX}] = E[X^{k}e^{tX}] = E[X^{k}]$$</p>
 
     <p>We can therefore calculate different properties of the probability distribution directly from the MFG, for example, the variance can therefore be written as: $Var(X)=\psi ''(0)-[\psi ' (0)]^{2}$</p>
+
+    <p>We can extend this further to show relationships between MFGs of transformations. Let X have an MFG $\psi _{1}$, and let some variable Y = aX + b, with an MFG $\psi _{2}$. We can then show that $\psi _{2}(t) = e^{bt}\psi _{1}(at)$. The proof is below:</p>
+    <p>$$\psi _{2}(t) = E[x^{tY}] = E[e^{t(aX + b)}]=E[e^{taX + tb}]=E[e^{taX}e^{tb}]=e^{tb}E[e^{taX}]=e^{tb}\psi _{1}(at)$$</p>
   </div>
