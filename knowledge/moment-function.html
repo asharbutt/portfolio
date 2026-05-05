@@ -8,4 +8,12 @@
   	<h3>Moments</h3>
 <p>The kth moment of a variable X can be written as: $E[X^{k}]$. The first moment therefore is the expectation of the random variable. The kth moment only exists if the following expectation is finite: $E[|X^{k}|] < /infty$, and if the kth moment exists, then any jth moment will exist provided $j /leq k$. Therefore, if the second moment exists, then the mean and variance will exist, provided that the variance can be written as: $Var(X) = E(x^{2}) - [E(X)]^2$, basically the second moment minus the square of the first moment</p>
 
+    <h2>Moment Generating Function</h2>
+    <p>The moment generating function can be written as: </p>
+
+    <p>$$\psi (t) = E[e^{tX}]$$</p>
+
+    <p>If the random variable X is bounded, then the MFG will exist for all t. If not, then the MFG may only exist for some t. We know for certain the the MFG ALWAYS exists for t = 0, given this expectation always equals 1. We take the first derivative of the MFG w.r.t t, and show:</p>
+
+    <p>$$\frac{d}{dt}E[e^{tX}] = E[\frac{d}{dt}e^{tX}] = E[Xe^{tX}]$$</p>
   </div>
