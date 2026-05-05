@@ -16,4 +16,8 @@
     <p>If the random variable X is bounded, then the MFG will exist for all t. If not, then the MFG may only exist for some t. We know for certain the the MFG ALWAYS exists for t = 0, given this expectation always equals 1. We take the first derivative of the MFG w.r.t t, and show:</p>
 
     <p>$$\frac{d}{dt}E[e^{tX}] = E[\frac{d}{dt}e^{tX}] = E[Xe^{tX}]$$</p>
+
+    <p>If we set t = 0, then the first derivative will give us the expected value of X, or the mean. We can show that the kth derivative of the MFG will actually lead to the kth moment of X when t = 0:</p>
+
+    <p>$$\frac{d^{k}}{dt^{k}}E[e^{tX}] = E[X^{k}e^{tX}] = E[X^{k}]$$</p>
   </div>
