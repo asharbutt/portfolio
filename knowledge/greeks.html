@@ -7,5 +7,17 @@
 
   <h3>Option Greeks</h3>
 
-<p>The Greeks for derivative contracts represent the sensitivity of the value of the contract with respect to certain input factors. For Equity options, there are a variety of important greeks which help with risk management, position sizing and quotation.</p>
+<p>The Greeks for derivative contracts represent the sensitivity of the value of the contract with respect to certain input factors. For Equity options, there are a variety of important greeks which help with risk management, position sizing and quotation. We will discuss the derivation and dynamics of the following greeks: </p>
+
+<h2>Delta</h2>
+    <p>The Delta is the change in the value of the option with respect to the underlying. For an equity option, the underlying equity has a delta of 1. The delta can then be defined as:</p>
+
+    <p>$$\Delta = \frac{\partial V}{\partial S}$$</p>
+
+<p>Under Black-Scholes, the Delta can be calculated as: </p>
+
+    <p>$$\frac{\partial V_{C}{\partial S} = \frac{\partial}{\partial S} [S e^{-qT}N(d_{1}) - Ke^{-rT}N(d_{2})]= e^{-qT}N(d_{1})$$</p>
+
+    <p>The Delta of a put is the same but negative i.e. $\Delta = -e^{-qT}N(d_{1})$</p>
+    
   </div>
