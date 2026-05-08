@@ -7,7 +7,9 @@
 
   <h3>Option Greeks</h3>
 
-<p>The Greeks for derivative contracts represent the sensitivity of the value of the contract with respect to certain input factors. For Equity options, there are a variety of important greeks which help with risk management, position sizing and quotation. We will discuss the derivation and dynamics of the following greeks: </p>
+<p>The Greeks for derivative contracts represent the sensitivity of the value of the contract with respect to certain input factors. For Equity options, there are a variety of important greeks which help with risk management, position sizing and quotation. You can find the cpp source and header file for the Black-Scholes class at the bottom</p>
+    
+    <p>We will discuss the derivation and dynamics of the following greeks: </p>
 
 <h2>Delta</h2>
     <p>The Delta is the change in the value of the option with respect to the underlying. For an equity option, the underlying equity has a delta of 1. The delta can then be defined as:</p>
@@ -34,7 +36,7 @@
 
     <p>$$ \frac{\partial}{\partial S} N(d_{1}) =  \frac{\partial}{\partial S} \int _{-\infty} ^{d_{1}} \phi (y) dy = \phi(d_{1})\frac{\partial}{\partial S} d_{1}$$</p>
 
-    <p>$$\frac{\partial}{\partial S} d_{1} = \frac{\partial}{\partial S} \frac{ln(\frac{S}{K} )}{\sigma \sqrt {T}} = \frac{\partial}{\partial S} \frac{ln(S)}{\sigma \sqrt {T}} = \frac{1}{S\sigma \sqrt{T}}$$</p>]
+    <p>$$\frac{\partial}{\partial S} d_{1} = \frac{\partial}{\partial S} \frac{ln(\frac{S}{K} )}{\sigma \sqrt {T}} = \frac{\partial}{\partial S} \frac{ln(S)}{\sigma \sqrt {T}} = \frac{1}{S\sigma \sqrt{T}}$$</p>
 
     <p>In the first line, given we are taking the derivative under the integral sign with a different variable, we are essentially using the chain rule here. In the second line, if we split the fraction for $d_{1}$ up into two parts, where the first is what we see above, we can also remove the ln(1/K) given the logarithm fraction can be split into subtraction. Then we substitute it in and we get the original Gamma we saw above.</p>
 <p>We can plot the Black-Scholes Gamma below for varying time to maturities: </p>
