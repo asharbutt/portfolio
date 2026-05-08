@@ -30,5 +30,9 @@
     the change in the Delta is the highest around and at the ATM, whilst the lowest when deep ITM or OTM. This means that our Delta should be peaking around and at the ATM. We can calculate the Delta as: </p>
 
     <p>$$\Gamma = \frac{\partial ^2 \V}{\partial S^{2}} = \frac{\partial \Delta}{\partial S} = \frac{\partial}{\partial S} N(d_{1}) = \frac{\phi (d_{1})}{S\sigma \sqrt {T}}$$</p>
+    <p>Below is the derivation which can be skipped: </p>
 
+    <p>$$ \frac{\partial}{\partial S} N(d_{1}) =  \frac{\partial}{\partial S} \int _{-\infty} ^{d_{1}} \phi (y) dy = \phi(d_{1})\frac{\partial}{\partial S} d_{1}$$</p>
+
+    <p>$${\partial}{\partial S} d_{1} = {\partial}{\partial S} \frac{ln(\frac{S}{K}}{\sigma \sqrt {T}} = {\partial}{\partial S} \frac{ln(S}{\sigma \sqrt {T}} = \frac{1}{S\sigma \sqrt{T}}$$</p>
 </div>
