@@ -19,7 +19,7 @@
     <p>$$\frac{\partial V_{C}{\partial S} = \frac{\partial}{\partial S} [S e^{-qT}N(d_{1}) - Ke^{-rT}N(d_{2})]= e^{-qT}N(d_{1}), 0 \leq |\Delta |$$</p>
 
     <p>The Delta of a put is the same but negative i.e. $\Delta = -e^{-qT}N(d_{1})$. We can plot the Black Scholes Delta below: </p>
-    <img src="assets/delta_call.PNG"/>
+    <img src="assets/Delta_call.PNG"/>
     <p>Besides the Black-Scholes delta, the delta can also be recomputed numerically by bumping the spot a small amount, with caution that the bump size will lead to an approximation error. This is as a result of approximating a derivative using a finite difference, where the size of the error depends on the size of the step. </p>
     <p>We notice that the delta is 0.5 for when the option is ATM (S=K), meaning that for every $1 move in the asset, the option will move $0.5. We also note that the an OTM option which is closer to expiry has a smaller delta than the same OTM option which has more time left. This is because a move in the underlying will not increase the probability of the option finishing ITM much if the option is OTM with not much time left to expiry. Instead, if we are close to ATM, the change in the Delta is far steeper if we are close to ATM, as a small move can lead to the option expiring ITM. Once we are deeper ITM, the option price behaves much like the underlying, and a Delta close to 1 means the option is moving in line with the underlying. </p>
 
@@ -29,7 +29,7 @@
     <p>Gamma is the second derivative of the option price with respect to the underlying, and can be seen as the change in Delta over change in the asset. Whilst the payoff function is linear max(S-K,0), the price of an option is a convex function, and therefore the change in the price of the option (the delta) w.r.t the underlying will change as the underlying value changes. We can see this from the above figure, where the Delta is not a straight line, but the change in delta goes up and down depending on where we are in terms of moneyness and expiration. We can see that
     the change in the Delta is the highest around and at the ATM, whilst the lowest when deep ITM or OTM. This means that our Delta should be peaking around and at the ATM. We can calculate the Delta as: </p>
 
-    <p>$$\Gamma = \frac{\partial ^2 \V}{\partial S^{2}} = \frac{\partial \Delta}{\partial S} = \frac{\partial}{\partial S} N(d_{1}) = \frac{\phi (d_{1})}{S\sigma \sqrt {T}}$$</p>
+    <p>$$\Gamma = \frac{\partial ^2 V}{\partial S^{2}} = \frac{\partial \Delta}{\partial S} = \frac{\partial}{\partial S} N(d_{1}) = \frac{\phi (d_{1})}{S\sigma \sqrt {T}}$$</p>
     <p>Below is the derivation which can be skipped: </p>
 
     <p>$$ \frac{\partial}{\partial S} N(d_{1}) =  \frac{\partial}{\partial S} \int _{-\infty} ^{d_{1}} \phi (y) dy = \phi(d_{1})\frac{\partial}{\partial S} d_{1}$$</p>
