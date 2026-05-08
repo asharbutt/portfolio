@@ -29,6 +29,6 @@
     <p>Gamma is the second derivative of the option price with respect to the underlying, and can be seen as the change in Delta over change in the asset. Whilst the payoff function is linear max(S-K,0), the price of an option is a convex function, and therefore the change in the price of the option (the delta) w.r.t the underlying will change as the underlying value changes. We can see this from the above figure, where the Delta is not a straight line, but the change in delta goes up and down depending on where we are in terms of moneyness and expiration. We can see that
     the change in the Delta is the highest around and at the ATM, whilst the lowest when deep ITM or OTM. This means that our Delta should be peaking around and at the ATM. We can calculate the Delta as: </p>
 
-    <p>$$\Gamma = \frac{\partial ^2 \V}{\partial S^{2}} = \frac{\partial \Delta}{\partial S} = \frac{\partial}{\partial S} N(d_{1}) = S\phi (d_{1})\sqrt {T}$$</p>
+    <p>$$\Gamma = \frac{\partial ^2 \V}{\partial S^{2}} = \frac{\partial \Delta}{\partial S} = \frac{\partial}{\partial S} N(d_{1}) = \frac{\phi (d_{1})}{S\sigma \sqrt {T}}$$</p>
 
 </div>
