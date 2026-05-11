@@ -20,4 +20,10 @@
 
     <p>We can then write the value of the option using the COS expansion for the density:</p> 
     <p>$$V(t,x) = e^{-rT} \int _{a} ^{b} V(T,y) \sum _{k=0} ^{N-1} \bar{A}_{k} cos(k\pi \frac{y-a}{b-a})$$</p>
+
+    <p>Using Leibnitz theorem of exchanging integral orders, which can be applied to exchanging sums and integrals, we write a new function defined as: </p>
+
+    <p>$$H(x) = \frac{2}{b-a}\int _{a} ^{b} V(T,y)cos(k\pi \frac{y-a}{b-a})$$</p>
+    <p>We can substitute this into our options formula and find:  </p>
+    <p>$$V(t,x) = e^{-rT} \frac{b-a}{2}\sum _{k=0} ^{N-1} H_{k}(x) \bar{A}_{k} $$</p>
   </div>
