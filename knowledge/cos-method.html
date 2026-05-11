@@ -48,4 +48,8 @@
 \end{cases}$$</p>
 
      <p>The put option can then be written as: $\frac{2}{b-a} -K(\chi _{k}(a,0) - \psi _{k}(a,0))$</p>
+
+    <h2>The Greeks</h2>
+
+    <p>Greeks can be computed quite fast. Recall the Delta formula as: $\Delta = \frac{\partial V}{\partial S}$. Given our COS expansion is given in terms of log coordinates, we can use the chain rule to evaluate this: $\Delta = \frac{\partial V}{\partial x} = \frac{\partial V}{partial x} \frac{\partial x}{\partial S}$. Given x = ln(S), then $\Delta = \frac{1}{S}\ \frac{\partial V}{\partial x}$. The derivative can be calculated by taking the derivative of our COS expansion w.r.t x.</p>
   </div>
