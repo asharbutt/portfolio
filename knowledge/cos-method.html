@@ -7,7 +7,7 @@
 
     <h3>Options pricing under COS method</h3>
 <p>Recall the Feynman-Kac representation to the BS PDE is given by: </p>
-<p>$$V(t,x) = e^{-rT}E^{Q}[V(T,y)] = e^{-rT}}\int _{-\infty} ^{\infty} V(T,y)f_{X}(T,y;t,x)dy$$</p>
+<p>$$V(t,x) = e^{-rT}E^{Q}[V(T,y)] = e^{-rT}\int _{-\infty} ^{\infty} V(T,y)f_{X}(T,y;t,x)dy$$</p>
 
   <p>Where f(T,y;t,x) is the transition density from state x to state y for the underlying process. Given the density will decay rapidly to zero when $|y| \to \infty$, we can truncate the intergral interval to [a,b]:</p>
 
@@ -16,5 +16,5 @@
   <p>We may not know what the underlying density is, so we can use the COS approximation to estimate the density function such that:</p>
 
   <p>$$\hat {f} _{X}(y) =\sum _{k=0} ^{N-1} \bar{A}_{k} cos(k \pi \frac{y-a}{b-a})$$</p>
-  <p>\bar{A} _{k} = \frac{2}{b-a} \int _{a} ^{b} \hat {f} _{X}(y) cos(k\pi \frac{y-a}{b-a})dy</p>
+  <p>$$\bar{A} _{k} = \frac{2}{b-a} \int _{a} ^{b} \hat {f} _{X}(y) cos(k\pi \frac{y-a}{b-a})dy$$</p>
   </div>
