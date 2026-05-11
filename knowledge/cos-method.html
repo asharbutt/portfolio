@@ -25,7 +25,7 @@
 
     <p>$$H(x) = \frac{2}{b-a}\int _{a} ^{b} V(T,y)cos(k\pi \frac{y-a}{b-a})$$</p>
     <p>We can substitute this into our options formula and find:  </p>
-    <p>$$V(t,x) = e^{-rT} \frac{b-a}{2}\sum _{k=0} ^{N-1} H_{k}(x) \bar{A}_{k} $$</p>
+    <p>$$V(t,x) = e^{-rT} \frac{b-a}{2}\sum _{k=0} ^{N-1} H_{k} \bar{A}_{k} $$</p>
 
     <p>Using the approximation $\bar{F}_{k}$for $\bar{A}_{k}$ from our previous page, we get the following:</p>
 
@@ -52,4 +52,6 @@
     <h2>The Greeks</h2>
 
     <p>Greeks can be computed quite fast. Recall the Delta formula as: $\Delta = \frac{\partial V}{\partial S}$. Given our COS expansion is given in terms of log coordinates, we can use the chain rule to evaluate this: $\Delta = \frac{\partial V}{\partial x} = \frac{\partial V}{partial x} \frac{\partial x}{\partial S}$. Given x = ln(S), then $\Delta = \frac{1}{S}\ \frac{\partial V}{\partial x}$. The derivative can be calculated by taking the derivative of our COS expansion w.r.t x.</p>
-  </div>
+<p>This gives us: $\Delta = \frac{1}{S}e^{-rT}\sum  _{k=0} ^{N-1}H_{k} -\frac{i\pi k}{b-a}Re[\phi (\frac{k\pi}{b-a})e^{-i \frac{k\pi a}{b-a}]$</p>  
+
+</div>
