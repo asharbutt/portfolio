@@ -32,4 +32,8 @@
     <p>$$V(t,x) = e^{-rT}\sum _{k=0} ^{N-1}H_{k}(x) Re{\phi (\frac{k\pi}{b-a}) e^{-i \frac{k\pi a}{b-a}}}$$</p>
 
     <p>This is our options pricing formula using the COS method. The function $H_{k}(x)$ are the payoff coefficients for V(T,y), and have to be recovered. Their coefficients are available for vanilla and digital options, and solutions are available for other payoffs.</p>
+
+    <p>For a call option, we can write the Payoff coefficient as: </p>
+
+    <p>$$H_{k} ^{Call} = \frac{2}{b-a} \int _{0} ^{b} K(e^{y} - 1)cos(k\pi \frac{y-a}{b-a})$$</p>
   </div>
