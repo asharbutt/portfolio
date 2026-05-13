@@ -38,4 +38,9 @@
 	<p>$$\boxed{x_{i+1}=x_{i}+\mu(t_{i},x_{i})(t_{i+1}-t_{i})+\sigma(t_{i},x_{i})W(t_{i+1}-t_{i})}$$</p>
 
 	<p>We know $W(t_{i+1}-t_{i})$ is normally distributed with a mean 0 and variance $t_{i+1}-t_{i}$, so we can estimate it by $Z\sqrt{t_{i+1}-t_{i}}$, where $Z\sim N(0,1)$</p>
+
+	<h1>Convergence</h1>
+	<p>We are interested in the order of convergence of the computed average to the true value of the payoff (or whatever the simulation is for). We can seperate the order of convergence into two different orders: Convergence in the strong sense and convergence in the weak sense. </p>
+
+	<p>If we define $x_{m}$ as the approximation for X(T), and $\Delta t$ is the time step used in the discretization scheme, then the approximation $x_{m}$ converges in the strong sense to X(T) with order $\alpha > 0$ if: $E[|X(T)-x_{m}|] \leq c\Delta t^{\alpha}$ where $\alpha$ is the order of convergence. A higher value for this means reducing the size of $\Delta t$ actually reduces the error more significantly. </p>
 </div>
