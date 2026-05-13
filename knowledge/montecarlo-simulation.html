@@ -43,4 +43,7 @@
 	<p>We are interested in the order of convergence of the computed average to the true value of the payoff (or whatever the simulation is for). We can seperate the order of convergence into two different orders: Convergence in the strong sense and convergence in the weak sense. </p>
 
 	<p>If we define $x_{m}$ as the approximation for X(T), and $\Delta t$ is the time step used in the discretization scheme, then the approximation $x_{m}$ converges in the strong sense to X(T) with order $\alpha > 0$ if: $E[|X(T)-x_{m}|] \leq c\Delta t^{\alpha}$ where $\alpha$ is the order of convergence. A higher value for this means reducing the size of $\Delta t$ actually reduces the error more significantly. </p>
+<p>This is path-wise accuracy, meaning reducing the step size here will increase the accuracy of the path by reducing the error between the path value and the actual value. This is why in the strong convergence, we are looking at the expectation of the error size. This is important where the actual path itself matters more, for example Barrier options, Asian Options and lookbacks</p>
+
+	<p></p>
 </div>
