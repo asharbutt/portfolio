@@ -33,9 +33,9 @@
 	<p>The standard error is the measure of variability in the estimator, i.e. what the error is in the sample variance.</p>
 	<h2>Simulation of Stochastic Differential Equations</h2>
 
-	<p>For a general SDE of the form $dX(t)=\mu (t,X(t))+\sigma (t,X(t))dW(t)$, its integrated form is of the form: $X(t_{i+1})=X(t_{i}) + \int _{t_{i}}^{t_{i+1}} \mu (t,X(t))dt + \int _{t_{i}}^{t_{i-1}} \sigma (t,X(t))dW(t)$. We can then approximate this function using a scheme such as the Eurler scheme, which approxmates the integrals on the left side of the boundary as such:</p>
+	<p>For a general SDE of the form $dX(t)=\mu (t,X(t))+\sigma (t,X(t))dW(t)$, its integrated form is of the form: $X(t_{i+1})=X(t_{i}) + \int _{t_{i}}^{t_{i+1}} \mu (t,X(t))dt + \int _{t_{i}}^{t_{i-1}} \sigma (t,X(t))dW(t)$. We can then approximate this function using a scheme such as the Eurler scheme, which approximates the integrals on the left side of the boundary as such:</p>
 
 	<p>$$\boxed{x_{i+1}=x_{i}+\mu(t_{i},x_{i})(t_{i+1}-t_{i})+\sigma(t_{i},x_{i})W(t_{i+1}-t_{i})}$$</p>
 
-	<p>We know $W(t_{i+1}-t_{i})$ is normally distributed with a mean 0 and variance $t_{i+1}-t_{i}$, so we can estimate it by $Z\sqrt{t_{i+1}-t_{i}}$, where $Z\simN(0,1)$</p>
+	<p>We know $W(t_{i+1}-t_{i})$ is normally distributed with a mean 0 and variance $t_{i+1}-t_{i}$, so we can estimate it by $Z\sqrt{t_{i+1}-t_{i}}$, where $Z\sim N(0,1)$</p>
 </div>
