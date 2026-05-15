@@ -28,5 +28,14 @@
 <p>If we have a suitable $\theta (u)$ such that EZ=1, then Girsanovs states that the following is then a new Brownian motion under the new measure:</p>
 
     <p>$$W^{Q} = W^{P} + \int _{0}^{t} \theta (u) du$$</p>
-    
+
+    <p>We can then substitute this into our SDE under the original measure (the real world measure) and make the change to the new measure. We can do the following to our GBM:</p>
+
+    <p>$$dS = \mu S dt + \sigma S dW^{P}$$</p>
+    <p>$$dS = \mu S dt + \sigma S (dW^{Q} - \theta dt)$$</p>
+    <p>$$dS = \mu S dt + \sigma S (dW^{Q} - \frac{\mu - r}{\sigma} dt)$$</p>
+    <p>$$dS = \mu S dt + \sigma S dW^{Q} - \mu S dt + r S dt$$</p>
+    <p>$$dS = r S dt + \sigma S dW^{Q}$$</p>
+
+    <p>And with that, this SDE describes the evolution of the stock price under the risk neutral measure. This means that we can now evaluate our payoff under the risk neutral measure using the solution to this SDE to determine the distribution of the asset price. </p>
 </div>
