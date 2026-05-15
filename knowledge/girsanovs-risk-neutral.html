@@ -21,6 +21,8 @@
 
     <p>For our options case, we start off with the SDE under the real world measure: $dS = \mu S dt + \sigma S dW^{P}$. We are interested in evaluating the payoff max(S-K,0) in a risk neutral world, where the drift is not $\mu$, but rather r. We cant just do this by switching in r, because the probabilities for $dW^{P}$ are still under a different measure. We define an arbitrary function as the market price of risk, $\theta = \frac{\mu - r}{\sigma}$. For changing the measure, we always define a Dolean Dade exponential, which is always a local martingale:</p>
 <p>$$Z = e^{-\int _{0}^{t}\theta (u)dW(u) - \frac{1}{2} \int _{0}^{t} \theta ^{2}du}$$</p>
-<p>This will always be a local martingale, but the choice of $\theta$ will decide whether Z is a true martingale. Given that $Z_{0}=1$, then we would need EZ=1. </p>
-
+<p>This will always be a local martingale, but the choice of $\theta$ will decide whether Z is a true martingale. Given that $Z_{0}=1$, then we would need EZ=1. In order for this to be true, we need $Z_{0}=1$ (which always holds), and we also need to fulfil some conidtion (such as Novikovs) to ensure EZ=1. Novikovs states:</p>
+<p>$$E[e^{\frac{1}{2}\int _{0}^{t}\theta ^{2}(s)ds}]< \inty$$</p>
+    <p>Another simpler condition is: $E[\int _{0}^{t} \theta ^{2}(u)Z^{2}du] < \inty$. Both conditions can ensure EZ=1, and either is sufficient to prove so.</p>
+    
 </div>
