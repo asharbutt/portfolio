@@ -9,4 +9,10 @@
 <p>We start by introducing the Radon-Nikodym derivative. Lets assume we have two measures Q and P, and these two are absolutely mutually continious with respect to each other. This means $Q \gg P$ and $P \gg Q$, which in other words means that for all sets A where P(A)=0, Q(A)=0, and for all sets where Q(A)=0, P(A)=0 as well. </p>
   <p>Simply speaking, for any set A where the probability under one measure is 0, the other also agrees that the probability is 0. Both measures will agree on which sets have a probability 0. For all other sets where the probability is non-zero, both sets will asign a probability, which doesnt have to be the same. </p>
 
-  </div>
+    <p>If these two measures are absolutely continious with respect to each other, then there exists some variable Z that will describe the ratio between the change of these two measures. We can write this ratio as:</p>
+<p>$$Z = \frac{dQ}{dP}$$</p>
+
+<p>For this to hold, EZ = 1. We can then define expectations of variables under the two measures using Z:</p>
+<p>$$E^{Q}[X] = E^{P}[XZ], E^{P}[X]=E^{Q}[\frac{X}{Z}]$$</p> 
+
+</div>
