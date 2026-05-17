@@ -24,7 +24,7 @@
 
     <ul>
   <li>1. For a contingent claim, ensure it is replicable using the assets in the market (for Black-Scholes, we replicate using the stock and a bank account). We need to ensure the market is complete i.e there are enough assets in the market to cover the risk factors in our claim.</li>
-  <li>2. Ensure that the claim is risk-free, and under no arbitrage, an equivalent martingale measure exists such that the replicating portfolio is a martingale under said EMM (and therefore by extension the claim is also a martingale under said EMM)</li>
+  <li>2. If the market satisfies no artbitrage, an equivalent martingale measure known as the risk neutral measure exists such that the replicating portfolio is a martingale under said EMM (and therefore by extension the claim is also a martingale under said EMM). In our case, the discounted replicating portfolio is a martingale.</li>
   <li>3. Convert the dynamics of the underlying asset to the martingale measure. We find the drift adjustment such that the Radon-Nikodym derivative (which is the ratio between two EMMs) fulfils Novikovs condition (or similar), EZ=1</li>
 <li>4. If fulfilled, then Girsanovs gives us the new Brownian motion under the EMM with the drift adjustment. We substitute this to get the dynamics of the underlying asset in the target EMM</li>
 <li>5. Given the claim is a martingale under the target EMM, we can then write the price of the claim today (or at any time t $\lt$ T) as the Expected value of the claim adjusted by the Numeraire. </li>
