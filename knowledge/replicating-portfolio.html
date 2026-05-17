@@ -19,6 +19,19 @@
 
     <p>The first fundamental theorem of asset pricing states that a market is arbitrage free if the risk neutral measure Q exists and is equivalent. The second theorem states that the market is complete if and only if the martingale measure is unique. For the second point, its important to understand that you can have a family of equivalent martingale measures for the same claim or payoff, but each has to be based on its OWN numeraire. If we have two EMMs on the same numeraire, then we are saying that adjusting by a tradeable risk-less refence asset can give us two different prices, which means we are no longer free of arbitrage. The EMM has to be UNIQUE to its OWN numeraire. Multiple EMMs on different numeraires can exist and all give the same price of the claim, and they will all then be connected by Girsanovs. </p>
 
+    <h2>A simple recipe to pricing</h2>
+<p>We provide a somewhat simplified recipe or list to pricing:</p>
+
+    <ul>
+  <li>1. For a contingent claim, ensure it is replicable using the assets in the market (for Black-Scholes, we replicate using the stock and a bank account)</li>
+  <li>2. Ensure that the claim is risk-free, and under no arbitrage, an equivalent martingale measure exists such that the replicating portfolio is a martingale under said EMM (and therefore by extension the claim is also a martingale under said EMM)</li>
+  <li>3. Convert the dynamics of the underlying asset to the martingale measure. We find the drift adjustment such that the Radon-Nikodym derivative (which is the ratio between two EMMs) fulfils Novikovs condition (or similar), EZ=1</li>
+<li>4. If fulfilled, then Girsanovs gives us the new Brownian motion under the EMM with the drift adjustment. We substitute this to get the dynamics of the underlying asset in the target EMM</li>
+<li>5. Given the claim is a martingale under the target EMM, we can then write the price of the claim today (or at any time t $\lt$ T) as the Expected value of the claim adjusted by the Numeraire. </li>
+<li>6. If we are able to derive the distribution  of the underlying then we can directly evaluate the expectation (in the case of Black-Scholes, a close form solution exists to the stock, we can use this to derive the closed form Solution to the expectation, which is the BSM formula).</li>
+<li>7. A PDE may exist that is related to the expectation (Feynman-Kac provides a method to write the solution of a PDE as an expectation). This can then be solved numerically</li>
+<li>8. We can also try to evaluate the price of the claim using simulation. </li>
+</ul>
 <h2> Equivalent Martingale Measure </h2>
 
 <p>For a measure $\mathbb{P}$ on a probability space ($\Omega , \mathscr{F}$), a measure $$\mathbb{P}_{0}$$ is equivalent if they are mutually absolutely continious with respect to each other. This means: </p>
