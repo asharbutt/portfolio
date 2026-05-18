@@ -471,7 +471,7 @@
       </div>
       <pre class="snippet" data-lang="C++"><span class="com">// Solve Ax = b via LU with partial pivoting</span>
 <span class="kw">#include</span> <span class="str">"numerics/lu.hpp"</span>
-
+<!--
 <span class="kw">auto</span> [L, U, P] = numerics::<span class="fn">lu_decompose</span>(A);
 <span class="kw">auto</span> x        = numerics::<span class="fn">lu_solve</span>(L, U, P, b);
 
@@ -479,6 +479,7 @@
     </article>
 
     <!-- stochastic-py -->
+        <!--
     <article class="library">
       <div class="library-meta">
         <div class="library-head">
@@ -513,6 +514,7 @@ paths = <span class="fn">simulate</span>(process, t=<span class="num">1.0</span>
   </section>
 
   <!-- ═══════ PRICING ═══════ -->
+        <!--
   <section class="group">
     <div class="group-header">
       <span class="group-number">02</span>
@@ -521,6 +523,7 @@ paths = <span class="fn">simulate</span>(process, t=<span class="num">1.0</span>
     </div>
 
     <!-- pricing-cpp -->
+        <!--
     <article class="library">
       <div class="library-meta">
         <div class="library-head">
@@ -553,6 +556,7 @@ bs::Option call{<span class="num">100</span>, <span class="num">100</span>, <spa
     </article>
 
     <!-- vol-models-py -->
+        <!--
     <article class="library">
       <div class="library-meta">
         <div class="library-head">
@@ -591,6 +595,7 @@ result = <span class="fn">calibrate</span>(Heston, market_quotes,
     More coming as the speedrun progresses. See the
     <a href="/projects">Projects</a> page for Streamlit dashboards that
     consume these libraries.
+        -->
   </div>
 
 </div>
