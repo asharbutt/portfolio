@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Labs — Ashar Wakee Butt</title>
+
+<!-- Fonts: matches refreshed styles.css -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,400;9..144,0,500;9..144,0,600;9..144,1,400&family=JetBrains+Mono:wght@400;500;600&family=Inter+Tight:wght@400;500;600&display=swap">
+
+<!-- highlight.js — syntax highlighting -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+<!-- On a real deploy, replace the inline <style> below with: -->
+<!-- <link rel="stylesheet" href="styles.css"> -->
+<style>
+/* ───────────────────────────────────────────────────────── */
+/* Shared base — mirrors refreshed styles.css (trimmed to     */
+/* what this page needs). On deploy, delete this block and    */
+/* link styles.css instead, keeping only the labs-specific    */
+/* block further down.                                        */
+/* ───────────────────────────────────────────────────────── */
+:root {
+    --bg:           #faf8f4;
+    --bg-alt:       #f3efe7;
+    --bg-card:      #ffffff;
+    --border:       #e2ddd0;
+    --border-dark:  #c8c1b0;
+    --text:         #1a1612;
+    --text-muted:   #4a443c;
+    --text-dim:     #847c70;
+    --accent:       #8b3a1f;
+    --accent-light: #f3e7df;
+    --accent-warm:  #b85c2a;
+    --mono:         'JetBrains Mono', monospace;
+    --serif:        'Fraunces', Georgia, serif;
+    --sans:         'Inter Tight', -apple-system, sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    position: relative;
+}
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(139, 58, 31, 0.015) 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, rgba(74, 68, 60, 0.02) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+}
+main, nav, footer { position: relative; z-index: 1; }
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border-dark); border-radius: 2px; }
+.container { max-width: 960px; margin: 0 auto; padding: 0 2.5rem; }
+
+/* Nav */
+nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(250,248,244,0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+}
+nav .container { display: flex; justify-content: space-between; align-items: stretch; height: 56px; }
+.nav-logo {
+    font-family: var(--serif); font-weight: 500; font-size: 1.1rem;
+    color: var(--accent); text-decoration: none;
+    display: flex; align-items: center;
+    border-right: 1px solid var(--border);
+    padding-right: 1.5rem; letter-spacing: -0.01em;
+}
+.nav-links { display: flex; align-items: stretch; }
+.nav-links a {
+    font-family: var(--mono); font-size: 0.65rem; font-weight: 500;
+    color: var(--text-muted); text-decoration: none;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    transition: color 0.2s, background 0.2s;
+    display: flex; align-items: center; padding: 0 1.1rem;
+    border-right: 1px solid var(--border); position: relative;
+}
+.nav-links a:hover { color: var(--accent); background: var(--accent-light); }
+.nav-links a.active { color: var(--accent); background: var(--accent-light); }
+.nav-links a.active::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+    height: 2px; background: var(--accent);
+}
+main { padding-top: 56px; }
+
+/* Footer */
+footer {
+    padding: 2rem 0; border-top: 1px solid var(--border);
+    background: var(--bg-alt);
+}
+footer .container { display: flex; justify-content: space-between; align-items: center; }
+footer span { font-family: var(--mono); font-size: 0.62rem; color: var(--text-dim); }
+.footer-links { display: flex; gap: 1.5rem; }
+.footer-links a {
+    font-family: var(--mono); font-size: 0.62rem; font-weight: 500;
+    color: var(--text-muted); text-decoration: none; letter-spacing: 0.05em;
+    transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--accent); }
+
+/* ───────────────────────────────────────────────────────── */
+/* Labs-specific styles — KEEP THIS BLOCK, add to styles.css  */
+/* ───────────────────────────────────────────────────────── */
+
+/* Layout: sticky sidebar + content, same grammar as kb-layout */
+.labs-layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    min-height: calc(100vh - 56px);
+}
+
+/* ── Sidebar ── */
+.labs-sidebar {
+    position: sticky;
+    top: 56px;
+    height: calc(100vh - 56px);
+    overflow-y: auto;
+    background: var(--bg-alt);
+    border-right: 1px solid var(--border);
+    padding: 2rem 0;
+}
+.labs-sidebar-title {
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent-warm);
+    padding: 0 1.25rem;
+    margin-bottom: 0.4rem;
+}
+.labs-sidebar-sub {
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    padding: 0 1.25rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+}
+.labs-cat { margin-bottom: 0.25rem; }
+.labs-cat-title {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    padding: 0.5rem 1.25rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    user-select: none;
+    transition: color 0.2s;
+    text-transform: uppercase;
+}
+.labs-cat-title:hover { color: var(--accent); }
+.labs-cat-title .chevron {
+    font-size: 0.5rem;
+    color: var(--text-dim);
+    transition: transform 0.2s;
+}
+.labs-cat.collapsed .chevron { transform: rotate(-90deg); }
+.labs-cat.collapsed .labs-link-list { display: none; }
+.labs-cat-count {
+    margin-left: auto;
+    font-size: 0.58rem;
+    color: var(--text-dim);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.05rem 0.4rem;
+}
+.labs-link-list { list-style: none; }
+.labs-link-item a {
+    display: block;
+    padding: 0.32rem 1.25rem 0.32rem 2rem;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: all 0.15s;
+    border-left: 2px solid transparent;
+    line-height: 1.4;
+}
+.labs-link-item a:hover {
+    color: var(--accent);
+    background: var(--accent-light);
+    border-left-color: var(--border-dark);
+}
+
+/* ── Content area ── */
+.labs-content {
+    padding: 3.5rem 4rem;
+    max-width: 860px;
+}
+.labs-header { margin-bottom: 3rem; }
+.labs-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent-warm);
+    margin-bottom: 0.6rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.labs-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 16px;
+    height: 1px;
+    background: var(--accent-warm);
+}
+.labs-header h1 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 2.6rem;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    color: var(--text);
+    margin-bottom: 1rem;
+}
+.labs-header h1 em { font-style: italic; color: var(--accent); }
+.labs-header p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.8;
+    max-width: 620px;
+}
+.labs-header p a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+/* ── Category section in content ── */
+.labs-section { margin-bottom: 3rem; scroll-margin-top: 72px; }
+.labs-section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.9rem;
+    padding-bottom: 0.7rem;
+    margin-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border);
+}
+.labs-section-num {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--text-dim);
+}
+.labs-section-title {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 1.4rem;
+    letter-spacing: -0.015em;
+    color: var(--text);
+}
+.labs-section-desc {
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    margin-left: auto;
+}
+
+/* ── Code entry (expandable) ── */
+.entry {
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    margin-bottom: 0.85rem;
+    background: var(--bg-card);
+    overflow: hidden;
+    transition: border-color 0.2s;
+    scroll-margin-top: 72px;
+}
+.entry.open { border-color: var(--border-dark); }
+
+.entry-head {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+}
+.entry-head:hover { background: var(--accent-light); }
+
+.entry-toggle {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    width: 14px;
+    flex-shrink: 0;
+    transition: transform 0.2s;
+}
+.entry.open .entry-toggle { transform: rotate(90deg); }
+
+.entry-title {
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 0.92rem;
+    color: var(--text);
+    flex-shrink: 0;
+}
+.entry-blurb {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.entry-tags {
+    display: flex;
+    gap: 0.4rem;
+    margin-left: auto;
+    flex-shrink: 0;
+}
+.tag {
+    font-family: var(--mono);
+    font-size: 0.56rem;
+    font-weight: 500;
+    padding: 0.18rem 0.5rem;
+    border-radius: 3px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border: 1px solid var(--border-dark);
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+.tag-cpp { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+.tag-py  { border-color: var(--accent-warm); color: var(--accent-warm); background: #f5ece6; }
+.tag-foundational { border-color: var(--border-dark); color: var(--text-dim); }
+.tag-intermediate { border-color: #6a7a4e; color: #5a6a3e; background: #eef0e6; }
+.tag-advanced     { border-color: #8b3a1f; color: #8b3a1f; background: #f3e7df; }
+
+/* Expandable body */
+.entry-body {
+    display: none;
+    border-top: 1px solid var(--border);
+}
+.entry.open .entry-body { display: block; }
+
+.entry-explain {
+    padding: 1.25rem 1.5rem 0.5rem;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.75;
+}
+.entry-explain p { margin-bottom: 0.7rem; }
+.entry-explain strong { color: var(--text); font-weight: 600; }
+.entry-explain code {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    padding: 0.05rem 0.35rem;
+    border-radius: 3px;
+    color: var(--accent);
+}
+
+/* Code block */
+.entry-code {
+    margin: 0.75rem 1.5rem 1.25rem;
+    border-radius: 5px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+}
+.entry-code-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #1a1612;
+    padding: 0.5rem 0.85rem;
+    border-bottom: 1px solid #2a2520;
+}
+.entry-code-file {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: #847c70;
+}
+.entry-code-actions {
+    display: flex;
+    gap: 0.85rem;
+}
+.entry-code-actions button,
+.entry-code-actions a {
+    font-family: var(--mono);
+    font-size: 0.64rem;
+    color: #b8ad9c;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: color 0.15s;
+    padding: 0;
+}
+.entry-code-actions button:hover,
+.entry-code-actions a:hover { color: #d4a373; }
+.entry-code pre { margin: 0; }
+.entry-code pre code.hljs {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    line-height: 1.65;
+    padding: 1.1rem 1.25rem;
+}
+
+/* Empty / coming-soon entry */
+.entry-soon {
+    padding: 1rem 1.25rem;
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    font-style: italic;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+.entry-soon::before {
+    content: '○';
+    color: var(--border-dark);
+    font-style: normal;
+}
+
+/* Footer note */
+.labs-foot {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+.labs-foot a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+    .labs-layout { grid-template-columns: 1fr; }
+    .labs-sidebar {
+        position: relative; top: 0; height: auto;
+        border-right: none; border-bottom: 1px solid var(--border);
+    }
+    .labs-content { padding: 2.5rem 1.5rem; }
+}
+@media (max-width: 600px) {
+    .container { padding: 0 1.25rem; }
+    .nav-links a { padding: 0 0.7rem; font-size: 0.58rem; }
+    .labs-header h1 { font-size: 1.9rem; }
+    .entry-blurb { display: none; }
+    .entry-code { margin-left: 0.75rem; margin-right: 0.75rem; }
+    .labs-section-desc { display: none; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <a href="index.html" class="nav-logo">Ashar Wakee Butt</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="projects.html">Projects</a>
+      <a href="labs.html" class="active">Labs</a>
+      <a href="knowledge.html">Knowledge</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+<div class="labs-layout">
+
+  <!-- ══════════ SIDEBAR ══════════ -->
+  <aside class="labs-sidebar">
+    <div class="labs-sidebar-title">Code Index</div>
+    <div class="labs-sidebar-sub">Numerical methods, implemented from scratch.</div>
+
+    <div class="labs-cat">
+      <div class="labs-cat-title" onclick="toggleCat(this)">
+        <span class="chevron">&#9660;</span> Linear Algebra
+        <span class="labs-cat-count">2</span>
+      </div>
+      <ul class="labs-link-list">
+        <li class="labs-link-item"><a href="#cholesky">Cholesky Decomposition</a></li>
+        <li class="labs-link-item"><a href="#lu">LU Decomposition</a></li>
+      </ul>
+    </div>
+
+    <div class="labs-cat">
+      <div class="labs-cat-title" onclick="toggleCat(this)">
+        <span class="chevron">&#9660;</span> Root Finding
+        <span class="labs-cat-count">1</span>
+      </div>
+      <ul class="labs-link-list">
+        <li class="labs-link-item"><a href="#newton">Newton-Raphson</a></li>
+      </ul>
+    </div>
+
+    <div class="labs-cat">
+      <div class="labs-cat-title" onclick="toggleCat(this)">
+        <span class="chevron">&#9660;</span> Option Pricing
+        <span class="labs-cat-count">2</span>
+      </div>
+      <ul class="labs-link-list">
+        <li class="labs-link-item"><a href="#mc-pricer">Monte Carlo Pricer</a></li>
+        <li class="labs-link-item"><a href="#lsmc">Longstaff-Schwartz</a></li>
+      </ul>
+    </div>
+
+    <div class="labs-cat collapsed">
+      <div class="labs-cat-title" onclick="toggleCat(this)">
+        <span class="chevron">&#9660;</span> Stochastic Processes
+        <span class="labs-cat-count">&mdash;</span>
+      </div>
+      <ul class="labs-link-list">
+        <li class="labs-link-item"><a href="#processes">Process simulators</a></li>
+      </ul>
+    </div>
+
+    <div class="labs-cat collapsed">
+      <div class="labs-cat-title" onclick="toggleCat(this)">
+        <span class="chevron">&#9660;</span> Volatility Models
+        <span class="labs-cat-count">&mdash;</span>
+      </div>
+      <ul class="labs-link-list">
+        <li class="labs-link-item"><a href="#volmodels">Heston, SABR, SVI</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- ══════════ CONTENT ══════════ -->
+  <div class="labs-content">
+
+    <div class="labs-header">
+      <div class="labs-eyebrow">The Lab</div>
+      <h1>Numerical methods,<br>built from <em>first principles</em>.</h1>
+      <p>
+        A growing collection of quantitative-finance code &mdash; linear algebra,
+        pricing, stochastic processes &mdash; written from scratch in C++ and Python.
+        Each entry expands to show the implementation and a note on how it works.
+        Full files, with tests, live on <a href="https://github.com/">GitHub</a>.
+      </p>
+    </div>
+
+    <!-- ─── Linear Algebra ─── -->
+    <section class="labs-section" id="linear-algebra">
+      <div class="labs-section-head">
+        <span class="labs-section-num">01</span>
+        <span class="labs-section-title">Linear Algebra</span>
+        <span class="labs-section-desc">Matrix factorisation and direct solvers</span>
+      </div>
+
+      <!-- Cholesky -->
+      <article class="entry" id="cholesky">
+        <div class="entry-head" onclick="toggleEntry(this)">
+          <span class="entry-toggle">&#9654;</span>
+          <span class="entry-title">cholesky</span>
+          <span class="entry-blurb">Decompose a symmetric positive-definite matrix into LL&#7488;</span>
+          <span class="entry-tags">
+            <span class="tag tag-cpp">C++</span>
+            <span class="tag tag-foundational">Foundational</span>
+          </span>
+        </div>
+        <div class="entry-body">
+          <div class="entry-explain">
+            <p>
+              The Cholesky decomposition factors a symmetric positive-definite
+              matrix <code>A</code> as <code>A = L&#183;L&#7488;</code>, where <code>L</code>
+              is lower-triangular. It is roughly twice as fast as LU and is the
+              standard tool for <strong>correlating Gaussian draws</strong> in
+              Monte Carlo &mdash; if <code>z</code> is a vector of independent standard
+              normals, then <code>L&#183;z</code> has covariance <code>A</code>.
+            </p>
+            <p>
+              The one subtlety: the algorithm takes a square root of the running
+              diagonal term, so if <code>A</code> is not positive-definite that
+              value goes negative. The implementation checks for this explicitly
+              and throws, rather than silently returning <code>NaN</code> &mdash; a
+              non-PD covariance matrix is almost always a data bug worth surfacing.
+            </p>
+          </div>
+          <div class="entry-code">
+            <div class="entry-code-bar">
+              <span class="entry-code-file">numerics/cholesky.hpp</span>
+              <span class="entry-code-actions">
+                <button onclick="copyCode(this)">copy</button>
+                <a href="https://github.com/" target="_blank">view on github</a>
+              </span>
+            </div>
+<pre><code class="language-cpp">#include &lt;vector&gt;
+#include &lt;cmath&gt;
+#include &lt;stdexcept&gt;
+
+namespace numerics {
+
+// Cholesky factorisation: A = L * L^T for symmetric positive-definite A.
+// Returns the lower-triangular factor L (row-major, n x n).
+inline std::vector&lt;std::vector&lt;double&gt;&gt;
+cholesky(const std::vector&lt;std::vector&lt;double&gt;&gt;& A) {
+    const std::size_t n = A.size();
+    std::vector&lt;std::vector&lt;double&gt;&gt; L(n, std::vector&lt;double&gt;(n, 0.0));
+
+    for (std::size_t i = 0; i &lt; n; ++i) {
+        for (std::size_t j = 0; j &lt;= i; ++j) {
+            double sum = 0.0;
+            for (std::size_t k = 0; k &lt; j; ++k)
+                sum += L[i][k] * L[j][k];
+
+            if (i == j) {
+                const double d = A[i][i] - sum;
+                if (d &lt;= 0.0)
+                    throw std::runtime_error(
+                        "cholesky: matrix is not positive-definite");
+                L[i][j] = std::sqrt(d);
+            } else {
+                L[i][j] = (A[i][j] - sum) / L[j][j];
+            }
+        }
+    }
+    return L;
+}
+
+} // namespace numerics</code></pre>
+          </div>
+        </div>
+      </article>
+
+      <!-- LU -->
+      <article class="entry" id="lu">
+        <div class="entry-head" onclick="toggleEntry(this)">
+          <span class="entry-toggle">&#9654;</span>
+          <span class="entry-title">lu_decompose</span>
+          <span class="entry-blurb">LU factorisation with partial pivoting</span>
+          <span class="entry-tags">
+            <span class="tag tag-cpp">C++</span>
+            <span class="tag tag-foundational">Foundational</span>
+          </span>
+        </div>
+        <div class="entry-body">
+          <div class="entry-explain">
+            <p>
+              LU with partial pivoting factors any non-singular matrix as
+              <code>P&#183;A = L&#183;U</code>. Pivoting &mdash; swapping in the row with the
+              largest available element &mdash; is what keeps the factorisation
+              numerically stable; without it, a small pivot blows up the error.
+            </p>
+            <p><em>Implementation coming as part of the Day 1 speedrun work.</em></p>
+          </div>
+          <div class="entry-soon">Implementation in progress &mdash; full file will appear here.</div>
+        </div>
+      </article>
+    </section>
+
+    <!-- ─── Root Finding ─── -->
+    <section class="labs-section" id="root-finding">
+      <div class="labs-section-head">
+        <span class="labs-section-num">02</span>
+        <span class="labs-section-title">Root Finding</span>
+        <span class="labs-section-desc">Solvers for f(x) = 0</span>
+      </div>
+
+      <!-- Newton-Raphson -->
+      <article class="entry" id="newton">
+        <div class="entry-head" onclick="toggleEntry(this)">
+          <span class="entry-toggle">&#9654;</span>
+          <span class="entry-title">newton_raphson</span>
+          <span class="entry-blurb">Quadratically-convergent root finder with a safeguard</span>
+          <span class="entry-tags">
+            <span class="tag tag-py">Python</span>
+            <span class="tag tag-foundational">Foundational</span>
+          </span>
+        </div>
+        <div class="entry-body">
+          <div class="entry-explain">
+            <p>
+              Newton-Raphson iterates <code>x &#8592; x &#8722; f(x)/f&#8242;(x)</code> and converges
+              quadratically near a root. Its weakness is well known: a near-zero
+              derivative sends the next iterate far away. The classic application
+              in finance is the <strong>implied volatility solve</strong> &mdash;
+              inverting the Black-Scholes price for &sigma; &mdash; where <code>f&#8242;</code> is
+              vega.
+            </p>
+            <p>
+              This version takes the derivative as a callable and adds two
+              safeguards: a divide-by-near-zero check on the derivative, and an
+              iteration cap that raises rather than looping forever. Returning a
+              wrong answer silently is worse than failing loudly.
+            </p>
+          </div>
+          <div class="entry-code">
+            <div class="entry-code-bar">
+              <span class="entry-code-file">numerics/roots.py</span>
+              <span class="entry-code-actions">
+                <button onclick="copyCode(this)">copy</button>
+                <a href="https://github.com/" target="_blank">view on github</a>
+              </span>
+            </div>
+<pre><code class="language-python">from typing import Callable
+
+
+def newton_raphson(
+    f: Callable[[float], float],
+    df: Callable[[float], float],
+    x0: float,
+    tol: float = 1e-10,
+    max_iter: int = 100,
+) -&gt; float:
+    """Solve f(x) = 0 from initial guess x0.
+
+    Parameters
+    ----------
+    f, df : the function and its first derivative.
+    x0    : starting point.
+    tol   : absolute tolerance on |f(x)|.
+
+    Raises
+    ------
+    RuntimeError
+        If the derivative collapses or the iteration cap is hit.
+    """
+    x = x0
+    for _ in range(max_iter):
+        fx = f(x)
+        if abs(fx) &lt; tol:
+            return x
+
+        dfx = df(x)
+        if abs(dfx) &lt; 1e-14:
+            raise RuntimeError("newton_raphson: derivative too small")
+
+        x -= fx / dfx
+
+    raise RuntimeError(
+        f"newton_raphson: no convergence in {max_iter} iterations"
+    )</code></pre>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- ─── Option Pricing ─── -->
+    <section class="labs-section" id="option-pricing">
+      <div class="labs-section-head">
+        <span class="labs-section-num">03</span>
+        <span class="labs-section-title">Option Pricing</span>
+        <span class="labs-section-desc">Monte Carlo and lattice methods</span>
+      </div>
+
+      <!-- Monte Carlo pricer -->
+      <article class="entry" id="mc-pricer">
+        <div class="entry-head" onclick="toggleEntry(this)">
+          <span class="entry-toggle">&#9654;</span>
+          <span class="entry-title">mc_price</span>
+          <span class="entry-blurb">Vanilla European pricer with antithetic variates</span>
+          <span class="entry-tags">
+            <span class="tag tag-py">Python</span>
+            <span class="tag tag-intermediate">Intermediate</span>
+          </span>
+        </div>
+        <div class="entry-body">
+          <div class="entry-explain">
+            <p>
+              A Monte Carlo price is just the discounted average payoff over many
+              simulated terminal prices. Under geometric Brownian motion the
+              terminal price has a closed form, so no time-stepping is needed for
+              a vanilla &mdash; one draw per path.
+            </p>
+            <p>
+              The variance-reduction trick here is <strong>antithetic
+              variates</strong>: for every draw <code>z</code> we also use
+              <code>&#8722;z</code>. Because the payoff is monotone in <code>z</code>,
+              the two are negatively correlated, so their average has lower
+              variance than two independent draws &mdash; a free reduction in standard
+              error for one line of code. The function also returns that standard
+              error, because a price without an error bar is only half an answer.
+            </p>
+          </div>
+          <div class="entry-code">
+            <div class="entry-code-bar">
+              <span class="entry-code-file">pricing/monte_carlo.py</span>
+              <span class="entry-code-actions">
+                <button onclick="copyCode(this)">copy</button>
+                <a href="https://github.com/" target="_blank">view on github</a>
+              </span>
+            </div>
+<pre><code class="language-python">import numpy as np
+
+
+def mc_price(
+    s0: float, k: float, r: float, sigma: float, t: float,
+    n_paths: int = 100_000, option: str = "call", seed: int | None = None,
+) -&gt; tuple[float, float]:
+    """Price a European option under Black-Scholes by Monte Carlo.
+
+    Returns
+    -------
+    (price, std_error) : the estimate and its Monte Carlo standard error.
+    """
+    rng = np.random.default_rng(seed)
+
+    # Antithetic draws: pair each z with -z.
+    z = rng.standard_normal(n_paths // 2)
+    z = np.concatenate([z, -z])
+
+    # Terminal price under GBM (exact, no time-stepping needed).
+    drift = (r - 0.5 * sigma**2) * t
+    diffusion = sigma * np.sqrt(t) * z
+    s_t = s0 * np.exp(drift + diffusion)
+
+    if option == "call":
+        payoff = np.maximum(s_t - k, 0.0)
+    elif option == "put":
+        payoff = np.maximum(k - s_t, 0.0)
+    else:
+        raise ValueError(f"unknown option type: {option!r}")
+
+    discounted = np.exp(-r * t) * payoff
+    price = discounted.mean()
+    std_error = discounted.std(ddof=1) / np.sqrt(len(discounted))
+    return price, std_error</code></pre>
+          </div>
+        </div>
+      </article>
+
+      <!-- Longstaff-Schwartz -->
+      <article class="entry" id="lsmc">
+        <div class="entry-head" onclick="toggleEntry(this)">
+          <span class="entry-toggle">&#9654;</span>
+          <span class="entry-title">longstaff_schwartz</span>
+          <span class="entry-blurb">Least-squares Monte Carlo for American/Bermudan options</span>
+          <span class="entry-tags">
+            <span class="tag tag-py">Python</span>
+            <span class="tag tag-advanced">Advanced</span>
+          </span>
+        </div>
+        <div class="entry-body">
+          <div class="entry-explain">
+            <p>
+              Pricing an early-exercisable option by Monte Carlo is hard because
+              the exercise decision needs the <em>continuation value</em> &mdash; the
+              expected payoff from holding &mdash; which is not known forward in time.
+              Longstaff-Schwartz estimates it by regressing realised discounted
+              payoffs against the current state, working backward through time.
+            </p>
+            <p><em>Full implementation is a planned flagship entry.</em></p>
+          </div>
+          <div class="entry-soon">Implementation in progress &mdash; full file will appear here.</div>
+        </div>
+      </article>
+    </section>
+
+    <div class="labs-foot">
+      The collection grows as the speedrun progresses. The Streamlit dashboards
+      on the <a href="projects.html">Projects</a> page are built on top of this code.
+    </div>
+
+  </div>
+</div>
+</main>
+
+<footer>
+  <div class="container">
+    <span>&copy; 2026 Ashar Wakee Butt</span>
+    <div class="footer-links">
+      <a href="https://github.com/" target="_blank">GitHub</a>
+      <a href="https://linkedin.com/" target="_blank">LinkedIn</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Highlight all code blocks on load
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('pre code').forEach(el => hljs.highlightElement(el));
+  });
+
+  // Expand / collapse a single code entry
+  function toggleEntry(head) {
+    head.closest('.entry').classList.toggle('open');
+  }
+
+  // Collapse / expand a sidebar category
+  function toggleCat(title) {
+    title.closest('.labs-cat').classList.toggle('collapsed');
+  }
+
+  // Copy code to clipboard
+  function copyCode(btn) {
+    const code = btn.closest('.entry-code').querySelector('code').innerText;
+    navigator.clipboard.writeText(code).then(() => {
+      const original = btn.textContent;
+      btn.textContent = 'copied';
+      setTimeout(() => { btn.textContent = original; }, 1400);
+    });
+  }
+
+  // Sidebar links: open the target entry and its section, then scroll
+  document.querySelectorAll('.labs-link-item a').forEach(link => {
+    link.addEventListener('click', e => {
+      const id = link.getAttribute('href').slice(1);
+      const target = document.getElementById(id);
+      if (target && target.classList.contains('entry')) {
+        e.preventDefault();
+        target.classList.add('open');
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
