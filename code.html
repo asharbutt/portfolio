@@ -47,8 +47,7 @@
         <span class="labs-cat-count">2</span>
       </div>
       <ul class="labs-link-list">
-        <li class="labs-link-item"><a href="#cholesky">Cholesky Decomposition</a></li>
-        <li class="labs-link-item"><a href="#lu">LU Decomposition</a></li>
+        <li class="labs-link-item"><a href="#cholesky">XXX</a></li>
       </ul>
     </div>
 
@@ -58,7 +57,7 @@
         <span class="labs-cat-count">1</span>
       </div>
       <ul class="labs-link-list">
-        <li class="labs-link-item"><a href="#newton">Newton-Raphson</a></li>
+        <li class="labs-link-item"><a href="#newton">XXX</a></li>
       </ul>
     </div>
 
@@ -68,8 +67,8 @@
         <span class="labs-cat-count">2</span>
       </div>
       <ul class="labs-link-list">
-        <li class="labs-link-item"><a href="#mc-pricer">Monte Carlo Pricer</a></li>
-        <li class="labs-link-item"><a href="#lsmc">Longstaff-Schwartz</a></li>
+        <li class="labs-link-item"><a href="#mc-pricer">Black Scholes Merton Pricer</a></li>
+        <li class="labs-link-item"><a href="#lsmc"></a></li>
       </ul>
     </div>
 
@@ -192,18 +191,10 @@
         <div class="entry-body">
           <div class="entry-explain">
             <p>
-              Newton-Raphson iterates <code>x &#8592; x &#8722; f(x)/f&#8242;(x)</code> and converges
-              quadratically near a root. Its weakness is well known: a near-zero
-              derivative sends the next iterate far away. The classic application
-              in finance is the <strong>implied volatility solve</strong> &mdash;
-              inverting the Black-Scholes price for &sigma; &mdash; where <code>f&#8242;</code> is
-              vega.
+             
             </p>
             <p>
-              This version takes the derivative as a callable and adds two
-              safeguards: a divide-by-near-zero check on the derivative, and an
-              iteration cap that raises rather than looping forever. Returning a
-              wrong answer silently is worse than failing loudly.
+            
             </p>
           </div>
           <div class="entry-code">
@@ -214,7 +205,7 @@
                 <a href="https://github.com/" target="_blank">view on github</a>
               </span>
             </div>
-<pre><code class="language-python">from typing import Callable
+<pre><code class="language-python">
 
 
 d
