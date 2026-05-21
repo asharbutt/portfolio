@@ -52,6 +52,7 @@
     <h2>The Greeks</h2>
 
     <p>Greeks can be computed quite fast. Recall the Delta formula as: $\Delta = \frac{\partial V}{\partial S}$. Given our COS expansion is given in terms of log coordinates, we can use the chain rule to evaluate this: $\Delta = \frac{\partial V}{\partial x} = \frac{\partial V}{partial x} \frac{\partial x}{\partial S}$. Given x = ln(S), then $\Delta = \frac{1}{S}\ \frac{\partial V}{\partial x}$. The derivative can be calculated by taking the derivative of our COS expansion w.r.t x.</p>
-    <p>This gives us: $ \Delta = \frac{1}{S}e^{-rT}\sum  _{k=0} ^{N-1}H_{k} - \frac{i\pi k}{b-a}Re(\phi (\frac{k\pi}{b-a})e^{-i \frac{k\pi a}{b-a}) $</p>  
+    <p>This gives us: </p>
+        <p>$$ \Delta = \frac{1}{S}e^{-rT}\sum  _{k=0} ^{N-1}H_{k} - \frac{i\pi k}{b-a}Re(\phi (\frac{k\pi}{b-a})e^{-i \frac{k\pi a}{b-a}) $$</p>  
 
 </div>
