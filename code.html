@@ -130,19 +130,7 @@
         <div class="entry-body">
           <div class="entry-explain">
             <p>
-              The Cholesky decomposition factors a symmetric positive-definite
-              matrix <code>A</code> as <code>A = L&#183;L&#7488;</code>, where <code>L</code>
-              is lower-triangular. It is roughly twice as fast as LU and is the
-              standard tool for <strong>correlating Gaussian draws</strong> in
-              Monte Carlo &mdash; if <code>z</code> is a vector of independent standard
-              normals, then <code>L&#183;z</code> has covariance <code>A</code>.
-            </p>
-            <p>
-              The one subtlety: the algorithm takes a square root of the running
-              diagonal term, so if <code>A</code> is not positive-definite that
-              value goes negative. The implementation checks for this explicitly
-              and throws, rather than silently returning <code>NaN</code> &mdash; a
-              non-PD covariance matrix is almost always a data bug worth surfacing.
+              
             </p>
           </div>
           <div class="entry-code">
@@ -153,40 +141,8 @@
                 <a href="https://github.com/" target="_blank">view on github</a>
               </span>
             </div>
-<pre><code class="language-cpp">#include &lt;vector&gt;
-#include &lt;cmath&gt;
-#include &lt;stdexcept&gt;
-
-namespace numerics {
-
-// Cholesky factorisation: A = L * L^T for symmetric positive-definite A.
-// Returns the lower-triangular factor L (row-major, n x n).
-inline std::vector&lt;std::vector&lt;double&gt;&gt;
-cholesky(const std::vector&lt;std::vector&lt;double&gt;&gt;& A) {
-    const std::size_t n = A.size();
-    std::vector&lt;std::vector&lt;double&gt;&gt; L(n, std::vector&lt;double&gt;(n, 0.0));
-
-    for (std::size_t i = 0; i &lt; n; ++i) {
-        for (std::size_t j = 0; j &lt;= i; ++j) {
-            double sum = 0.0;
-            for (std::size_t k = 0; k &lt; j; ++k)
-                sum += L[i][k] * L[j][k];
-
-            if (i == j) {
-                const double d = A[i][i] - sum;
-                if (d &lt;= 0.0)
-                    throw std::runtime_error(
-                        "cholesky: matrix is not positive-definite");
-                L[i][j] = std::sqrt(d);
-            } else {
-                L[i][j] = (A[i][j] - sum) / L[j][j];
-            }
-        }
-    }
-    return L;
-}
-
-} // namespace numerics</code></pre>
+<pre><code class="language-cpp">
+</code></pre>
           </div>
         </div>
       </article>
@@ -195,8 +151,8 @@ cholesky(const std::vector&lt;std::vector&lt;double&gt;&gt;& A) {
       <article class="entry" id="lu">
         <div class="entry-head" onclick="toggleEntry(this)">
           <span class="entry-toggle">&#9654;</span>
-          <span class="entry-title">lu_decompose</span>
-          <span class="entry-blurb">LU factorisation with partial pivoting</span>
+          <span class="entry-title"></span>
+          <span class="entry-blurb"></span>
           <span class="entry-tags">
             <span class="tag tag-cpp">C++</span>
             <span class="tag tag-foundational">Foundational</span>
@@ -205,14 +161,11 @@ cholesky(const std::vector&lt;std::vector&lt;double&gt;&gt;& A) {
         <div class="entry-body">
           <div class="entry-explain">
             <p>
-              LU with partial pivoting factors any non-singular matrix as
-              <code>P&#183;A = L&#183;U</code>. Pivoting &mdash; swapping in the row with the
-              largest available element &mdash; is what keeps the factorisation
-              numerically stable; without it, a small pivot blows up the error.
+             
             </p>
-            <p><em>Implementation coming as part of the Day 1 speedrun work.</em></p>
+            <p><em></em></p>
           </div>
-          <div class="entry-soon">Implementation in progress &mdash; full file will appear here.</div>
+          <div class="entry-soon"></div>
         </div>
       </article>
     </section>
@@ -306,21 +259,27 @@ d
 <pre><code class="language-cpp">import numpy as np
 
 
-double compute_d1(const option_parameters::OptionContract& c, const option_parameters::OptionsMarketData& d) { return (std::log(d.spot / c.strike) + (d.interestRate - d.divYield + 0.5 * d.volatility * d.volatility) * c.timeMaturity) / (d.volatility * std::sqrt(c.timeMaturity)); }
+double compute_d1(const option_parameters::OptionContract& c, const option_parameters::OptionsMarketData& d) 
+  { return (std::log(d.spot / c.strike) + (d.interestRate - d.divYield + 0.5 * d.volatility * d.volatility) * c.timeMaturity) / (d.volatility * std::sqrt(c.timeMaturity)); }
 double price(const option_parameters::OptionContract& c, const option_parameters::OptionsMarketData& d) {
     const double d1 = compute_d1(c, d);
     const double d2 = d1 - d.volatility * std::sqrt(c.timeMaturity);
     return c.optionType * d.spot * std::exp(-d.divYield * c.timeMaturity) * stats::standard_normal_cdf(c.optionType * d1) - c.optionType * c.strike * std::exp(-d.interestRate * c.timeMaturity) * stats::standard_normal_cdf(c.optionType * d2);
 }
-double delta(const option_parameters::OptionContract& c, const option_parameters::OptionsMarketData& d) { return c.optionType * std::exp(-d.divYield * c.timeMaturity) * stats::standard_normal_cdf(c.optionType * compute_d1(c, d)); }
-double gamma(const option_parameters::OptionContract& c, const option_parameters::OptionsMarketData& d) { return stats::standard_normal_pdf(compute_d1(c, d)) / (d.spot * d.volatility * std::sqrt(c.timeMaturity)); }
-double vega(const option_parameters::OptionContract& c, const option_parameters::OptionsMarketData& d) { return d.spot * std::exp(-d.divYield * c.timeMaturity) * stats::standard_normal_pdf(compute_d1(c, d)) * std::sqrt(c.timeMaturity); }
+double delta(const option_parameters::OptionContract& c, const option_parameters::OptionsMarketData& d) 
+  { return c.optionType * std::exp(-d.divYield * c.timeMaturity) * stats::standard_normal_cdf(c.optionType * compute_d1(c, d)); }
+double gamma(const option_parameters::OptionContract& c, const option_parameters::OptionsMarketData& d) 
+  { return stats::standard_normal_pdf(compute_d1(c, d)) / (d.spot * d.volatility * std::sqrt(c.timeMaturity)); }
+double vega(const option_parameters::OptionContract& c, const option_parameters::OptionsMarketData& d) 
+  { return d.spot * std::exp(-d.divYield * c.timeMaturity) * stats::standard_normal_pdf(compute_d1(c, d)) * std::sqrt(c.timeMaturity); }
 double theta(const option_parameters::OptionContract& c, const option_parameters::OptionsMarketData& d) {
     const double d1 = compute_d1(c, d);
     const double d2 = d1 - d.volatility * std::sqrt(c.timeMaturity);
     
-    double annual_theta =  -((d.spot * stats::standard_normal_pdf(d1) * d.volatility*std::exp(-d.divYield*c.timeMaturity)) / (2 * std::sqrt(c.timeMaturity))) - c.optionType* d.interestRate* c.strike*std::exp(-d.interestRate * c.timeMaturity)* stats::standard_normal_cdf(c.optionType * d2) + c.optionType*d.divYield*d.spot*stats::standard_normal_cdf(c.optionType*d1)*std::exp(-d.divYield*c.timeMaturity);
-    return annual_theta;
+    double annual_theta =  -((d.spot * stats::standard_normal_pdf(d1) * d.volatility*std::exp(-d.divYield*c.timeMaturity)) / (2 * std::sqrt(c.timeMaturity))) 
+      - c.optionType* d.interestRate* c.strike*std::exp(-d.interestRate * c.timeMaturity)* stats::standard_normal_cdf(c.optionType * d2) 
+      + c.optionType*d.divYield*d.spot*stats::standard_normal_cdf(c.optionType*d1)*std::exp(-d.divYield*c.timeMaturity);
+        return annual_theta;
 }</code></pre>
           </div>
         </div>
