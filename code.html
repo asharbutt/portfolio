@@ -256,7 +256,10 @@ d
                 <a href="https://github.com/" target="_blank">view on github</a>
               </span>
             </div>
-<pre><code class="language-cpp">import numpy as np
+<pre><code class="language-cpp">
+#include <cmath>      
+#include "option_parameters.hpp"
+#include "statistics.hpp"
 
 
 double compute_d1(const option_parameters::OptionContract& c, const option_parameters::OptionsMarketData& d) 
