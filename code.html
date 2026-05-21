@@ -303,7 +303,7 @@ d
                 <a href="https://github.com/" target="_blank">view on github</a>
               </span>
             </div>
-<pre><code class="language-python">import numpy as np
+<pre><code class="language-cpp">import numpy as np
 
 
 double compute_d1(const option_parameters::OptionContract& c, const option_parameters::OptionsMarketData& d) { return (std::log(d.spot / c.strike) + (d.interestRate - d.divYield + 0.5 * d.volatility * d.volatility) * c.timeMaturity) / (d.volatility * std::sqrt(c.timeMaturity)); }
