@@ -223,6 +223,64 @@ d
         <span class="labs-section-desc">Numerical Methods for Pricing Options</span>
       </div>
 
+ <article class="entry" id="mc-pricer">
+        <div class="entry-head" onclick="toggleEntry(this)">
+          <span class="entry-toggle">&#9654;</span>
+          <span class="entry-title">Pricing Code Structs</span>
+          <span class="entry-blurb">For all pricersr</span>
+          <span class="entry-tags">
+            <span class="tag tag-py">C++</span>
+          </span>
+        </div>
+        <div class="entry-body">
+          <div class="entry-explain">
+            <p>
+              Struct header to include to run the below pricers. These hold contract information, market data and the specific parameters for the pricers.
+            </p>
+          </div>
+          <div class="entry-code">
+            <div class="entry-code-bar">
+              <span class="entry-code-file">LibraryCode/option_parameters.hpp</span>
+              <span class="entry-code-actions">
+                <button onclick="copyCode(this)">copy</button>
+                <a href="https://github.com/" target="_blank">view on github</a>
+              </span>
+            </div>
+<pre><code class="language-cpp">
+#pragma once
+
+// header file to contain the structs used to price a black scholes option
+
+namespace option_parameters {
+
+    struct OptionContract {
+        double strike;
+        double timeMaturity;
+        int optionType; // +1 or -1
+    };
+
+    struct OptionsMarketData {
+        double volatility;
+        double interestRate;
+        double divYield;
+        double spot;
+    };
+
+    struct binomial_parameters {
+        double up;
+        double down;
+        double probabilityUp;
+        int numSteps;
+        double deltaT;
+    };
+
+}
+
+</code></pre>
+          </div>
+        </div>
+      </article>
+      
       <article class="entry" id="mc-pricer">
         <div class="entry-head" onclick="toggleEntry(this)">
           <span class="entry-toggle">&#9654;</span>
