@@ -223,7 +223,6 @@ d
         <span class="labs-section-desc">Numerical Methods for Pricing Options</span>
       </div>
 
-      <!-- ▸ Monte Carlo pricer -->
       <article class="entry" id="mc-pricer">
         <div class="entry-head" onclick="toggleEntry(this)">
           <span class="entry-toggle">&#9654;</span>
@@ -279,6 +278,66 @@ double theta(const option_parameters::OptionContract& c, const option_parameters
         </div>
       </article>
 
+<article class="entry" id="mc-pricer">
+        <div class="entry-head" onclick="toggleEntry(this)">
+          <span class="entry-toggle">&#9654;</span>
+          <span class="entry-title">European Binomial Option Pricer</span>
+          <span class="entry-blurb">Vanilla European pricer</span>
+          <span class="entry-tags">
+            <span class="tag tag-py">C++</span>
+          </span>
+        </div>
+        <div class="entry-body">
+          <div class="entry-explain">
+            <p>
+              Simple European Binomial Tree pricer
+            </p>
+          </div>
+          <div class="entry-code">
+            <div class="entry-code-bar">
+              <span class="entry-code-file">LibraryCode/binomialEuropean.hpp</span>
+              <span class="entry-code-actions">
+                <button onclick="copyCode(this)">copy</button>
+                <a href="https://github.com/" target="_blank">view on github</a>
+              </span>
+            </div>
+<pre><code class="language-cpp">
+#include &lt;cmath&gt;
+#include &lt;vector&gt;
+#include "option_parameters.hpp"
+
+double binomialTreeEuropean(binomial_parameters& params, OptionsMarketData& data, OptionContract& contract) {
+    params.deltaT = contract.timeMaturity / params.numSteps;
+    params.up = std::exp(data.volatility * std::sqrt(params.deltaT));
+    params.down = std::exp(-data.volatility * std::sqrt(params.deltaT));
+    params.probabilityUp = (std::exp(data.interestRate * params.deltaT) - params.down) / (params.up - params.down);
+
+    std::vector&lt;double&gt; optionValue(params.numSteps+1, 0.0);
+    std::vector&lt;double&gt; optionValue_temp(params.numSteps+1, 0.0);
+
+    std::vector&lt;double&gt; finalStockVector(params.numSteps+1, params.numSteps+1);
+
+    for (std::size_t i = 0; i &lt; params.numSteps; i++) {
+        finalStockVector[i] = data.spot * std::pow(params.up, params.numSteps - i) * std::pow(params.down, i);
+    }
+
+    //calculate payoff on initial vector
+    for (std::size_t i = 0; i &lt;= params.numSteps; i++) {
+        optionValue[i] = std::max(contract.optionType * (finalStockVector[i] - contract.strike), 0.0);
+    }
+
+    for (std::size_t j = params.numSteps; j &gt; 0; j--) {
+        for (std::size_t i = 0; i &lt; j; i++) {
+            optionValue[i] = (optionValue[i] * params.probabilityUp + optionValue[i + 1] * (1 - params.probabilityUp)) * std::exp(-data.interestRate * params.deltaT);
+        }
+    }
+
+    return optionValue[0];
+} </code></pre>
+          </div>
+        </div>
+      </article>
+      
       <!-- ▸ Longstaff-Schwartz (placeholder) -->
       <article class="entry" id="lsmc">
         <div class="entry-head" onclick="toggleEntry(this)">
