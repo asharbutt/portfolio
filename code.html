@@ -112,15 +112,15 @@
       <div class="labs-section-head">
         <span class="labs-section-num">01</span>
         <span class="labs-section-title">Linear Algebra</span>
-        <span class="labs-section-desc">Matrix factorisation and direct solvers</span>
+        <span class="labs-section-desc">Matrix and Linear Algebra code</span>
       </div>
 
       <!-- ▸ Cholesky -->
       <article class="entry" id="cholesky">
         <div class="entry-head" onclick="toggleEntry(this)">
           <span class="entry-toggle">&#9654;</span>
-          <span class="entry-title">cholesky</span>
-          <span class="entry-blurb">Decompose a symmetric positive-definite matrix into LL&#7488;</span>
+          <span class="entry-title">Simple Matrix Library</span>
+          <span class="entry-blurb"></span>
           <span class="entry-tags">
             <span class="tag tag-cpp">C++</span>
             <span class="tag tag-foundational">Foundational</span>
@@ -141,6 +141,44 @@
               </span>
             </div>
 <pre><code class="language-cpp">
+
+  #pragma once
+
+#include <vector>
+
+namespace Matrix{
+    template <typename T>
+    class Matrix {
+
+    private:
+        std::vector<T> matrix;
+        std::size_t rows;
+        std::size_t columns;
+
+    public: 
+        std::size_t rows_ = rows;
+        std::size_t columns_ = columns;
+        Matrix(std::size_t i, std::size_t j) : rows(i), columns(j) {
+            matrix.resize(rows*columns); //resize the matrix, column major
+        }
+
+        T& operator() (std::size_t i, std::size_t j) {
+            return matrix[j*rows + i];
+        }
+    };
+
+    struct simulation_parameters {
+        int num_sims;
+        int time_steps;
+
+    };  
+
+    struct monte_carlo_results {
+        double average;
+        double std_error;
+
+    };
+}
 </code></pre>
           </div>
         </div>
