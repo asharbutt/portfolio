@@ -353,7 +353,7 @@ double theta(const option_parameters::OptionContract& c, const option_parameters
           </div>
           <div class="entry-code">
             <div class="entry-code-bar">
-              <span class="entry-code-file">LibraryCode/binomialEuropean.hpp</span>
+              <span class="entry-code-file">LibraryCode/tree_methods.hpp</span>
               <span class="entry-code-actions">
                 <button onclick="copyCode(this)">copy</button>
                 <a href="https://github.com/" target="_blank">view on github</a>
@@ -393,6 +393,70 @@ double binomialTreeEuropean(option_parameters::binomial_parameters& params, opti
 
     return optionValue[0];
 } </code></pre>
+          </div>
+        </div>
+      </article>
+
+
+      <article class="entry" id="mc-pricer">
+        <div class="entry-head" onclick="toggleEntry(this)">
+          <span class="entry-toggle">&#9654;</span>
+          <span class="entry-title">American Binomial Option Pricer</span>
+          <span class="entry-blurb">Vanilla American pricer</span>
+          <span class="entry-tags">
+            <span class="tag tag-py">C++</span>
+          </span>
+        </div>
+        <div class="entry-body">
+          <div class="entry-explain">
+            <p>
+              Simple American Binomial Tree pricer
+            </p>
+          </div>
+          <div class="entry-code">
+            <div class="entry-code-bar">
+              <span class="entry-code-file">LibraryCode/tree_methods</span>
+              <span class="entry-code-actions">
+                <button onclick="copyCode(this)">copy</button>
+                <a href="https://github.com/" target="_blank">view on github</a>
+              </span>
+            </div>
+<pre><code class="language-cpp">
+#include "Matrix.hpp"
+namespace american_binomial {
+    double binomialTreeAmerican(option_parameters::binomial_parameters&amp; params, option_parameters::OptionsMarketData&amp; data, option_parameters::OptionContract&amp; contract) {
+    params.deltaT = contract.timeMaturity / params.numSteps;
+    params.up = std::exp(data.volatility * std::sqrt(params.deltaT));
+    params.down = std::exp(-data.volatility * std::sqrt(params.deltaT));
+    params.probabilityUp = (std::exp(data.interestRate * params.deltaT) - params.down) / (params.up - params.down);
+    std::vector&lt;double&gt; optionValue(params.numSteps + 1, 0.0); // initial payoff, will then be used to compute the option value at each Delta T
+    std::vector&lt;double&gt; optionValue_temp(params.numSteps + 1, 0.0); // temporary option value vector, used to hold option values from previous time.
+    Matrix::Matrix&lt;double&gt; finalStockMatrix(params.numSteps + 1, params.numSteps + 1);
+    finalStockMatrix(0, 0) = data.spot;
+    // initialise the stock matrix
+    for (std::size_t j = 1; j &lt;= params.numSteps; j++) {
+        for (std::size_t i = 0; i &lt; params.numSteps; i++) {
+            if (i == 0) {
+                finalStockMatrix(i, j) = finalStockMatrix(i, j - 1) * params.up;
+            }
+            else {
+                finalStockMatrix(i, j) = finalStockMatrix(i - 1, j - 1) * params.down;
+            }
+        }
+    }
+    //calculate payoff on initial vector
+    for (std::size_t i = 0; i &lt;= params.numSteps; i++) {
+        optionValue[i] = std::max(contract.optionType * (finalStockMatrix(i, params.numSteps) - contract.strike), 0.0);
+    }
+    for (std::size_t j = params.numSteps; j &gt; 0; j--) {
+        for (std::size_t i = 0; i &lt; j; i++) {
+            optionValue[i] = std::max((optionValue[i] * params.probabilityUp + optionValue[i + 1] * (1 - params.probabilityUp)) * std::exp(-data.interestRate * params.deltaT), std::max(contract.optionType*(finalStockMatrix(i,j-1)-contract.strike),0.0));
+        }
+    }
+    return optionValue[0];
+}
+}
+                                    </code></pre>
           </div>
         </div>
       </article>
