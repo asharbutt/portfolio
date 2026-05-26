@@ -47,7 +47,7 @@
         <span class="labs-cat-count">2</span>
       </div>
       <ul class="labs-link-list">
-        <li class="labs-link-item"><a href="#cholesky">XXX</a></li>
+        <li class="labs-link-item"><a href="#Matrix">Simple Matrix Class</a></li>
       </ul>
     </div>
 
@@ -67,11 +67,27 @@
         <span class="labs-cat-count">2</span>
       </div>
       <ul class="labs-link-list">
-        <li class="labs-link-item"><a href="#mc-pricer">Black Scholes Merton Pricer</a></li>
+        <li class="labs-link-item"><a href="#Option Pricing Structs">Option Pricing Structs</a></li>
+        <li class="labs-link-item"><a href="#lsmc"></a></li>
+      </ul>
+    </div>
+      <ul class="labs-link-list">
+        <li class="labs-link-item"><a href="#european-black-scholes">Black Scholes Merton Pricer</a></li>
+        <li class="labs-link-item"><a href="#lsmc"></a></li>
+      </ul>
+    </div>
+     <ul class="labs-link-list">
+        <li class="labs-link-item"><a href="#european-binomial-tree">European Binomial Tree</a></li>
+        <li class="labs-link-item"><a href="#lsmc"></a></li>
+      </ul>
+    </div>
+   <ul class="labs-link-list">
+        <li class="labs-link-item"><a href="#american-black-scholes">American Binomial Tree</a></li>
         <li class="labs-link-item"><a href="#lsmc"></a></li>
       </ul>
     </div>
 
+  
     <div class="labs-cat collapsed">
       <div class="labs-cat-title" onclick="toggleCat(this)">
         <span class="chevron">&#9660;</span> Stochastic Processes
@@ -116,7 +132,7 @@
       </div>
 
       <!-- ▸ Cholesky -->
-      <article class="entry" id="cholesky">
+      <article class="entry" id="Matrix">
         <div class="entry-head" onclick="toggleEntry(this)">
           <span class="entry-toggle">&#9654;</span>
           <span class="entry-title">Simple Matrix Library</span>
@@ -134,7 +150,7 @@
           </div>
           <div class="entry-code">
             <div class="entry-code-bar">
-              <span class="entry-code-file">numerics/cholesky.hpp</span>
+              <span class="entry-code-file">include/Matrix.hpp</span>
               <span class="entry-code-actions">
                 <button onclick="copyCode(this)">copy</button>
                 <a href="https://github.com/asharbutt/LibraryCode/blob/main/include/Matrix.hpp" target="_blank">view on github</a>
@@ -261,11 +277,11 @@ d
         <span class="labs-section-desc">Numerical Methods for Pricing Options</span>
       </div>
 
- <article class="entry" id="mc-pricer">
+ <article class="entry" id="Option Pricing Structs">
         <div class="entry-head" onclick="toggleEntry(this)">
           <span class="entry-toggle">&#9654;</span>
           <span class="entry-title">Pricing Code Structs</span>
-          <span class="entry-blurb">For all pricersr</span>
+          <span class="entry-blurb">For all pricers</span>
           <span class="entry-tags">
             <span class="tag tag-py">C++</span>
           </span>
@@ -319,7 +335,7 @@ namespace option_parameters {
         </div>
       </article>
       
-      <article class="entry" id="mc-pricer">
+      <article class="entry" id="european-black-scholes">
         <div class="entry-head" onclick="toggleEntry(this)">
           <span class="entry-toggle">&#9654;</span>
           <span class="entry-title">Black Scholes header</span>
@@ -374,7 +390,7 @@ double theta(const option_parameters::OptionContract& c, const option_parameters
         </div>
       </article>
 
-<article class="entry" id="mc-pricer">
+<article class="entry" id="european-binomial-tree">
         <div class="entry-head" onclick="toggleEntry(this)">
           <span class="entry-toggle">&#9654;</span>
           <span class="entry-title">European Binomial Option Pricer</span>
@@ -436,7 +452,7 @@ double binomialTreeEuropean(option_parameters::binomial_parameters& params, opti
       </article>
 
 
-      <article class="entry" id="mc-pricer">
+      <article class="entry" id="american-binomial-tree">
         <div class="entry-head" onclick="toggleEntry(this)">
           <span class="entry-toggle">&#9654;</span>
           <span class="entry-title">American Binomial Option Pricer</span>
