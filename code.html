@@ -372,7 +372,7 @@ double theta(const option_parameters::OptionContract& c, const option_parameters
 <pre><code class="language-cpp">
 #include &lt;cmath&gt;
 #include &lt;vector&gt;
-  #include &lt;algorithm&gt;
+#include &lt;algorithm&gt;
 #include "option_parameters.hpp"
 
 double binomialTreeEuropean(option_parameters::binomial_parameters& params, option_parameters::OptionsMarketData& data, option_parameters::OptionContract& contract) {
@@ -433,6 +433,9 @@ double binomialTreeEuropean(option_parameters::binomial_parameters& params, opti
             </div>
 <pre><code class="language-cpp">
 #include "Matrix.hpp"
+#include "option_parameters.hpp"
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
 namespace american_binomial {
     double binomialTreeAmerican(option_parameters::binomial_parameters&amp; params, option_parameters::OptionsMarketData&amp; data, option_parameters::OptionContract&amp; contract) {
     params.deltaT = contract.timeMaturity / params.numSteps;
