@@ -19,7 +19,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 </head>
 <body>
-
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }
+  };
+</script>
 <!-- ════════════════════ NAV ════════════════════ -->
 <nav>
   <div class="container">
@@ -202,7 +206,7 @@ namespace Matrix{
         <div class="entry-head" onclick="toggleEntry(this)">
           <span class="entry-toggle">&#9654;</span>
           <span class="entry-title">newton_raphson</span>
-          <span class="entry-blurb">Quadratically-convergent root finder with a safeguard</span>
+          <span class="entry-blurb"></span>
           <span class="entry-tags">
             <span class="tag tag-py">Python</span>
             <span class="tag tag-foundational">Foundational</span>
@@ -531,7 +535,7 @@ namespace american_binomial {
         <div class="entry-body">
           <div class="entry-explain">
             <p>
-              Simple python script to estimate and plot the value of \(\hat{\pi}\) using Monte Carlo simulation on a unit radius circle.
+              Simple python script to estimate and plot the value of $\pi$ using Monte Carlo simulation on a unit radius circle.
             </p>
           </div>
           <div class="entry-code">
