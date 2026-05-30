@@ -500,7 +500,94 @@ namespace american_binomial {
         </div>
       </article>
     </section>
+<section class="labs-section" id="linear-algebra">
+      <div class="labs-section-head">
+        <span class="labs-section-num">01</span>
+        <span class="labs-section-title">Linear Algebra</span>
+        <span class="labs-section-desc">Matrix and Linear Algebra code</span>
+      </div>
 
+      <!-- ▸ Cholesky -->
+      <article class="entry" id="pi_estimation">
+        <div class="entry-head" onclick="toggleEntry(this)">
+          <span class="entry-toggle">&#9654;</span>
+          <span class="entry-title">Estimating $\pi$ using Monte Carlo</span>
+          <span class="entry-blurb"></span>
+          <span class="entry-tags">
+            <span class="tag tag-cpp">Python</span>
+            <span class="tag tag-foundational">Foundational</span>
+          </span>
+        </div>
+        <div class="entry-body">
+          <div class="entry-explain">
+            <p>
+              Simple python script to estimate and plot the value of $\pi$ using Monte Carlo simulation on a unit radius circle.
+            </p>
+          </div>
+          <div class="entry-code">
+            <div class="entry-code-bar">
+              <span class="entry-code-file">python/estimate_pi.py</span>
+              <span class="entry-code-actions">
+                <button onclick="copyCode(this)">copy</button>
+                <a href="https://github.com/asharbutt/LibraryCode/blob/main/python/estimate_pi.py" target="_blank">view on github</a>
+              </span>
+            </div>
+<pre><code class="language-python">
+import numpy as np
+import matplotlib.pyplot as plt
+
+def estimate_pi():
+    n = 1000
+    x = np.random.uniform(-1, 1, n)
+    y = np.random.uniform(-1, 1, n)
+
+    inside_circle = np.pow(x,2) + np.power(y,2) <= 1 # condition for being within a unit circle. pythagoras th
+
+    total_inside = np.sum(inside_circle)
+
+    pi_estimate = total_inside/n *4
+    print(pi_estimate)
+
+    cumulative_sum = np.cumsum(inside_circle)
+    cumulative_sum_range = np.arange(1, n+1)
+    rolling_estimate = cumulative_sum/cumulative_sum_range * 4
+
+
+    fig, ax = plt.subplots(figsize=(6, 6))
+    ax.scatter(x[inside_circle], y[inside_circle], s=3, color="#2a9d8f", label="inside")
+    ax.scatter(x[~inside_circle], y[~inside_circle], s=3, color="#e76f51", label="outside")
+
+    # Reference circle and square
+    theta = np.linspace(0, 2 * np.pi, 400)
+    ax.plot(np.cos(theta), np.sin(theta), color="black", lw=1.5)
+    ax.add_patch(plt.Rectangle((-1, -1), 2, 2, fill=False, color="black", lw=1.5))
+
+    ax.set_aspect("equal")
+    ax.set_xlim(-1.05, 1.05)
+    ax.set_ylim(-1.05, 1.05)
+    ax.set_title(f"Monte Carlo $\\pi \\approx$ {pi_estimate:.4f}  (n={n:,})")
+    ax.axhline(y=0, color="black",ls="--", lw=1.5)
+    ax.axvline(x=0, color="black", ls="--",lw=1.5)
+    ax.legend(loc="upper right", markerscale=3)
+    plt.tight_layout()
+    plt.savefig("mc_pi.png", dpi=120)
+
+    fig_2, ax_2 = plt.subplots(figsize=(6, 6))
+
+    ax_2.plot(cumulative_sum_range, rolling_estimate, color="#2a9d8f", lw=1.5)
+    ax_2.axhline(np.pi, color="black", ls="--", lw=1.5)
+    ax_2.set_title("Monte Carlo Estimate Convergence to true $\\pi$")
+    ax_2.set_ylabel("Estimated $\\pi$")
+    ax_2.set_xlabel("n")
+
+    plt.show()
+
+ 
+</code></pre>
+          </div>
+        </div>
+      </article>
+    </section>
     <div class="labs-foot">
       The collection grows as the speedrun progresses. The Streamlit dashboards
       on the <a href="projects.html">Projects</a> page are built on top of this code.
