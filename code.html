@@ -239,6 +239,76 @@ d
       </article>
     </section>
 
+ <!-- ─────────── section for random things ─────────── -->
+    <section class="labs-section" id="Other Files">
+      <div class="labs-section-head">
+        <span class="labs-section-num">03</span>
+        <span class="labs-section-title">Random Files used in pricing</span>
+        <span class="labs-section-desc"></span>
+      </div>
+
+      <!-- ▸ Newton-Raphson -->
+      <article class="entry" id="newton">
+        <div class="entry-head" onclick="toggleEntry(this)">
+          <span class="entry-toggle">&#9654;</span>
+          <span class="entry-title">Contract Class File</span>
+          <span class="entry-blurb"></span>
+          <span class="entry-tags">
+            <span class="tag tag-py">Python</span>
+            <span class="tag tag-foundational"></span>
+          </span>
+        </div>
+        <div class="entry-body"> 
+          <div class="entry-explain">
+            <p>
+             Class that contains classes for contract details. To be used in python pricing scripts
+            </p>
+            <p>
+            
+            </p>
+          </div>
+          <div class="entry-code">
+            <div class="entry-code-bar">
+              <span class="entry-code-file">numerics/roots.py</span>
+              <span class="entry-code-actions">
+                <button onclick="copyCode(this)">copy</button>
+                <a href="https://github.com/" target="_blank">view on github</a>
+              </span>
+            </div>
+<pre><code class="language-python">
+from dataclasses import dataclass
+from typing import Optional
+
+@dataclass
+class Contract:
+    contractID: int
+    Notional: float
+    instrument: str # VanillaEquityOption, InterestRateSwap...etc
+
+    contractValue: Optional[float] = None
+    modelValue: Optional[float] = None
+
+    #risks
+    delta: Optional[float] = None
+    gamma: Optional[float] = None
+    theta: Optional[float] = None
+    vega: Optional[float] = None
+    rho: Optional[float] = None
+
+@dataclass
+class OptionContract(Contract):
+    Strike: float = 0.0
+    timeMaturity: float = 0.0
+    optionType: int = 1 # +1 or -1 for call/put
+
+    implied_volatility : Optional[float] = None
+
+    )</code></pre>
+          </div>
+        </div>
+      </article>
+    </section>
+    
     <!-- ─────────── Option Pricing ─────────── -->
     <section class="labs-section" id="option-pricing">
       <div class="labs-section-head">
@@ -521,11 +591,10 @@ namespace american_binomial {
         <span class="labs-section-desc">Matrix and Linear Algebra code</span>
       </div>
 
-      <!-- ▸ Cholesky -->
       <article class="entry" id="pi_estimation">
         <div class="entry-head" onclick="toggleEntry(this)">
           <span class="entry-toggle">&#9654;</span>
-          <span class="entry-title">Estimating \(\hat{\pi}\) using Monte Carlo</span>
+          <span class="entry-title">Estimating Pi using Monte Carlo</span>
           <span class="entry-blurb"></span>
           <span class="entry-tags">
             <span class="tag tag-cpp">Python</span>
