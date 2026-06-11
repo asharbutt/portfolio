@@ -268,7 +268,6 @@ d
         <span class="labs-section-desc"></span>
       </div>
 
-      <!-- ▸ Newton-Raphson -->
       <article class="entry" id="contract-class">
         <div class="entry-head" onclick="toggleEntry(this)">
           <span class="entry-toggle">&#9654;</span>
@@ -366,6 +365,49 @@ class MarketData:
     interestRate: float
     divYield: float
     valDate: str
+</code></pre>
+          </div>
+        </div>
+      </article>
+       <article class="entry" id="daycount-class">
+        <div class="entry-head" onclick="toggleEntry(this)">
+          <span class="entry-toggle">&#9654;</span>
+          <span class="entry-title">Daycount conventions file</span>
+          <span class="entry-blurb"></span>
+          <span class="entry-tags">
+            <span class="tag tag-py">Python</span>
+            <span class="tag tag-foundational"></span>
+          </span>
+        </div>
+        <div class="entry-body"> 
+          <div class="entry-explain">
+            <p>
+             File that contains daycount convention function to return daycount between two dates. Currently only support A360 and A365 as it is a showcase
+            </p>
+            <p>
+            
+            </p>
+          </div>
+          <div class="entry-code">
+            <div class="entry-code-bar">
+              <span class="entry-code-file"></span>
+              <span class="entry-code-actions">
+                <button onclick="copyCode(this)">copy</button>
+                <a href="https://github.com/asharbutt/LibraryCode/blob/main/python/daycountConventionCalculator.py" target="_blank">view on github</a>
+              </span>
+            </div>
+<pre><code class="language-python">
+import datetime
+
+def daycount(startDate, endDate, convention):
+    startDate = datetime.datetime.strptime(startDate, "%d/%m/%Y")
+    endDate = datetime.datetime.strptime(endDate, "%d/%m/%Y")
+    if convention == "A360":
+        return (endDate - startDate).days / 360
+    elif convention == "A365":
+        return (endDate - startDate).days / 365
+    elif convention == "30360":
+        return None
 </code></pre>
           </div>
         </div>
