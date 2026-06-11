@@ -282,7 +282,7 @@ d
               <span class="entry-code-file">numerics/roots.py</span>
               <span class="entry-code-actions">
                 <button onclick="copyCode(this)">copy</button>
-                <a href="https://github.com/" target="_blank">view on github</a>
+                <a href="https://github.com/asharbutt/LibraryCode/blob/main/python/contract_id_class" target="_blank">view on github</a>
               </span>
             </div>
 <pre><code class="language-python">
@@ -308,12 +308,54 @@ class Contract:
 @dataclass
 class OptionContract(Contract):
     Strike: float = 0.0
-    timeMaturity: float = 0.0
+    timeMaturity: str = ""
     optionType: int = 1 # +1 or -1 for call/put
-
+    dayCountConvention: str = ""
     implied_volatility : Optional[float] = None
 
+
     )</code></pre>
+          </div>
+        </div>
+      </article>
+       <article class="entry" id="marketdata-class">
+        <div class="entry-head" onclick="toggleEntry(this)">
+          <span class="entry-toggle">&#9654;</span>
+          <span class="entry-title">MarketData Class File</span>
+          <span class="entry-blurb"></span>
+          <span class="entry-tags">
+            <span class="tag tag-py">Python</span>
+            <span class="tag tag-foundational"></span>
+          </span>
+        </div>
+        <div class="entry-body"> 
+          <div class="entry-explain">
+            <p>
+             File that contains narket data class to be passed to pricing modules
+            </p>
+            <p>
+            
+            </p>
+          </div>
+          <div class="entry-code">
+            <div class="entry-code-bar">
+              <span class="entry-code-file"></span>
+              <span class="entry-code-actions">
+                <button onclick="copyCode(this)">copy</button>
+                <a href="https://github.com/asharbutt/LibraryCode/blob/main/python/marketData.py" target="_blank">view on github</a>
+              </span>
+            </div>
+<pre><code class="language-python">
+from dataclasses import dataclass
+
+@dataclass
+class MarketData:
+    spot: float
+    vol: float
+    interestRate: float
+    divYield: float
+    valDate: str
+</code></pre>
           </div>
         </div>
       </article>
