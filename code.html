@@ -361,6 +361,88 @@ class MarketData:
         </div>
       </article>
     </section>
+
+    
+<section class="labs-section" id="optionpricing-python">
+      <div class="labs-section-head">
+        <span class="labs-section-num">01</span>
+        <span class="labs-section-title">Option Pricing in Python</span>
+        <span class="labs-section-desc">Option Pricing files written in Python. Makes use of the Contract and Market Data files in the "Other" section above.</span>
+      </div>
+
+      <!-- ▸ Cholesky -->
+      <article class="entry" id="Matrix">
+        <div class="entry-head" onclick="toggleEntry(this)">
+          <span class="entry-toggle">&#9654;</span>
+          <span class="entry-title">Black Scholes Module</span>
+          <span class="entry-blurb"></span>
+          <span class="entry-tags">
+            <span class="tag tag-cpp">Python</span>
+            <span class="tag tag-foundational">Foundational</span>
+          </span>
+        </div>
+        <div class="entry-body">
+          <div class="entry-explain">
+            <p>
+              
+            </p>
+          </div>
+          <div class="entry-code">
+            <div class="entry-code-bar">
+              <span class="entry-code-file">include/Matrix.hpp</span>
+              <span class="entry-code-actions">
+                <button onclick="copyCode(this)">copy</button>
+                <a href="https://github.com/asharbutt/LibraryCode/blob/main/python/black_scholes.py" target="_blank">view on github</a>
+              </span>
+            </div>
+<pre><code class="language-cpp">
+from scipy.stats import norm
+from marketData import *
+import contract_id_class as id
+import numpy as np
+import daycountConventionCalculator as cd
+
+def bs_price(contract: id.OptionContract, data: MarketData):
+    d1 = (np.log(data.spot / contract.Strike) + (data.interestRate - data.divYield + 0.5 * data.vol*data.vol)*cd.daycount(data.valDate, contract.timeMaturity, contract.dayCountConvention))/ (data.vol*np.sqrt(contract.timeMaturity))
+    d2 = d1 - (data.vol*np.sqrt(contract.timeMaturity))
+    return contract.optionType*data.spot*np.exp(-data.divYield*cd.daycount(data.valDate, contract.timeMaturity, contract.dayCountConvention))*norm.cdf(contract.optionType* d1) - contract.optionType*contract.Strike*np.exp(-data.interestRate*cd.daycount(data.valDate, contract.timeMaturity, data.dayCountConvention))*norm.cdf(contract.optionType* d2)
+
+def delta(contract: id.OptionContract, data: MarketData):
+    d1 = (np.log(data.spot / contract.Strike) + (
+                data.interestRate - data.divYield + 0.5 * data.vol * data.vol) * contract.Strike) / (
+                     data.vol * np.sqrt(contract.Strike))
+    return contract.optionType*np.exp(-data.divYield*cd.daycount(data.valDate, contract.timeMaturity, contract.dayCountConvention))*norm.cdf(contract.optionType*d1)
+
+def gamma(contract: id.OptionContract, data: MarketData):
+    d1 = (np.log(data.spot / contract.Strike) + (
+                data.interestRate - data.divYield + 0.5 * data.vol * data.vol) * contract.Strike) / (
+                     data.vol * np.sqrt(contract.Strike))
+    return norm.pdf(d1) /(data.spot*np.sqrt(contract.timeMaturity)*data.vol)
+
+def vega(contract: id.OptionContract, data: MarketData):
+    d1 = (np.log(data.spot / contract.Strike) + (
+            data.interestRate - data.divYield + 0.5 * data.vol * data.vol) * contract.Strike) / (
+                 data.vol * np.sqrt(contract.Strike))
+    return data.spot * np.exp(-data.divYield*cd.daycount(data.valDate, contract.timeMaturity, contract.dayCountConvention))*norm.pdf(d1) * np.sqrt(contract.timeMaturity)
+
+def theta(contract: id.OptionContract, data: MarketData):
+    d1 = ((np.log(data.spot / contract.Strike) + (data.interestRate - data.divYield + 0.5 * data.vol * data.vol) * cd.daycount(data.valDate, contract.timeMaturity, contract.dayCountConvention))
+          / (data.vol * np.sqrt(contract.timeMaturity)))
+    d2 = d1 - (data.vol * np.sqrt(contract.timeMaturity))
+    return -(data.vol * data.spot * norm.pdf(d1))/(2*np.sqrt(contract.timeMaturity)) - contract.optionType * data.interestRate * contract.Strike*np.exp(-data.interestRate*cd.daycount(data.valDate, contract.timeMaturity, contract.dayCountConvention))*norm.cdf(contract.optionType*d2)
+
+def rho(contract: id.OptionContract, data: MarketData):
+    d1 = ((np.log(data.spot / contract.Strike) + (
+                data.interestRate - data.divYield + 0.5 * data.vol * data.vol) * cd.daycount(data.valDate, contract.timeMaturity, contract.dayCountConvention))
+          / (data.vol * np.sqrt(contract.timeMaturity)))
+    d2 = d1 - (data.vol * np.sqrt(contract.timeMaturity))
+    return contract.optionType*contract.Strike*cd.daycount(data.valDate, contract.timeMaturity, contract.dayCountConvention)*np.exp(-data.interestRate*cd.daycount(data.valDate, contract.timeMaturity, contract.dayCountConvention))*norm.cdf(contract.optionType*d2)
+</code></pre>
+          </div>
+        </div>
+      </article>
+    </section>
+
     
     <!-- ─────────── Option Pricing ─────────── -->
     <section class="labs-section" id="option-pricing">
