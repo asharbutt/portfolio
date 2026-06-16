@@ -226,7 +226,7 @@ namespace Matrix{
       <article class="entry" id="newton">
         <div class="entry-head" onclick="toggleEntry(this)">
           <span class="entry-toggle">&#9654;</span>
-          <span class="entry-title">newton_raphson</span>
+          <span class="entry-title">Newton Raphson in Python</span>
           <span class="entry-blurb"></span>
           <span class="entry-tags">
             <span class="tag tag-py">Python</span>
@@ -236,7 +236,7 @@ namespace Matrix{
         <div class="entry-body">
           <div class="entry-explain">
             <p>
-             
+             Newton Raphson function to find implied vol for European Options. Uses the Contract, marketData and the black scholes modules as input
             </p>
             <p>
             
@@ -251,10 +251,29 @@ namespace Matrix{
               </span>
             </div>
 <pre><code class="language-python">
+import black_scholes as bs
+import contract_id_class as id
+import marketData as md
 
-
-d
-    )</code></pre>
+def newton_raphson_implied_volatility(contract: id.OptionContract, data: md.MarketData, initial_guess: float ):
+    # checks to ensure contract details are sufficient
+    if any(x is None for x in (contract.contractID, contract.Notional, contract.Strike, contract.instrument, contract.contractValue, contract.dateMaturity)):
+        raise ValueError("Missing parameters in Contract details")
+    if any(x is None for x in (data.spot, data.interestRate, data.divYield, data.valDate, data.dayCountConvention)):
+        raise ValueError("Missing parameters in marketData details")
+    tol = 1e-5
+    max_iterations = 10000
+    x_0 = initial_guess
+    data.vol = x_0
+    print(data)
+    for i in range(max_iterations):
+        x_1 = x_0 - (bs.bs_price(contract, data) - contract.contractValue) / bs.vega(contract, data)
+        data.vol = x_1
+        if abs(bs.bs_price(contract, data) - contract.contractValue) &lt; tol:
+            return x_1
+        x_0 = x_1
+    return None
+</code></pre>
           </div>
         </div>
       </article>
