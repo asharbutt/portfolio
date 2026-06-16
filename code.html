@@ -318,10 +318,8 @@ class Contract:
 @dataclass
 class OptionContract(Contract):
     Strike: float = 0.0
-    timeMaturity: str = ""
+    dateMaturity: str = ""
     optionType: int = 1 # +1 or -1 for call/put
-    dayCountConvention: str = ""
-    implied_volatility : Optional[float] = None
 
 
   </code></pre>
@@ -357,14 +355,20 @@ class OptionContract(Contract):
             </div>
 <pre><code class="language-python">
 from dataclasses import dataclass
+from typing import Optional
 
 @dataclass
 class MarketData:
     spot: float
-    vol: float
     interestRate: float
     divYield: float
     valDate: str
+    dayCountConvention: str = ""
+    vol: Optional[float] = None
+    timeMaturity: Optional[float] = None
+
+
+
 </code></pre>
           </div>
         </div>
