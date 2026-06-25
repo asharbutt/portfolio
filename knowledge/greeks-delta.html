@@ -5,7 +5,8 @@
 </div>
 <div class="kb-content-body">
 <h3>Delta</h3>
-<p>One way of pricing an option is by creating a hedging portfolio which hedges the payoff of the option. In the famous Black Scholes equation, the way to do this is by creating a delta hedged portfolio, which consists of an option and shorting Delta amounts of the stock. This makes the overall portfolio hedged against any small movements in the underlying. We should this via:
+<p>One way of pricing an option is by creating a hedging portfolio which hedges the payoff of the option. In the famous Black Scholes equation, the way to do this is by creating a delta hedged portfolio, which consists of an option and shorting Delta amounts of the stock. 
+    This makes the overall portfolio hedged against any small movements in the underlying. We should this via:
 $\Pi = V - \Delta S$.</p>
   <p>The Delta shows us the change in the Option Value in the currency amount (e.g. Dollars) for a change in the underlying, and ranges between 0 and 1 for Calls, and -1 and 0 for puts. We can calculate the delta using the Black Scholes formula, where we take the first derivative with respect to the underlying:</p>
 <p>$$\frac{\partial V_{Call}}{\partial S} = e^{-qT}N(d_{1})$$</p>
@@ -13,7 +14,10 @@ $\Pi = V - \Delta S$.</p>
   <img src="assets/Delta_call.PNG"/>
 
 <p>We observe that the Delta for the call option is close to 0 when deep OTM, and close to 1 when deep ITM. As we get closer to the maturity, we see that the Delta approaches its relative values (0 for OTM, 1 for ITM), and the range where the delta is actually changing tightens up around the ATM. This makes sense as we have lost all time value, and the option price reflects mostly the intrinsic value, and if you were OTM close to expiry, then your option will not carry much intrinsic value, and neither will it experience a change in intrinsic value unless you are sitting on the ATM point. </p>
-<h2>Factors affecting Delta</h2>
+<p>The delta is important as a trader aims to hedge his option positions, usually on a book level. When setting up the hedging portfolio, the cost of the hedge will reflect the cost of the option. Under Black-scholes, it is assumed that the option is hedged continiously, with no friction i.e. liquidity issues, no transaction costs, perfect information. 
+In reality, these factors play an important part in how costly it is to delta hedge. For example, thin liquidity can make shorting/buying shares more expensive, thus the cost of setting up the hedging portfolio is higher, and so the trader would charge more for writing an option.</p>
+    
+    <h2>Factors affecting Delta</h2>
 <h1>Time to Maturity</h1>
 <p>We have already observed the effect of time to maturity on the Delta - as we get closer to maturity/expiry, the option loses its time value and reflects more and more of its intrinsic value. </p>
 
@@ -22,3 +26,5 @@ $\Pi = V - \Delta S$.</p>
   The effect on Delta is that a higher volatility will flatten the Delta curve out more, so the delta for OTM will increase, and the delta for ITM will decrease (thought deep ITM/OTM will see a smaller effect). We show this below:</p>
   <img src="assets/Greeks-Delta-IV-range.png"/>
     <p>We can see that the Delta is becoming flatter the higher the input IV is.</p>
+
+    <h1></h1>
