@@ -57,6 +57,15 @@
                 <li class="kb-link-item"><a onclick="loadNote('greeks', this)">Option Greeks</a></li>
             </ul>
         </div>
+        <div class="kb-group">
+            <div class="kb-group-title" onclick="this.parentElement.classList.toggle('collapsed')"><span class="chevron">&#9662;</span>The Greeks</div>
+            <ul class="kb-link-list">
+                <li class="kb-link-item"><a onclick="loadNote('greeks-delta', this)">Delta</a></li>
+                <li class="kb-link-item"><a onclick="loadNote('greeks-gamma', this)">Gamma</a></li>
+                <li class="kb-link-item"><a onclick="loadNote('greeks-vega', this)">Vega</a></li>
+                <li class="kb-link-item"><a onclick="loadNote('greeks-Rho', this)">Rho</a></li>
+            </ul>
+        </div>
          <div class="kb-group">
             <div class="kb-group-title" onclick="this.parentElement.classList.toggle('collapsed')"><span class="chevron">&#9662;</span>Monte Carlo Method</div>
             <ul class="kb-link-list">
