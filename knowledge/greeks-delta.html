@@ -15,7 +15,8 @@ $\Pi = V - \Delta S$.</p>
 
 <p>We observe that the Delta for the call option is close to 0 when deep OTM, and close to 1 when deep ITM. As we get closer to the maturity, we see that the Delta approaches its relative values (0 for OTM, 1 for ITM), and the range where the delta is actually changing tightens up around the ATM. This makes sense as we have lost all time value, and the option price reflects mostly the intrinsic value, and if you were OTM close to expiry, then your option will not carry much intrinsic value, and neither will it experience a change in intrinsic value unless you are sitting on the ATM point. </p>
 <p>The delta is important as a trader aims to hedge his option positions, usually on a book level. When setting up the hedging portfolio, the cost of the hedge will reflect the cost of the option. Under Black-scholes, it is assumed that the option is hedged continiously, with no friction i.e. liquidity issues, no transaction costs, perfect information. 
-In reality, these factors play an important part in how costly it is to delta hedge. For example, thin liquidity can make shorting/buying shares more expensive, thus the cost of setting up the hedging portfolio is higher, and so the trader would charge more for writing an option.</p>
+In reality, these factors play an important part in how costly it is to delta hedge. For example, thin liquidity can make shorting/buying shares more expensive, thus the cost of setting up the hedging portfolio is higher, and so this cost would be reflected in the option premium.
+</p>
     
     <h2>Factors affecting Delta</h2>
 <h1>Time to Maturity</h1>
@@ -27,4 +28,5 @@ In reality, these factors play an important part in how costly it is to delta he
   <img src="assets/Greeks-Delta-IV-range.png" style="width: 750px; height: 300px;"/>
     <p>We can see that the Delta is becoming flatter the higher the input IV is.</p>
 
-    <h1></h1>
+    <h1>Interest Rates</h1>
+    <p>The interest rate determines the cost of hedging, as shorting or buying shares requires interest (short has interest cost, buying shares means borrowing money to buy), which means if rates go up, then the cost of delta hedging will increase, meaning the cost of the option increases.</p>
