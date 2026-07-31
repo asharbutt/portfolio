@@ -4,7 +4,11 @@
     <div class="kb-content-meta">Last updated — March 2026</div>
 </div>
 <div class="kb-content-body">
-<h3>Proof of Brownian motion quadratic variation</h3>
+    <h3>Proof of Brownian Motion Quadratic Variation as a symmetrical scaled random variable</h3>
+    <p>If we define the Brownian motion as a scalled symmetrical random walk, then we can write the value as: </p>
+    <p>$$M_{nt} = \sum \frac{1}{\sqrt{n}X_{j}}$$</p>
+    <p>Where the variable $X_{j}$ </p>
+<h2>Proof of Brownian Motion Quadratic Variation</h2>
 <p>We prove that the Quadratic Variation of a Brownian Motion is T by subdividing the interval [0,T] into n subintervals, and sampling the value of the Brownian Motion. We prove that the expected value of the quadratic variation is T with a variance close to 0.</p>
 <p>We start by partinioning the interval via $\Pi_{n} = {t_{0},t_{1}, t_{2},...,t_{n}}$. We can then define the quadratic variation of this partition as: </p>
   <p>$$Q_{\Pi} = \sum_{j=0}^{n-1} [W(t_{j+1}) - W(t_{j})]^{2}$$</p>
@@ -28,5 +32,6 @@
 
     <p>$$Var(Q_{\Pi}) = \sum_{j=0}^{n-1} (t_{j+1} - t{j})^{2}$$</p>
 <p>As the partition size approaches 0 and $n->\infty$, the limit of the variance approaches 0, meaning that the expected value of the sampled quadratic variance is T and the variance is 0. </p>
+    
 </div>
 
