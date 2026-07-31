@@ -7,15 +7,15 @@
 <h3>Proof of Brownian motion quadratic variation</h3>
 <p>We prove that the Quadratic Variation of a Brownian Motion is T by subdividing the interval [0,T] into n subintervals, and sampling the value of the Brownian Motion. We prove that the expected value of the quadratic variation is T with a variance close to 0.</p>
 <p>We start by partinioning the interval via $\Pi_{n} = {t_{0},t_{1}, t_{2},...,t_{n}}$. We can then define the quadratic variation of this partition as: </p>
-  <p>$$Q_{\Pi} = \Sum_{j=0}^{n-1} [W(t_{j+1}) - W(t_{j})]^{2}$$</p>
+  <p>$$Q_{\Pi} = \sum_{j=0}^{n-1} [W(t_{j+1}) - W(t_{j})]^{2}$$</p>
   
 <p>We first show that the expected value is T. We take the expectation of both sides:</p>
-<p>$$EQ_{\Pi} = E\Sum_{j=0}^{n-1} [W(t_{j+1}) - W(t_{j})]^{2} = \Sum_{j=0}^{n-1} E[W(t_{j+1}) - W(t_{j})]^{2}$$</p>
+<p>$$EQ_{\Pi} = E\sum_{j=0}^{n-1} [W(t_{j+1}) - W(t_{j})]^{2} = \sum_{j=0}^{n-1} E[W(t_{j+1}) - W(t_{j})]^{2}$$</p>
 
     <p>The expected value of each increment is 0, and thus the variance of any increment is then given by: $Var(X) = E[(X-EX)^{2}] = E[X^{2}]$</p>
     <p>Therefore, the expected value of the square of the increment is then the variance of the increment, which is equal to the change in time:</p>
 
-<p>$$\Sum_{j=0}^{n-1} E[W(t_{j+1}) - W(t_{j})]^{2} = \Sum_{j=0}^{n-1} t_{j+1} - t{j} = T$$</p>
+<p>$$\sum_{j=0}^{n-1} E[W(t_{j+1}) - W(t_{j})]^{2} = \sum_{j=0}^{n-1} t_{j+1} - t{j} = T$$</p>
 
                                                                                                             
 </div>
