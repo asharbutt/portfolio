@@ -18,8 +18,15 @@
 <p>$$\sum_{j=0}^{n-1} E[W(t_{j+1}) - W(t_{j})]^{2} = \sum_{j=0}^{n-1} t_{j+1} - t{j} = T$$</p>
 
 <p>We now prove the variance of the sum of the increment is 0. We start by taking the variance of the square of the increment:</p>
-<p>$$Var(W(t_{j+1}) - W(t_{j})]^{2}) = E[([W(t_{j+1}) - W(t_{j})]^{2}) - E[[W(t_{j+1}) - W(t_{j})]^{2}]]^{2}$$</p>
+<p>$$Var([W(t_{j+1}) - W(t_{j})]^{2}) = E[([W(t_{j+1}) - W(t_{j})]^{2}) - E[[W(t_{j+1}) - W(t_{j})]^{2}]]^{2}$$</p>
 <p>The expected value of the square of the increment, as shown before is: </p>
     <p>$$E[([W(t_{j+1}) - W(t_{j})]^{2}) - E[[W(t_{j+1}) - W(t_{j})]^{2}]]^{2} = E[([W(t_{j+1}) - W(t_{j})]^{2}) - (t_{j+1} - t{j})]^{2} = 
-        E[[W(t_{j+1}) - W(t_{j})]^{4}] + 2(t_{j+1} - t{j})E[W(t_{j+1}) - W(t_{j})]^{2} + (t_{j+1} - t{j})^{2}$$</p>
+        E[[W(t_{j+1}) - W(t_{j})]^{4}] - 2(t_{j+1} - t{j})E[W(t_{j+1}) - W(t_{j})]^{2} + (t_{j+1} - t{j})^{2}$$</p>
+<p>The first term is the 4th moment of the variable, which is the kurtosis of the distribution of the increment (given the increment has 0 mean you do not need to centralise the variable). This is given by $3\sigma^{4}$, which is $3t^{2}$. You therefore get:</p>
+<p>$$3(t_{j+1} - t{j})^{2} - 3 (t_{j+1} - t{j}) + (t_{j+1} - t{j})^{2} = (t_{j+1} - t{j})^{2}$$</p>
+    <p>This means the variance of the sum then becomes:</p>
+
+    <p>$$Var(Q_{\Pi}) = \sum_{j=0}^{n-1} (t_{j+1} - t{j})^{2}$$</p>
+<p>As the partition size approaches 0 and $n->\infty$, the limit of the variance approaches 0, meaning that the expected value of the sampled quadratic variance is T and the variance is 0. </p>
 </div>
+
