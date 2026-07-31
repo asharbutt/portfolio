@@ -20,5 +20,6 @@
 <p>We now prove the variance of the sum of the increment is 0. We start by taking the variance of the square of the increment:</p>
 <p>$$Var(W(t_{j+1}) - W(t_{j})]^{2}) = E[([W(t_{j+1}) - W(t_{j})]^{2}) - E[[W(t_{j+1}) - W(t_{j})]^{2}]]^{2}$$</p>
 <p>The expected value of the square of the increment, as shown before is: </p>
-    <p>E[([W(t_{j+1}) - W(t_{j})]^{2}) - E[[W(t_{j+1}) - W(t_{j})]^{2}]]^{2} = E[([W(t_{j+1}) - W(t_{j})]^{2}) - t_{j+1} - t{j}]^{2}</p>
+    <p>$$E[([W(t_{j+1}) - W(t_{j})]^{2}) - E[[W(t_{j+1}) - W(t_{j})]^{2}]]^{2} = E[([W(t_{j+1}) - W(t_{j})]^{2}) - (t_{j+1} - t{j})]^{2} = 
+        E[[W(t_{j+1}) - W(t_{j})]^{4}] + 2(t_{j+1} - t{j})E[W(t_{j+1}) - W(t_{j})]^{2} + (t_{j+1} - t{j})^{2}$$</p>
 </div>
