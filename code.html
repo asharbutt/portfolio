@@ -17,13 +17,39 @@
 <!-- highlight.js — syntax highlighting -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+<!-- MathJax — lets you write $...$ maths in the explanation notes -->
+<script>
+  window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<!-- Small additions on top of lab-styles.css: language switch + planned entries -->
+<style>
+  .lang-switch { display: flex; gap: 8px; margin: 28px 0 12px; flex-wrap: wrap; }
+  .lang-btn {
+    font-family: 'JetBrains Mono', monospace; font-size: 13px;
+    padding: 7px 16px; border-radius: 6px; cursor: pointer;
+    background: transparent; color: inherit;
+    border: 1px solid rgba(127, 127, 127, 0.35);
+  }
+  .lang-btn.active { border-color: currentColor; font-weight: 600; }
+  .lang-btn .lang-count { opacity: 0.55; margin-left: 8px; font-weight: 400; }
+  .lang-pane { display: none; }
+  .lang-pane.active { display: block; }
+  .lang-intro { opacity: 0.75; margin: 0 0 8px; }
+
+  .tag-planned {
+    background: transparent !important; color: inherit !important;
+    border: 1px dashed rgba(127, 127, 127, 0.6); opacity: 0.7;
+  }
+  .entry.planned .entry-title { opacity: 0.6; }
+  .labs-link-item.is-planned a { opacity: 0.5; }
+  .entry-soon code { font-family: 'JetBrains Mono', monospace; font-size: 0.9em; }
+</style>
 </head>
 <body>
-<script>
-  window.MathJax = {
-    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }
-  };
-</script>
+
 <!-- ════════════════════ NAV ════════════════════ -->
 <nav>
   <div class="container">
@@ -40,65 +66,14 @@
 <main>
 <div class="labs-layout">
 
-  <!-- ════════════════════ SIDEBAR ════════════════════ -->
+  <!-- ════════════════════ SIDEBAR ════════════════════
+       Built automatically from the sections below (see script).
+       Add an <article class="entry"> to a section and it appears here. -->
   <aside class="labs-sidebar">
-  <div class="labs-sidebar-title">Code Index</div>
-  <div class="labs-sidebar-sub">Numerical methods, implemented from scratch.</div>
-
-  <div class="labs-cat">
-    <div class="labs-cat-title" onclick="toggleCat(this)">
-      <span class="chevron">&#9660;</span> Linear Algebra
-      <span class="labs-cat-count">1</span>
-    </div>
-    <ul class="labs-link-list">
-      <li class="labs-link-item"><a href="#Matrix">Simple Matrix Class</a></li>
-    </ul>
-  </div>
-
-  <div class="labs-cat">
-    <div class="labs-cat-title" onclick="toggleCat(this)">
-      <span class="chevron">&#9660;</span> Other Files
-      <span class="labs-cat-count">3</span>
-    </div>
-    <ul class="labs-link-list">
-      <li class="labs-link-item"><a href="#contract-class">Python Contract class</a></li>
-      <li class="labs-link-item"><a href="#marketdata-class">Python Market Data class</a></li>
-    </ul>
-  </div>
-
-<div class="labs-cat">
-    <div class="labs-cat-title" onclick="toggleCat(this)">
-      <span class="chevron">&#9660;</span> Option Pricing in Python
-      <span class="labs-cat-count">3</span>
-    </div>
-    <ul class="labs-link-list">
-      <li class="labs-link-item"><a href="#contract-class">Black Scholes Option Pricer</a></li>
-    </ul>
-  </div>
-    
-  <div class="labs-cat">
-    <div class="labs-cat-title" onclick="toggleCat(this)">
-      <span class="chevron">&#9660;</span> Option Pricing in C++
-      <span class="labs-cat-count">4</span>
-    </div>
-    <ul class="labs-link-list">
-      <li class="labs-link-item"><a href="#Option Pricing Structs">Option Pricing Structs</a></li>
-      <li class="labs-link-item"><a href="#european-black-scholes">Black Scholes Merton Pricer</a></li>
-      <li class="labs-link-item"><a href="#european-binomial-tree">European Binomial Tree</a></li>
-      <li class="labs-link-item"><a href="#american-black-scholes">American Binomial Tree</a></li>
-    </ul>
-  </div>
-<div class="labs-cat">
-    <div class="labs-cat-title" onclick="toggleCat(this)">
-      <span class="chevron">&#9660;</span> Other Code
-      <span class="labs-cat-count">1</span>
-    </div>
-    <ul class="labs-link-list">
-      <li class="labs-link-item"><a href="#estimate_pi">Estimating Pi using Monte Carlo Simulation</a></li>
-    </ul>
-  </div>
-    
-</aside>
+    <div class="labs-sidebar-title">Code Index</div>
+    <div class="labs-sidebar-sub" id="sidebar-sub">Numerical methods, implemented from scratch.</div>
+    <div id="sidebar-cats"></div>
+  </aside>
 
   <!-- ════════════════════ CONTENT ════════════════════ -->
   <div class="labs-content">
@@ -107,58 +82,121 @@
       <div class="labs-eyebrow">The Lab</div>
       <h1>Numerical methods,<br>built from <em>first principles</em>.</h1>
       <p>
-        A growing collection of quantitative-finance code &mdash; linear algebra,
-        pricing, stochastic processes &mdash; written from scratch in C++ and Python.
-        Each entry expands to show the implementation and a note on how it works.
-        Full files, with tests, live on <a href="https://github.com/">GitHub</a>.
+        A growing pricing library written from scratch in C++ and Python &mdash;
+        closed-form, tree, finite-difference and Monte Carlo methods for vanilla and
+        exotic products. Each entry expands to show the implementation and a note on
+        how it works. Faded entries are planned and will be filled in as they're built.
+        The full code, with tests, is mirrored on
+        <a href="https://github.com/asharbutt/LibraryCode" target="_blank">GitHub</a>.
       </p>
     </div>
 
-    <!-- ─────────── Linear Algebra ─────────── -->
-    <section class="labs-section" id="linear-algebra">
-      <div class="labs-section-head">
-        <span class="labs-section-num">01</span>
-        <span class="labs-section-title">Linear Algebra</span>
-        <span class="labs-section-desc">Matrix and Linear Algebra code</span>
-      </div>
+    <div class="lang-switch">
+      <button class="lang-btn" data-lang="cpp" onclick="switchLang('cpp')">C++<span class="lang-count"></span></button>
+      <button class="lang-btn" data-lang="py" onclick="switchLang('py')">Python<span class="lang-count"></span></button>
+    </div>
 
-      <!-- ▸ Cholesky -->
-      <article class="entry" id="Matrix">
-        <div class="entry-head" onclick="toggleEntry(this)">
-          <span class="entry-toggle">&#9654;</span>
-          <span class="entry-title">Simple Matrix Library</span>
-          <span class="entry-blurb"></span>
-          <span class="entry-tags">
-            <span class="tag tag-cpp">C++</span>
-            <span class="tag tag-foundational">Foundational</span>
-          </span>
+    <!-- ╔══════════════════════════════════════════════════════════╗
+         ║                          C++                             ║
+         ╚══════════════════════════════════════════════════════════╝ -->
+    <div class="lang-pane" id="pane-cpp" data-lang="cpp">
+
+      <p class="lang-intro">Header-based C++ library. Shared structs for contracts, market data and pricer parameters sit under Foundations.</p>
+
+      <!-- ─────────── C++ · 01 Foundations ─────────── -->
+      <section class="labs-section" data-title="Foundations">
+        <div class="labs-section-head">
+          <span class="labs-section-num">01</span>
+          <span class="labs-section-title">Foundations</span>
+          <span class="labs-section-desc">Structs, containers and utilities shared by every pricer</span>
         </div>
-        <div class="entry-body">
-          <div class="entry-explain">
-            <p>
-              
-            </p>
+
+        <article class="entry" id="cpp-option-parameters">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">Option Pricing Structs</span>
+            <span class="entry-blurb">Contract, market data, tree parameters</span>
+            <span class="entry-tags">
+              <span class="tag tag-cpp">C++</span>
+              <span class="tag tag-foundational">Foundational</span>
+            </span>
           </div>
-          <div class="entry-code">
-            <div class="entry-code-bar">
-              <span class="entry-code-file">include/Matrix.hpp</span>
-              <span class="entry-code-actions">
-                <button onclick="copyCode(this)">copy</button>
-                <a href="https://github.com/asharbutt/LibraryCode/blob/main/include/Matrix.hpp" target="_blank">view on github</a>
-              </span>
+          <div class="entry-body">
+            <div class="entry-explain">
+              <p>Struct header included by every pricer. Holds contract terms, market data and the method-specific parameters (e.g. binomial tree settings).</p>
             </div>
-<pre><code class="language-cpp">
+            <div class="entry-code">
+              <div class="entry-code-bar">
+                <span class="entry-code-file">include/option_parameters.hpp</span>
+                <span class="entry-code-actions">
+                  <button onclick="copyCode(this)">copy</button>
+                  <a href="https://github.com/asharbutt/LibraryCode/blob/main/include/option_parameters.hpp" target="_blank">view on github</a>
+                </span>
+              </div>
+<pre><code class="language-cpp">#pragma once
 
-  #pragma once
+// header file to contain the structs used to price a black scholes option
 
-#include <vector>
+namespace option_parameters {
+
+    struct OptionContract {
+        double strike;
+        double timeMaturity;
+        int optionType; // +1 or -1
+    };
+
+    struct OptionsMarketData {
+        double volatility;
+        double interestRate;
+        double divYield;
+        double spot;
+    };
+
+    struct binomial_parameters {
+        double up;
+        double down;
+        double probabilityUp;
+        int numSteps;
+        double deltaT;
+    };
+
+}</code></pre>
+            </div>
+          </div>
+        </article>
+
+        <article class="entry" id="cpp-matrix">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">Simple Matrix Class</span>
+            <span class="entry-blurb">Column-major, flat storage</span>
+            <span class="entry-tags">
+              <span class="tag tag-cpp">C++</span>
+              <span class="tag tag-foundational">Foundational</span>
+            </span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain">
+              <p>Templated matrix stored in a single flat <code>std::vector</code> in column-major order, with <code>operator()</code> for (row, column) access. Also holds the simulation-parameter and result structs used by the Monte Carlo code.</p>
+            </div>
+            <div class="entry-code">
+              <div class="entry-code-bar">
+                <span class="entry-code-file">include/Matrix.hpp</span>
+                <span class="entry-code-actions">
+                  <button onclick="copyCode(this)">copy</button>
+                  <a href="https://github.com/asharbutt/LibraryCode/blob/main/include/Matrix.hpp" target="_blank">view on github</a>
+                </span>
+              </div>
+<pre><code class="language-cpp">#pragma once
+
+#include &lt;vector&gt;
 
 namespace Matrix{
-    template <typename T>
+    template &lt;typename T&gt;
     class Matrix {
 
     private:
-        std::vector<T> matrix;
+        std::vector&lt;T&gt; matrix;
         std::size_t rows;
         std::size_t columns;
 
@@ -169,7 +207,7 @@ namespace Matrix{
             matrix.resize(rows*columns); //resize the matrix, column major
         }
 
-        T& operator() (std::size_t i, std::size_t j) {
+        T&amp; operator() (std::size_t i, std::size_t j) {
             return matrix[j*rows + i];
         }
     };
@@ -185,137 +223,531 @@ namespace Matrix{
         double std_error;
 
     };
+}</code></pre>
+            </div>
+          </div>
+        </article>
+
+        <article class="entry planned" id="cpp-statistics">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">Statistics Header</span>
+            <span class="entry-blurb">Normal pdf / cdf</span>
+            <span class="entry-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-planned">Planned</span></span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain"><p>Standard normal pdf and cdf (via <code>std::erfc</code>), used by every closed-form pricer.</p></div>
+            <div class="entry-soon">Planned &mdash; <code>include/statistics.hpp</code></div>
+          </div>
+        </article>
+      </section>
+
+      <!-- ─────────── C++ · 02 Numerical Tools ─────────── -->
+      <section class="labs-section" data-title="Numerical Tools">
+        <div class="labs-section-head">
+          <span class="labs-section-num">02</span>
+          <span class="labs-section-title">Numerical Tools</span>
+          <span class="labs-section-desc">Random numbers, root finding, decompositions</span>
+        </div>
+
+        <article class="entry planned" id="cpp-rng">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">Normal Random Number Generator</span>
+            <span class="entry-blurb">Box&ndash;Muller</span>
+            <span class="entry-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-planned">Planned</span></span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain"><p>Box&ndash;Muller transform on top of <code>std::mt19937_64</code>, with a fixed seed option for reproducible Monte Carlo.</p></div>
+            <div class="entry-soon">Planned &mdash; <code>include/random.hpp</code></div>
+          </div>
+        </article>
+
+        <article class="entry planned" id="cpp-implied-vol">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">Implied Volatility Solver</span>
+            <span class="entry-blurb">Newton&ndash;Raphson with bisection fallback</span>
+            <span class="entry-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-planned">Planned</span></span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain"><p>Newton&ndash;Raphson on the Black&ndash;Scholes price using vega, falling back to bisection when vega is small (deep ITM/OTM).</p></div>
+            <div class="entry-soon">Planned &mdash; <code>include/implied_vol.hpp</code></div>
+          </div>
+        </article>
+
+        <article class="entry planned" id="cpp-cholesky">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">Cholesky Decomposition</span>
+            <span class="entry-blurb">Correlated Brownian motions</span>
+            <span class="entry-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-planned">Planned</span></span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain"><p>Factorises a correlation matrix as $LL^T$ to generate correlated normals, e.g. asset and FX paths for quanto Monte Carlo.</p></div>
+            <div class="entry-soon">Planned &mdash; <code>include/cholesky.hpp</code></div>
+          </div>
+        </article>
+      </section>
+
+      <!-- ─────────── C++ · 03 Closed Form ─────────── -->
+      <section class="labs-section" data-title="Closed Form">
+        <div class="labs-section-head">
+          <span class="labs-section-num">03</span>
+          <span class="labs-section-title">Closed Form</span>
+          <span class="labs-section-desc">Analytical prices and Greeks</span>
+        </div>
+
+        <article class="entry" id="cpp-bsm">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">Black&ndash;Scholes&ndash;Merton</span>
+            <span class="entry-blurb">European price and Greeks</span>
+            <span class="entry-tags">
+              <span class="tag tag-cpp">C++</span>
+              <span class="tag tag-foundational">Foundational</span>
+            </span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain">
+              <p>Closed-form European price, delta, gamma, vega and theta with a continuous dividend yield. Uses the statistics and option-parameter headers.</p>
+            </div>
+            <div class="entry-code">
+              <div class="entry-code-bar">
+                <span class="entry-code-file">include/black_scholes_merton.hpp</span>
+                <span class="entry-code-actions">
+                  <button onclick="copyCode(this)">copy</button>
+                  <a href="https://github.com/asharbutt/LibraryCode/blob/main/include/black_scholes_merton.hpp" target="_blank">view on github</a>
+                </span>
+              </div>
+<pre><code class="language-cpp">#include &lt;cmath&gt;      
+#include "option_parameters.hpp"
+#include "statistics.hpp"
+
+
+double compute_d1(const option_parameters::OptionContract&amp; c, const option_parameters::OptionsMarketData&amp; d) 
+  { return (std::log(d.spot / c.strike) + (d.interestRate - d.divYield + 0.5 * d.volatility * d.volatility) * c.timeMaturity) / (d.volatility * std::sqrt(c.timeMaturity)); }
+double price(const option_parameters::OptionContract&amp; c, const option_parameters::OptionsMarketData&amp; d) {
+    const double d1 = compute_d1(c, d);
+    const double d2 = d1 - d.volatility * std::sqrt(c.timeMaturity);
+    return c.optionType * d.spot * std::exp(-d.divYield * c.timeMaturity) * stats::standard_normal_cdf(c.optionType * d1) - c.optionType * c.strike * std::exp(-d.interestRate * c.timeMaturity) * stats::standard_normal_cdf(c.optionType * d2);
 }
-</code></pre>
-          </div>
-        </div>
-      </article>
-
-      <!-- ▸ LU (placeholder) -->
-      <article class="entry" id="lu">
-        <div class="entry-head" onclick="toggleEntry(this)">
-          <span class="entry-toggle">&#9654;</span>
-          <span class="entry-title"></span>
-          <span class="entry-blurb"></span>
-          <span class="entry-tags">
-            <span class="tag tag-cpp">C++</span>
-            <span class="tag tag-foundational">Foundational</span>
-          </span>
-        </div>
-        <div class="entry-body">
-          <div class="entry-explain">
-            <p>
-             
-            </p>
-            <p><em></em></p>
-          </div>
-          <div class="entry-soon"></div>
-        </div>
-      </article>
-    </section>
-
-    <!-- ─────────── Root Finding ─────────── -->
-    <section class="labs-section" id="root-finding">
-      <div class="labs-section-head">
-        <span class="labs-section-num">02</span>
-        <span class="labs-section-title">Root Finding</span>
-        <span class="labs-section-desc">Solvers for f(x) = 0</span>
-      </div>
-
-      <!-- ▸ Newton-Raphson -->
-      <article class="entry" id="newton">
-        <div class="entry-head" onclick="toggleEntry(this)">
-          <span class="entry-toggle">&#9654;</span>
-          <span class="entry-title">Newton Raphson in Python</span>
-          <span class="entry-blurb"></span>
-          <span class="entry-tags">
-            <span class="tag tag-py">Python</span>
-            <span class="tag tag-foundational">Foundational</span>
-          </span>
-        </div>
-        <div class="entry-body">
-          <div class="entry-explain">
-            <p>
-             Newton Raphson function to find implied vol for European Options. Uses the Contract, marketData and the black scholes modules as input
-            </p>
-            <p>
-            
-            </p>
-          </div>
-          <div class="entry-code">
-            <div class="entry-code-bar">
-              <span class="entry-code-file">numerics/roots.py</span>
-              <span class="entry-code-actions">
-                <button onclick="copyCode(this)">copy</button>
-                <a href="https://github.com/" target="_blank">view on github</a>
-              </span>
+double delta(const option_parameters::OptionContract&amp; c, const option_parameters::OptionsMarketData&amp; d) 
+  { return c.optionType * std::exp(-d.divYield * c.timeMaturity) * stats::standard_normal_cdf(c.optionType * compute_d1(c, d)); }
+double gamma(const option_parameters::OptionContract&amp; c, const option_parameters::OptionsMarketData&amp; d) 
+  { return stats::standard_normal_pdf(compute_d1(c, d)) / (d.spot * d.volatility * std::sqrt(c.timeMaturity)); }
+double vega(const option_parameters::OptionContract&amp; c, const option_parameters::OptionsMarketData&amp; d) 
+  { return d.spot * std::exp(-d.divYield * c.timeMaturity) * stats::standard_normal_pdf(compute_d1(c, d)) * std::sqrt(c.timeMaturity); }
+double theta(const option_parameters::OptionContract&amp; c, const option_parameters::OptionsMarketData&amp; d) {
+    const double d1 = compute_d1(c, d);
+    const double d2 = d1 - d.volatility * std::sqrt(c.timeMaturity);
+    
+    double annual_theta =  -((d.spot * stats::standard_normal_pdf(d1) * d.volatility*std::exp(-d.divYield*c.timeMaturity)) / (2 * std::sqrt(c.timeMaturity))) 
+      - c.optionType* d.interestRate* c.strike*std::exp(-d.interestRate * c.timeMaturity)* stats::standard_normal_cdf(c.optionType * d2) 
+      + c.optionType*d.divYield*d.spot*stats::standard_normal_cdf(c.optionType*d1)*std::exp(-d.divYield*c.timeMaturity);
+        return annual_theta;
+}</code></pre>
             </div>
-<pre><code class="language-python">
-import black_scholes as bs
-import contract_id_class as id
-import marketData as md
-
-def newton_raphson_implied_volatility(contract: id.OptionContract, data: md.MarketData, initial_guess: float ):
-    # checks to ensure contract details are sufficient
-    if any(x is None for x in (contract.contractID, contract.Notional, contract.Strike, contract.instrument, contract.contractValue, contract.dateMaturity)):
-        raise ValueError("Missing parameters in Contract details")
-    if any(x is None for x in (data.spot, data.interestRate, data.divYield, data.valDate, data.dayCountConvention)):
-        raise ValueError("Missing parameters in marketData details")
-    tol = 1e-5
-    max_iterations = 10000
-    x_0 = initial_guess
-    data.vol = x_0
-    print(data)
-    for i in range(max_iterations):
-        x_1 = x_0 - (bs.bs_price(contract, data) - contract.contractValue) / bs.vega(contract, data)
-        data.vol = x_1
-        if abs(bs.bs_price(contract, data) - contract.contractValue) &lt; tol:
-            return x_1
-        x_0 = x_1
-    return None
-</code></pre>
           </div>
-        </div>
-      </article>
-    </section>
+        </article>
 
- <!-- ─────────── section for random things ─────────── -->
-    <section class="labs-section" id="Other Files">
-      <div class="labs-section-head">
-        <span class="labs-section-num">03</span>
-        <span class="labs-section-title">Random Files used in pricing</span>
-        <span class="labs-section-desc"></span>
-      </div>
-
-      <article class="entry" id="contract-class">
-        <div class="entry-head" onclick="toggleEntry(this)">
-          <span class="entry-toggle">&#9654;</span>
-          <span class="entry-title">Contract Class File</span>
-          <span class="entry-blurb"></span>
-          <span class="entry-tags">
-            <span class="tag tag-py">Python</span>
-            <span class="tag tag-foundational"></span>
-          </span>
-        </div>
-        <div class="entry-body"> 
-          <div class="entry-explain">
-            <p>
-             Class that contains classes for contract details. To be used in python pricing scripts
-            </p>
-            <p>
-            
-            </p>
+        <article class="entry planned" id="cpp-fx-forward">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">FX Forward</span>
+            <span class="entry-blurb">Covered interest parity, MTM</span>
+            <span class="entry-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-planned">Planned</span></span>
           </div>
-          <div class="entry-code">
-            <div class="entry-code-bar">
-              <span class="entry-code-file">contract_id_class.py</span>
-              <span class="entry-code-actions">
-                <button onclick="copyCode(this)">copy</button>
-                <a href="https://github.com/asharbutt/LibraryCode/blob/main/python/contract_id_class" target="_blank">view on github</a>
-              </span>
+          <div class="entry-body">
+            <div class="entry-explain"><p>Forward rate $F = S\,e^{(r_d - r_f)T}$ and mark-to-market of an existing forward, $N\,(F - K)\,e^{-r_d T}$.</p></div>
+            <div class="entry-soon">Planned &mdash; <code>include/fx_forward.hpp</code></div>
+          </div>
+        </article>
+
+        <article class="entry planned" id="cpp-garman-kohlhagen">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">FX Options (Garman&ndash;Kohlhagen)</span>
+            <span class="entry-blurb">European FX price and Greeks</span>
+            <span class="entry-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-planned">Planned</span></span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain"><p>Black&ndash;Scholes with the foreign rate as the dividend yield, plus FX delta conventions (spot vs forward, premium-adjusted).</p></div>
+            <div class="entry-soon">Planned &mdash; <code>include/garman_kohlhagen.hpp</code></div>
+          </div>
+        </article>
+
+        <article class="entry planned" id="cpp-digital">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">Digital Options</span>
+            <span class="entry-blurb">Cash- and asset-or-nothing</span>
+            <span class="entry-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-planned">Planned</span></span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain"><p>Cash-or-nothing $e^{-rT}N(d_2)$ and asset-or-nothing $S e^{-qT}N(d_1)$, with a call-spread replication check.</p></div>
+            <div class="entry-soon">Planned &mdash; <code>include/digital.hpp</code></div>
+          </div>
+        </article>
+
+        <article class="entry planned" id="cpp-barrier-closed">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">Barrier Options</span>
+            <span class="entry-blurb">Reiner&ndash;Rubinstein, all 8 types</span>
+            <span class="entry-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-planned">Planned</span></span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain"><p>Continuously monitored up/down, in/out calls and puts, with rebates and the Broadie&ndash;Glasserman&ndash;Kou adjustment for discrete monitoring. Applies to equity and FX barriers.</p></div>
+            <div class="entry-soon">Planned &mdash; <code>include/barrier.hpp</code></div>
+          </div>
+        </article>
+
+        <article class="entry planned" id="cpp-geometric-asian">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">Geometric Asian Options</span>
+            <span class="entry-blurb">Exact closed form</span>
+            <span class="entry-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-planned">Planned</span></span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain"><p>The geometric average of a GBM is lognormal, so it prices exactly with an adjusted drift and vol. Used as the control variate for the arithmetic Asian.</p></div>
+            <div class="entry-soon">Planned &mdash; <code>include/asian_geometric.hpp</code></div>
+          </div>
+        </article>
+
+        <article class="entry planned" id="cpp-quanto">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">Quanto Options</span>
+            <span class="entry-blurb">Correlation-adjusted drift</span>
+            <span class="entry-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-planned">Planned</span></span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain"><p>Generalised Black&ndash;Scholes with carry $b = r_f - q - \rho\sigma_S\sigma_X$, discounted at $r_d$, with correlation and FX-vol sensitivities.</p></div>
+            <div class="entry-soon">Planned &mdash; <code>include/quanto.hpp</code></div>
+          </div>
+        </article>
+      </section>
+
+      <!-- ─────────── C++ · 04 Tree Methods ─────────── -->
+      <section class="labs-section" data-title="Tree Methods">
+        <div class="labs-section-head">
+          <span class="labs-section-num">04</span>
+          <span class="labs-section-title">Tree Methods</span>
+          <span class="labs-section-desc">Binomial and trinomial lattices</span>
+        </div>
+
+        <article class="entry" id="cpp-binomial-european">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">European Binomial Tree</span>
+            <span class="entry-blurb">Cox&ndash;Ross&ndash;Rubinstein</span>
+            <span class="entry-tags">
+              <span class="tag tag-cpp">C++</span>
+              <span class="tag tag-foundational">Foundational</span>
+            </span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain">
+              <p>CRR tree: builds terminal stock prices, applies the payoff, then rolls back under the risk-neutral probability. Converges to Black&ndash;Scholes as the step count grows.</p>
             </div>
-<pre><code class="language-python">
-from dataclasses import dataclass
+            <div class="entry-code">
+              <div class="entry-code-bar">
+                <span class="entry-code-file">include/tree_methods.hpp</span>
+                <span class="entry-code-actions">
+                  <button onclick="copyCode(this)">copy</button>
+                  <a href="https://github.com/asharbutt/LibraryCode/blob/main/include/tree_methods.hpp" target="_blank">view on github</a>
+                </span>
+              </div>
+<pre><code class="language-cpp">#include &lt;cmath&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+#include "option_parameters.hpp"
+
+double binomialTreeEuropean(option_parameters::binomial_parameters&amp; params, option_parameters::OptionsMarketData&amp; data, option_parameters::OptionContract&amp; contract) {
+    params.deltaT = contract.timeMaturity / params.numSteps;
+    params.up = std::exp(data.volatility * std::sqrt(params.deltaT));
+    params.down = std::exp(-data.volatility * std::sqrt(params.deltaT));
+    params.probabilityUp = (std::exp(data.interestRate * params.deltaT) - params.down) / (params.up - params.down);
+
+    std::vector&lt;double&gt; optionValue(params.numSteps+1, 0.0);
+    std::vector&lt;double&gt; optionValue_temp(params.numSteps+1, 0.0);
+
+    std::vector&lt;double&gt; finalStockVector(params.numSteps+1, params.numSteps+1);
+
+    for (std::size_t i = 0; i &lt; params.numSteps; i++) {
+        finalStockVector[i] = data.spot * std::pow(params.up, params.numSteps - i) * std::pow(params.down, i);
+    }
+
+    //calculate payoff on initial vector
+    for (std::size_t i = 0; i &lt;= params.numSteps; i++) {
+        optionValue[i] = std::max(contract.optionType * (finalStockVector[i] - contract.strike), 0.0);
+    }
+
+    for (std::size_t j = params.numSteps; j &gt; 0; j--) {
+        for (std::size_t i = 0; i &lt; j; i++) {
+            optionValue[i] = (optionValue[i] * params.probabilityUp + optionValue[i + 1] * (1 - params.probabilityUp)) * std::exp(-data.interestRate * params.deltaT);
+        }
+    }
+
+    return optionValue[0];
+}</code></pre>
+            </div>
+          </div>
+        </article>
+
+        <article class="entry" id="cpp-binomial-american">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">American Binomial Tree</span>
+            <span class="entry-blurb">Early exercise at every node</span>
+            <span class="entry-tags">
+              <span class="tag tag-cpp">C++</span>
+              <span class="tag tag-foundational">Foundational</span>
+            </span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain">
+              <p>Same lattice as the European tree, but at each node the value is the maximum of continuation and immediate exercise. Stores the full stock lattice in the Matrix class.</p>
+            </div>
+            <div class="entry-code">
+              <div class="entry-code-bar">
+                <span class="entry-code-file">include/tree_methods.hpp</span>
+                <span class="entry-code-actions">
+                  <button onclick="copyCode(this)">copy</button>
+                  <a href="https://github.com/asharbutt/LibraryCode/blob/main/include/tree_methods.hpp" target="_blank">view on github</a>
+                </span>
+              </div>
+<pre><code class="language-cpp">#include "Matrix.hpp"
+#include "option_parameters.hpp"
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+namespace american_binomial {
+    double binomialTreeAmerican(option_parameters::binomial_parameters&amp; params, option_parameters::OptionsMarketData&amp; data, option_parameters::OptionContract&amp; contract) {
+    params.deltaT = contract.timeMaturity / params.numSteps;
+    params.up = std::exp(data.volatility * std::sqrt(params.deltaT));
+    params.down = std::exp(-data.volatility * std::sqrt(params.deltaT));
+    params.probabilityUp = (std::exp(data.interestRate * params.deltaT) - params.down) / (params.up - params.down);
+    std::vector&lt;double&gt; optionValue(params.numSteps + 1, 0.0); // initial payoff, will then be used to compute the option value at each Delta T
+    std::vector&lt;double&gt; optionValue_temp(params.numSteps + 1, 0.0); // temporary option value vector, used to hold option values from previous time.
+    Matrix::Matrix&lt;double&gt; finalStockMatrix(params.numSteps + 1, params.numSteps + 1);
+    finalStockMatrix(0, 0) = data.spot;
+    // initialise the stock matrix
+    for (std::size_t j = 1; j &lt;= params.numSteps; j++) {
+        for (std::size_t i = 0; i &lt; params.numSteps; i++) {
+            if (i == 0) {
+                finalStockMatrix(i, j) = finalStockMatrix(i, j - 1) * params.up;
+            }
+            else {
+                finalStockMatrix(i, j) = finalStockMatrix(i - 1, j - 1) * params.down;
+            }
+        }
+    }
+    //calculate payoff on initial vector
+    for (std::size_t i = 0; i &lt;= params.numSteps; i++) {
+        optionValue[i] = std::max(contract.optionType * (finalStockMatrix(i, params.numSteps) - contract.strike), 0.0);
+    }
+    for (std::size_t j = params.numSteps; j &gt; 0; j--) {
+        for (std::size_t i = 0; i &lt; j; i++) {
+            optionValue[i] = std::max((optionValue[i] * params.probabilityUp + optionValue[i + 1] * (1 - params.probabilityUp)) * std::exp(-data.interestRate * params.deltaT), std::max(contract.optionType*(finalStockMatrix(i,j-1)-contract.strike),0.0));
+        }
+    }
+    return optionValue[0];
+}
+}</code></pre>
+            </div>
+          </div>
+        </article>
+
+        <article class="entry planned" id="cpp-trinomial">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">Trinomial Tree</span>
+            <span class="entry-blurb">European and American</span>
+            <span class="entry-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-planned">Planned</span></span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain"><p>Three-branch lattice (Boyle) with smoother convergence than CRR; the natural bridge to explicit finite differences.</p></div>
+            <div class="entry-soon">Planned &mdash; <code>include/tree_methods.hpp</code></div>
+          </div>
+        </article>
+
+        <article class="entry planned" id="cpp-barrier-tree">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">Barrier Options on a Tree</span>
+            <span class="entry-blurb">Knock-out with barrier-aligned nodes</span>
+            <span class="entry-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-planned">Planned</span></span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain"><p>Zeroes node values beyond the barrier during rollback; shows the sawtooth convergence and how aligning nodes with the barrier fixes it. Benchmarked against the closed form.</p></div>
+            <div class="entry-soon">Planned &mdash; <code>include/tree_methods.hpp</code></div>
+          </div>
+        </article>
+
+        <article class="entry planned" id="cpp-convertible">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">Convertible Bond</span>
+            <span class="entry-blurb">Tsiveriotis&ndash;Fernandes tree</span>
+            <span class="entry-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-planned">Planned</span><span class="tag tag-advanced">Advanced</span></span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain"><p>Equity tree with conversion, call and put features; splits value into cash-only (discounted with credit spread) and equity components.</p></div>
+            <div class="entry-soon">Planned &mdash; <code>include/convertible_bond.hpp</code></div>
+          </div>
+        </article>
+      </section>
+
+      <!-- ─────────── C++ · 05 Finite Difference ─────────── -->
+      <section class="labs-section" data-title="Finite Difference">
+        <div class="labs-section-head">
+          <span class="labs-section-num">05</span>
+          <span class="labs-section-title">Finite Difference</span>
+          <span class="labs-section-desc">Solving the Black&ndash;Scholes PDE on a grid</span>
+        </div>
+
+        <article class="entry planned" id="cpp-fd-explicit">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">Explicit Finite Difference</span>
+            <span class="entry-blurb">European and American</span>
+            <span class="entry-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-planned">Planned</span></span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain"><p>Explicit scheme on a spot/time grid, with the stability condition on $\Delta t$ and early exercise applied at each step.</p></div>
+            <div class="entry-soon">Planned &mdash; <code>include/finite_difference.hpp</code></div>
+          </div>
+        </article>
+
+        <article class="entry planned" id="cpp-fd-cn">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">Crank&ndash;Nicolson</span>
+            <span class="entry-blurb">Tridiagonal (Thomas) solver</span>
+            <span class="entry-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-planned">Planned</span></span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain"><p>Unconditionally stable, second-order scheme; American options via PSOR. Barriers handled by placing a grid boundary at the barrier.</p></div>
+            <div class="entry-soon">Planned &mdash; <code>include/finite_difference.hpp</code></div>
+          </div>
+        </article>
+      </section>
+
+      <!-- ─────────── C++ · 06 Monte Carlo ─────────── -->
+      <section class="labs-section" data-title="Monte Carlo">
+        <div class="labs-section-head">
+          <span class="labs-section-num">06</span>
+          <span class="labs-section-title">Monte Carlo</span>
+          <span class="labs-section-desc">Path simulation and path-dependent payoffs</span>
+        </div>
+
+        <article class="entry planned" id="cpp-mc-european">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">Monte Carlo Engine</span>
+            <span class="entry-blurb">GBM paths, European payoff</span>
+            <span class="entry-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-planned">Planned</span></span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain"><p>Streaming path generator with pluggable payoffs, returning price and standard error; antithetic variates. Checked against Black&ndash;Scholes.</p></div>
+            <div class="entry-soon">Planned &mdash; <code>include/monte_carlo.hpp</code></div>
+          </div>
+        </article>
+
+        <article class="entry planned" id="cpp-mc-asian">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">Arithmetic Asian Options</span>
+            <span class="entry-blurb">Geometric control variate</span>
+            <span class="entry-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-planned">Planned</span></span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain"><p>Arithmetic-average payoff by simulation, using the closed-form geometric Asian as a control variate to cut variance.</p></div>
+            <div class="entry-soon">Planned &mdash; <code>include/asian_arithmetic.hpp</code></div>
+          </div>
+        </article>
+
+        <article class="entry planned" id="cpp-mc-barrier">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">Barrier Options by Simulation</span>
+            <span class="entry-blurb">Brownian-bridge correction</span>
+            <span class="entry-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-planned">Planned</span></span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain"><p>Discretely monitored paths with a Brownian-bridge crossing probability between steps to remove monitoring bias.</p></div>
+            <div class="entry-soon">Planned &mdash; <code>include/monte_carlo.hpp</code></div>
+          </div>
+        </article>
+
+        <article class="entry planned" id="cpp-lsmc">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">Longstaff&ndash;Schwartz</span>
+            <span class="entry-blurb">Least-squares MC for American options</span>
+            <span class="entry-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-planned">Planned</span><span class="tag tag-advanced">Advanced</span></span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain"><p>Estimates the continuation value by regressing discounted future cash flows on basis functions of the current state, working backwards through time. Benchmarked against the American tree.</p></div>
+            <div class="entry-soon">Planned &mdash; <code>include/longstaff_schwartz.hpp</code></div>
+          </div>
+        </article>
+
+        <article class="entry planned" id="cpp-autocallable">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">Autocallable</span>
+            <span class="entry-blurb">Memory coupon, knock-in put</span>
+            <span class="entry-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-planned">Planned</span><span class="tag tag-advanced">Advanced</span></span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain"><p>Observation-date autocall, memory coupons and a down-and-in put at maturity; reports expected life and autocall probabilities alongside price.</p></div>
+            <div class="entry-soon">Planned &mdash; <code>include/autocallable.hpp</code></div>
+          </div>
+        </article>
+      </section>
+    </div>
+
+    <!-- ╔══════════════════════════════════════════════════════════╗
+         ║                         PYTHON                           ║
+         ╚══════════════════════════════════════════════════════════╝ -->
+    <div class="lang-pane" id="pane-py" data-lang="py">
+
+      <p class="lang-intro">Python modules built on shared Contract and MarketData dataclasses, so every pricer takes the same inputs.</p>
+
+      <!-- ─────────── Python · 01 Foundations ─────────── -->
+      <section class="labs-section" data-title="Foundations">
+        <div class="labs-section-head">
+          <span class="labs-section-num">01</span>
+          <span class="labs-section-title">Foundations</span>
+          <span class="labs-section-desc">Data classes and utilities shared by every pricer</span>
+        </div>
+
+        <article class="entry" id="py-contract">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">Contract Class</span>
+            <span class="entry-blurb">Trade terms, values and risks</span>
+            <span class="entry-tags">
+              <span class="tag tag-py">Python</span>
+              <span class="tag tag-foundational">Foundational</span>
+            </span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain">
+              <p>Dataclasses for contract details, with an option subclass. Passed into every Python pricer.</p>
+            </div>
+            <div class="entry-code">
+              <div class="entry-code-bar">
+                <span class="entry-code-file">python/contract_id_class.py</span>
+                <span class="entry-code-actions">
+                  <button onclick="copyCode(this)">copy</button>
+                  <a href="https://github.com/asharbutt/LibraryCode/blob/main/python/contract_id_class" target="_blank">view on github</a>
+                </span>
+              </div>
+<pre><code class="language-python">from dataclasses import dataclass
 from typing import Optional
 
 @dataclass
@@ -338,42 +770,34 @@ class Contract:
 class OptionContract(Contract):
     Strike: float = 0.0
     dateMaturity: str = ""
-    optionType: int = 1 # +1 or -1 for call/put
-
-
-  </code></pre>
-          </div>
-        </div>
-      </article>
-       <article class="entry" id="marketdata-class">
-        <div class="entry-head" onclick="toggleEntry(this)">
-          <span class="entry-toggle">&#9654;</span>
-          <span class="entry-title">MarketData Class File</span>
-          <span class="entry-blurb"></span>
-          <span class="entry-tags">
-            <span class="tag tag-py">Python</span>
-            <span class="tag tag-foundational"></span>
-          </span>
-        </div>
-        <div class="entry-body"> 
-          <div class="entry-explain">
-            <p>
-             File that contains narket data class to be passed to pricing modules
-            </p>
-            <p>
-            
-            </p>
-          </div>
-          <div class="entry-code">
-            <div class="entry-code-bar">
-              <span class="entry-code-file">marketData.py</span>
-              <span class="entry-code-actions">
-                <button onclick="copyCode(this)">copy</button>
-                <a href="https://github.com/asharbutt/LibraryCode/blob/main/python/marketData.py" target="_blank">view on github</a>
-              </span>
+    optionType: int = 1 # +1 or -1 for call/put</code></pre>
             </div>
-<pre><code class="language-python">
-from dataclasses import dataclass
+          </div>
+        </article>
+
+        <article class="entry" id="py-marketdata">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">MarketData Class</span>
+            <span class="entry-blurb">Spot, rates, vol, dates</span>
+            <span class="entry-tags">
+              <span class="tag tag-py">Python</span>
+              <span class="tag tag-foundational">Foundational</span>
+            </span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain">
+              <p>Market data dataclass passed to the pricing modules.</p>
+            </div>
+            <div class="entry-code">
+              <div class="entry-code-bar">
+                <span class="entry-code-file">python/marketData.py</span>
+                <span class="entry-code-actions">
+                  <button onclick="copyCode(this)">copy</button>
+                  <a href="https://github.com/asharbutt/LibraryCode/blob/main/python/marketData.py" target="_blank">view on github</a>
+                </span>
+              </div>
+<pre><code class="language-python">from dataclasses import dataclass
 from typing import Optional
 
 @dataclass
@@ -384,43 +808,34 @@ class MarketData:
     valDate: str
     dayCountConvention: str = ""
     vol: Optional[float] = None
-    timeMaturity: Optional[float] = None
-
-
-
-</code></pre>
-          </div>
-        </div>
-      </article>
-       <article class="entry" id="daycount-class">
-        <div class="entry-head" onclick="toggleEntry(this)">
-          <span class="entry-toggle">&#9654;</span>
-          <span class="entry-title">Daycount conventions file</span>
-          <span class="entry-blurb"></span>
-          <span class="entry-tags">
-            <span class="tag tag-py">Python</span>
-            <span class="tag tag-foundational"></span>
-          </span>
-        </div>
-        <div class="entry-body"> 
-          <div class="entry-explain">
-            <p>
-             File that contains daycount convention function to return daycount between two dates. Currently only support A360 and A365 as it is a showcase
-            </p>
-            <p>
-            
-            </p>
-          </div>
-          <div class="entry-code">
-            <div class="entry-code-bar">
-              <span class="entry-code-file"></span>
-              <span class="entry-code-actions">
-                <button onclick="copyCode(this)">copy</button>
-                <a href="https://github.com/asharbutt/LibraryCode/blob/main/python/daycountConventionCalculator.py" target="_blank">view on github</a>
-              </span>
+    timeMaturity: Optional[float] = None</code></pre>
             </div>
-<pre><code class="language-python">
-import datetime
+          </div>
+        </article>
+
+        <article class="entry" id="py-daycount">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">Day Count Conventions</span>
+            <span class="entry-blurb">ACT/360, ACT/365</span>
+            <span class="entry-tags">
+              <span class="tag tag-py">Python</span>
+              <span class="tag tag-foundational">Foundational</span>
+            </span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain">
+              <p>Returns the year fraction between two dates. Currently supports ACT/360 and ACT/365; 30/360 to follow.</p>
+            </div>
+            <div class="entry-code">
+              <div class="entry-code-bar">
+                <span class="entry-code-file">python/daycountConventionCalculator.py</span>
+                <span class="entry-code-actions">
+                  <button onclick="copyCode(this)">copy</button>
+                  <a href="https://github.com/asharbutt/LibraryCode/blob/main/python/daycountConventionCalculator.py" target="_blank">view on github</a>
+                </span>
+              </div>
+<pre><code class="language-python">import datetime
 
 def daycount(startDate, endDate, convention):
     startDate = datetime.datetime.strptime(startDate, "%d/%m/%Y")
@@ -430,48 +845,100 @@ def daycount(startDate, endDate, convention):
     elif convention == "A365":
         return (endDate - startDate).days / 365
     elif convention == "30360":
-        return None
-</code></pre>
-          </div>
-        </div>
-      </article>
-    </section>
-
-    
-<section class="labs-section" id="optionpricing-python">
-      <div class="labs-section-head">
-        <span class="labs-section-num">01</span>
-        <span class="labs-section-title">Option Pricing in Python</span>
-        <span class="labs-section-desc">Option Pricing files written in Python. Makes use of the Contract and Market Data files in the "Other" section above.</span>
-      </div>
-
-      <!-- ▸ Cholesky -->
-      <article class="entry" id="Matrix">
-        <div class="entry-head" onclick="toggleEntry(this)">
-          <span class="entry-toggle">&#9654;</span>
-          <span class="entry-title">Black Scholes Module</span>
-          <span class="entry-blurb"></span>
-          <span class="entry-tags">
-            <span class="tag tag-cpp">Python</span>
-            <span class="tag tag-foundational">Foundational</span>
-          </span>
-        </div>
-        <div class="entry-body">
-          <div class="entry-explain">
-            <p>
-              
-            </p>
-          </div>
-          <div class="entry-code">
-            <div class="entry-code-bar">
-              <span class="entry-code-file">black_scholes.py</span>
-              <span class="entry-code-actions">
-                <button onclick="copyCode(this)">copy</button>
-                <a href="https://github.com/asharbutt/LibraryCode/blob/main/python/black_scholes.py" target="_blank">view on github</a>
-              </span>
+        return None</code></pre>
             </div>
-<pre><code class="language-cpp">
-from scipy.stats import norm
+          </div>
+        </article>
+      </section>
+
+      <!-- ─────────── Python · 02 Numerical Tools ─────────── -->
+      <section class="labs-section" data-title="Numerical Tools">
+        <div class="labs-section-head">
+          <span class="labs-section-num">02</span>
+          <span class="labs-section-title">Numerical Tools</span>
+          <span class="labs-section-desc">Root finding and solvers</span>
+        </div>
+
+        <article class="entry" id="py-newton-iv">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">Implied Volatility (Newton&ndash;Raphson)</span>
+            <span class="entry-blurb">Solves BS price = market price</span>
+            <span class="entry-tags">
+              <span class="tag tag-py">Python</span>
+              <span class="tag tag-foundational">Foundational</span>
+            </span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain">
+              <p>Newton&ndash;Raphson iteration for the implied vol of a European option, using vega as the derivative. Uses the Contract, MarketData and Black&ndash;Scholes modules.</p>
+            </div>
+            <div class="entry-code">
+              <div class="entry-code-bar">
+                <span class="entry-code-file">python/roots.py</span>
+                <span class="entry-code-actions">
+                  <button onclick="copyCode(this)">copy</button>
+                  <a href="https://github.com/asharbutt/LibraryCode/tree/main/python" target="_blank">view on github</a>
+                </span>
+              </div>
+<pre><code class="language-python">import black_scholes as bs
+import contract_id_class as id
+import marketData as md
+
+def newton_raphson_implied_volatility(contract: id.OptionContract, data: md.MarketData, initial_guess: float ):
+    # checks to ensure contract details are sufficient
+    if any(x is None for x in (contract.contractID, contract.Notional, contract.Strike, contract.instrument, contract.contractValue, contract.dateMaturity)):
+        raise ValueError("Missing parameters in Contract details")
+    if any(x is None for x in (data.spot, data.interestRate, data.divYield, data.valDate, data.dayCountConvention)):
+        raise ValueError("Missing parameters in marketData details")
+    tol = 1e-5
+    max_iterations = 10000
+    x_0 = initial_guess
+    data.vol = x_0
+    print(data)
+    for i in range(max_iterations):
+        x_1 = x_0 - (bs.bs_price(contract, data) - contract.contractValue) / bs.vega(contract, data)
+        data.vol = x_1
+        if abs(bs.bs_price(contract, data) - contract.contractValue) &lt; tol:
+            return x_1
+        x_0 = x_1
+    return None</code></pre>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <!-- ─────────── Python · 03 Closed Form ─────────── -->
+      <section class="labs-section" data-title="Closed Form">
+        <div class="labs-section-head">
+          <span class="labs-section-num">03</span>
+          <span class="labs-section-title">Closed Form</span>
+          <span class="labs-section-desc">Analytical prices and Greeks</span>
+        </div>
+
+        <article class="entry" id="py-bsm">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">Black&ndash;Scholes&ndash;Merton</span>
+            <span class="entry-blurb">European price and Greeks</span>
+            <span class="entry-tags">
+              <span class="tag tag-py">Python</span>
+              <span class="tag tag-foundational">Foundational</span>
+            </span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain">
+              <p>Closed-form European price, delta, gamma, vega, theta and rho with a continuous dividend yield. Uses the Contract, MarketData and day-count modules.</p>
+            </div>
+            <div class="entry-code">
+              <div class="entry-code-bar">
+                <span class="entry-code-file">python/black_scholes.py</span>
+                <span class="entry-code-actions">
+                  <button onclick="copyCode(this)">copy</button>
+                  <a href="https://github.com/asharbutt/LibraryCode/blob/main/python/black_scholes.py" target="_blank">view on github</a>
+                </span>
+              </div>
+<pre><code class="language-python">from scipy.stats import norm
 from marketData import *
 import contract_id_class as id
 import numpy as np
@@ -511,320 +978,203 @@ def rho(contract: id.OptionContract, data: MarketData):
     d1 = (np.log(data.spot / contract.Strike) + (data.interestRate - data.divYield + 0.5 * data.vol*data.vol)*data.timeMaturity)/ (data.vol*np.sqrt(data.timeMaturity))
     d2 = d1 - (data.vol*np.sqrt(data.timeMaturity))
     return contract.optionType*contract.Strike*data.timeMaturity*np.exp(-data.interestRate*data.timeMaturity)*norm.cdf(contract.optionType*d2)</code></pre>
-          </div>
-        </div>
-      </article>
-    </section>
-
-    
-    <!-- ─────────── Option Pricing ─────────── -->
-    <section class="labs-section" id="option-pricing">
-      <div class="labs-section-head">
-        <span class="labs-section-num">03</span>
-        <span class="labs-section-title">Option Pricing in C++</span>
-        <span class="labs-section-desc">Numerical Methods for Pricing Options</span>
-      </div>
-
- <article class="entry" id="Option Pricing Structs">
-        <div class="entry-head" onclick="toggleEntry(this)">
-          <span class="entry-toggle">&#9654;</span>
-          <span class="entry-title">Pricing Code Structs</span>
-          <span class="entry-blurb">For all pricers</span>
-          <span class="entry-tags">
-            <span class="tag tag-py">C++</span>
-          </span>
-        </div>
-        <div class="entry-body">
-          <div class="entry-explain">
-            <p>
-              Struct header to include to run the below pricers. These hold contract information, market data and the specific parameters for the pricers.
-            </p>
-          </div>
-          <div class="entry-code">
-            <div class="entry-code-bar">
-              <span class="entry-code-file">LibraryCode/option_parameters.hpp</span>
-              <span class="entry-code-actions">
-                <button onclick="copyCode(this)">copy</button>
-                <a href="https://github.com/asharbutt/LibraryCode/blob/main/include/option_parameters.hpp" target="_blank">view on github</a>
-              </span>
             </div>
-<pre><code class="language-cpp">
-#pragma once
-
-// header file to contain the structs used to price a black scholes option
-
-namespace option_parameters {
-
-    struct OptionContract {
-        double strike;
-        double timeMaturity;
-        int optionType; // +1 or -1
-    };
-
-    struct OptionsMarketData {
-        double volatility;
-        double interestRate;
-        double divYield;
-        double spot;
-    };
-
-    struct binomial_parameters {
-        double up;
-        double down;
-        double probabilityUp;
-        int numSteps;
-        double deltaT;
-    };
-
-}
-
-</code></pre>
           </div>
-        </div>
-      </article>
-      
-      <article class="entry" id="european-black-scholes">
-        <div class="entry-head" onclick="toggleEntry(this)">
-          <span class="entry-toggle">&#9654;</span>
-          <span class="entry-title">Black Scholes header</span>
-          <span class="entry-blurb">Vanilla European pricer</span>
-          <span class="entry-tags">
-            <span class="tag tag-py">C++</span>
-          </span>
-        </div>
-        <div class="entry-body">
-          <div class="entry-explain">
-            <p>
-              Simple Black Scholes Header file. Uses the statistics and payoff params headers.
-            </p>
+        </article>
+
+        <article class="entry planned" id="py-fx-forward">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">FX Forward</span>
+            <span class="entry-blurb">Covered interest parity, MTM</span>
+            <span class="entry-tags"><span class="tag tag-py">Python</span><span class="tag tag-planned">Planned</span></span>
           </div>
-          <div class="entry-code">
-            <div class="entry-code-bar">
-              <span class="entry-code-file">LibraryCode/blackscholes.hpp</span>
-              <span class="entry-code-actions">
-                <button onclick="copyCode(this)">copy</button>
-                <a href="https://github.com/asharbutt/LibraryCode/blob/main/include/black_scholes_merton.hpp" target="_blank">view on github</a>
-              </span>
+          <div class="entry-body">
+            <div class="entry-explain"><p>Forward rate $F = S\,e^{(r_d - r_f)T}$ and mark-to-market of an existing forward, $N\,(F - K)\,e^{-r_d T}$.</p></div>
+            <div class="entry-soon">Planned &mdash; <code>python/fx_forward.py</code></div>
+          </div>
+        </article>
+
+        <article class="entry planned" id="py-garman-kohlhagen">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">FX Options (Garman&ndash;Kohlhagen)</span>
+            <span class="entry-blurb">European FX price and Greeks</span>
+            <span class="entry-tags"><span class="tag tag-py">Python</span><span class="tag tag-planned">Planned</span></span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain"><p>Black&ndash;Scholes with the foreign rate as the dividend yield, plus FX delta conventions (spot vs forward, premium-adjusted).</p></div>
+            <div class="entry-soon">Planned &mdash; <code>python/garman_kohlhagen.py</code></div>
+          </div>
+        </article>
+
+        <article class="entry planned" id="py-digital">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">Digital Options</span>
+            <span class="entry-blurb">Cash- and asset-or-nothing</span>
+            <span class="entry-tags"><span class="tag tag-py">Python</span><span class="tag tag-planned">Planned</span></span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain"><p>Cash-or-nothing $e^{-rT}N(d_2)$ and asset-or-nothing $S e^{-qT}N(d_1)$, with a call-spread replication check.</p></div>
+            <div class="entry-soon">Planned &mdash; <code>python/digital.py</code></div>
+          </div>
+        </article>
+
+        <article class="entry planned" id="py-barrier-closed">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">Barrier Options</span>
+            <span class="entry-blurb">Reiner&ndash;Rubinstein, all 8 types</span>
+            <span class="entry-tags"><span class="tag tag-py">Python</span><span class="tag tag-planned">Planned</span></span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain"><p>Continuously monitored up/down, in/out calls and puts, with rebates and the Broadie&ndash;Glasserman&ndash;Kou adjustment for discrete monitoring. Applies to equity and FX barriers.</p></div>
+            <div class="entry-soon">Planned &mdash; <code>python/barrier.py</code></div>
+          </div>
+        </article>
+
+        <article class="entry planned" id="py-geometric-asian">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">Geometric Asian Options</span>
+            <span class="entry-blurb">Exact closed form</span>
+            <span class="entry-tags"><span class="tag tag-py">Python</span><span class="tag tag-planned">Planned</span></span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain"><p>The geometric average of a GBM is lognormal, so it prices exactly with an adjusted drift and vol. Used as the control variate for the arithmetic Asian.</p></div>
+            <div class="entry-soon">Planned &mdash; <code>python/asian_geometric.py</code></div>
+          </div>
+        </article>
+
+        <article class="entry planned" id="py-quanto">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">Quanto Options</span>
+            <span class="entry-blurb">Correlation-adjusted drift</span>
+            <span class="entry-tags"><span class="tag tag-py">Python</span><span class="tag tag-planned">Planned</span></span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain"><p>Generalised Black&ndash;Scholes with carry $b = r_f - q - \rho\sigma_S\sigma_X$, discounted at $r_d$, with correlation and FX-vol sensitivities.</p></div>
+            <div class="entry-soon">Planned &mdash; <code>python/quanto.py</code></div>
+          </div>
+        </article>
+      </section>
+
+      <!-- ─────────── Python · 04 Tree Methods ─────────── -->
+      <section class="labs-section" data-title="Tree Methods">
+        <div class="labs-section-head">
+          <span class="labs-section-num">04</span>
+          <span class="labs-section-title">Tree Methods</span>
+          <span class="labs-section-desc">Binomial and trinomial lattices</span>
+        </div>
+
+        <article class="entry planned" id="py-binomial">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">Binomial Tree</span>
+            <span class="entry-blurb">European and American (CRR)</span>
+            <span class="entry-tags"><span class="tag tag-py">Python</span><span class="tag tag-planned">Planned</span></span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain"><p>Vectorised NumPy CRR tree with an early-exercise flag, plus a convergence plot against Black&ndash;Scholes.</p></div>
+            <div class="entry-soon">Planned &mdash; <code>python/binomial_tree.py</code></div>
+          </div>
+        </article>
+
+        <article class="entry planned" id="py-trinomial">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">Trinomial Tree</span>
+            <span class="entry-blurb">European and American</span>
+            <span class="entry-tags"><span class="tag tag-py">Python</span><span class="tag tag-planned">Planned</span></span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain"><p>Three-branch lattice (Boyle) with smoother convergence than CRR.</p></div>
+            <div class="entry-soon">Planned &mdash; <code>python/trinomial_tree.py</code></div>
+          </div>
+        </article>
+
+        <article class="entry planned" id="py-barrier-tree">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">Barrier Options on a Tree</span>
+            <span class="entry-blurb">Knock-out with barrier-aligned nodes</span>
+            <span class="entry-tags"><span class="tag tag-py">Python</span><span class="tag tag-planned">Planned</span></span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain"><p>Zeroes node values beyond the barrier during rollback and plots the sawtooth convergence against the closed form.</p></div>
+            <div class="entry-soon">Planned &mdash; <code>python/barrier_tree.py</code></div>
+          </div>
+        </article>
+
+        <article class="entry planned" id="py-convertible">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">Convertible Bond</span>
+            <span class="entry-blurb">Tsiveriotis&ndash;Fernandes tree</span>
+            <span class="entry-tags"><span class="tag tag-py">Python</span><span class="tag tag-planned">Planned</span><span class="tag tag-advanced">Advanced</span></span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain"><p>Equity tree with conversion, call and put features; splits value into cash-only (discounted with credit spread) and equity components.</p></div>
+            <div class="entry-soon">Planned &mdash; <code>python/convertible_bond.py</code></div>
+          </div>
+        </article>
+      </section>
+
+      <!-- ─────────── Python · 05 Finite Difference ─────────── -->
+      <section class="labs-section" data-title="Finite Difference">
+        <div class="labs-section-head">
+          <span class="labs-section-num">05</span>
+          <span class="labs-section-title">Finite Difference</span>
+          <span class="labs-section-desc">Solving the Black&ndash;Scholes PDE on a grid</span>
+        </div>
+
+        <article class="entry planned" id="py-fd-cn">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">Crank&ndash;Nicolson</span>
+            <span class="entry-blurb">European, American and barrier</span>
+            <span class="entry-tags"><span class="tag tag-py">Python</span><span class="tag tag-planned">Planned</span></span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain"><p>Crank&ndash;Nicolson with <code>scipy.linalg.solve_banded</code>; American options via PSOR and barriers via grid boundaries.</p></div>
+            <div class="entry-soon">Planned &mdash; <code>python/finite_difference.py</code></div>
+          </div>
+        </article>
+      </section>
+
+      <!-- ─────────── Python · 06 Monte Carlo ─────────── -->
+      <section class="labs-section" data-title="Monte Carlo">
+        <div class="labs-section-head">
+          <span class="labs-section-num">06</span>
+          <span class="labs-section-title">Monte Carlo</span>
+          <span class="labs-section-desc">Path simulation and path-dependent payoffs</span>
+        </div>
+
+        <article class="entry" id="py-estimate-pi">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">Estimating &pi; by Monte Carlo</span>
+            <span class="entry-blurb">Convergence at $1/\sqrt{n}$</span>
+            <span class="entry-tags">
+              <span class="tag tag-py">Python</span>
+              <span class="tag tag-foundational">Foundational</span>
+            </span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain">
+              <p>Estimates &pi; from the share of uniform points inside the unit circle, and plots the running estimate to show Monte Carlo convergence.</p>
             </div>
-<pre><code class="language-cpp">
-#include <cmath>      
-#include "option_parameters.hpp"
-#include "statistics.hpp"
-
-
-double compute_d1(const option_parameters::OptionContract& c, const option_parameters::OptionsMarketData& d) 
-  { return (std::log(d.spot / c.strike) + (d.interestRate - d.divYield + 0.5 * d.volatility * d.volatility) * c.timeMaturity) / (d.volatility * std::sqrt(c.timeMaturity)); }
-double price(const option_parameters::OptionContract& c, const option_parameters::OptionsMarketData& d) {
-    const double d1 = compute_d1(c, d);
-    const double d2 = d1 - d.volatility * std::sqrt(c.timeMaturity);
-    return c.optionType * d.spot * std::exp(-d.divYield * c.timeMaturity) * stats::standard_normal_cdf(c.optionType * d1) - c.optionType * c.strike * std::exp(-d.interestRate * c.timeMaturity) * stats::standard_normal_cdf(c.optionType * d2);
-}
-double delta(const option_parameters::OptionContract& c, const option_parameters::OptionsMarketData& d) 
-  { return c.optionType * std::exp(-d.divYield * c.timeMaturity) * stats::standard_normal_cdf(c.optionType * compute_d1(c, d)); }
-double gamma(const option_parameters::OptionContract& c, const option_parameters::OptionsMarketData& d) 
-  { return stats::standard_normal_pdf(compute_d1(c, d)) / (d.spot * d.volatility * std::sqrt(c.timeMaturity)); }
-double vega(const option_parameters::OptionContract& c, const option_parameters::OptionsMarketData& d) 
-  { return d.spot * std::exp(-d.divYield * c.timeMaturity) * stats::standard_normal_pdf(compute_d1(c, d)) * std::sqrt(c.timeMaturity); }
-double theta(const option_parameters::OptionContract& c, const option_parameters::OptionsMarketData& d) {
-    const double d1 = compute_d1(c, d);
-    const double d2 = d1 - d.volatility * std::sqrt(c.timeMaturity);
-    
-    double annual_theta =  -((d.spot * stats::standard_normal_pdf(d1) * d.volatility*std::exp(-d.divYield*c.timeMaturity)) / (2 * std::sqrt(c.timeMaturity))) 
-      - c.optionType* d.interestRate* c.strike*std::exp(-d.interestRate * c.timeMaturity)* stats::standard_normal_cdf(c.optionType * d2) 
-      + c.optionType*d.divYield*d.spot*stats::standard_normal_cdf(c.optionType*d1)*std::exp(-d.divYield*c.timeMaturity);
-        return annual_theta;
-}</code></pre>
-          </div>
-        </div>
-      </article>
-
-<article class="entry" id="european-binomial-tree">
-        <div class="entry-head" onclick="toggleEntry(this)">
-          <span class="entry-toggle">&#9654;</span>
-          <span class="entry-title">European Binomial Option Pricer</span>
-          <span class="entry-blurb">Vanilla European pricer</span>
-          <span class="entry-tags">
-            <span class="tag tag-py">C++</span>
-          </span>
-        </div>
-        <div class="entry-body">
-          <div class="entry-explain">
-            <p>
-              Simple European Binomial Tree pricer
-            </p>
-          </div>
-          <div class="entry-code">
-            <div class="entry-code-bar">
-              <span class="entry-code-file">LibraryCode/tree_methods.hpp</span>
-              <span class="entry-code-actions">
-                <button onclick="copyCode(this)">copy</button>
-                <a href="https://github.com/" target="_blank">view on github</a>
-              </span>
-            </div>
-<pre><code class="language-cpp">
-#include &lt;cmath&gt;
-#include &lt;vector&gt;
-#include &lt;algorithm&gt;
-#include "option_parameters.hpp"
-
-double binomialTreeEuropean(option_parameters::binomial_parameters& params, option_parameters::OptionsMarketData& data, option_parameters::OptionContract& contract) {
-    params.deltaT = contract.timeMaturity / params.numSteps;
-    params.up = std::exp(data.volatility * std::sqrt(params.deltaT));
-    params.down = std::exp(-data.volatility * std::sqrt(params.deltaT));
-    params.probabilityUp = (std::exp(data.interestRate * params.deltaT) - params.down) / (params.up - params.down);
-
-    std::vector&lt;double&gt; optionValue(params.numSteps+1, 0.0);
-    std::vector&lt;double&gt; optionValue_temp(params.numSteps+1, 0.0);
-
-    std::vector&lt;double&gt; finalStockVector(params.numSteps+1, params.numSteps+1);
-
-    for (std::size_t i = 0; i &lt; params.numSteps; i++) {
-        finalStockVector[i] = data.spot * std::pow(params.up, params.numSteps - i) * std::pow(params.down, i);
-    }
-
-    //calculate payoff on initial vector
-    for (std::size_t i = 0; i &lt;= params.numSteps; i++) {
-        optionValue[i] = std::max(contract.optionType * (finalStockVector[i] - contract.strike), 0.0);
-    }
-
-    for (std::size_t j = params.numSteps; j &gt; 0; j--) {
-        for (std::size_t i = 0; i &lt; j; i++) {
-            optionValue[i] = (optionValue[i] * params.probabilityUp + optionValue[i + 1] * (1 - params.probabilityUp)) * std::exp(-data.interestRate * params.deltaT);
-        }
-    }
-
-    return optionValue[0];
-} </code></pre>
-          </div>
-        </div>
-      </article>
-
-
-      <article class="entry" id="american-binomial-tree">
-        <div class="entry-head" onclick="toggleEntry(this)">
-          <span class="entry-toggle">&#9654;</span>
-          <span class="entry-title">American Binomial Option Pricer</span>
-          <span class="entry-blurb">Vanilla American pricer</span>
-          <span class="entry-tags">
-            <span class="tag tag-py">C++</span>
-          </span>
-        </div>
-        <div class="entry-body">
-          <div class="entry-explain">
-            <p>
-              Simple American Binomial Tree pricer
-            </p>
-          </div>
-          <div class="entry-code">
-            <div class="entry-code-bar">
-              <span class="entry-code-file">LibraryCode/tree_methods</span>
-              <span class="entry-code-actions">
-                <button onclick="copyCode(this)">copy</button>
-                <a href="https://github.com/asharbutt/LibraryCode/blob/main/include/tree_methods.hpp" target="_blank">view on github</a>
-              </span>
-            </div>
-<pre><code class="language-cpp">
-#include "Matrix.hpp"
-#include "option_parameters.hpp"
-#include &lt;vector&gt;
-#include &lt;algorithm&gt;
-namespace american_binomial {
-    double binomialTreeAmerican(option_parameters::binomial_parameters&amp; params, option_parameters::OptionsMarketData&amp; data, option_parameters::OptionContract&amp; contract) {
-    params.deltaT = contract.timeMaturity / params.numSteps;
-    params.up = std::exp(data.volatility * std::sqrt(params.deltaT));
-    params.down = std::exp(-data.volatility * std::sqrt(params.deltaT));
-    params.probabilityUp = (std::exp(data.interestRate * params.deltaT) - params.down) / (params.up - params.down);
-    std::vector&lt;double&gt; optionValue(params.numSteps + 1, 0.0); // initial payoff, will then be used to compute the option value at each Delta T
-    std::vector&lt;double&gt; optionValue_temp(params.numSteps + 1, 0.0); // temporary option value vector, used to hold option values from previous time.
-    Matrix::Matrix&lt;double&gt; finalStockMatrix(params.numSteps + 1, params.numSteps + 1);
-    finalStockMatrix(0, 0) = data.spot;
-    // initialise the stock matrix
-    for (std::size_t j = 1; j &lt;= params.numSteps; j++) {
-        for (std::size_t i = 0; i &lt; params.numSteps; i++) {
-            if (i == 0) {
-                finalStockMatrix(i, j) = finalStockMatrix(i, j - 1) * params.up;
-            }
-            else {
-                finalStockMatrix(i, j) = finalStockMatrix(i - 1, j - 1) * params.down;
-            }
-        }
-    }
-    //calculate payoff on initial vector
-    for (std::size_t i = 0; i &lt;= params.numSteps; i++) {
-        optionValue[i] = std::max(contract.optionType * (finalStockMatrix(i, params.numSteps) - contract.strike), 0.0);
-    }
-    for (std::size_t j = params.numSteps; j &gt; 0; j--) {
-        for (std::size_t i = 0; i &lt; j; i++) {
-            optionValue[i] = std::max((optionValue[i] * params.probabilityUp + optionValue[i + 1] * (1 - params.probabilityUp)) * std::exp(-data.interestRate * params.deltaT), std::max(contract.optionType*(finalStockMatrix(i,j-1)-contract.strike),0.0));
-        }
-    }
-    return optionValue[0];
-}
-}
-                                    </code></pre>
-          </div>
-        </div>
-      </article>
-      
-      <!-- ▸ Longstaff-Schwartz (placeholder) -->
-      <article class="entry" id="lsmc">
-        <div class="entry-head" onclick="toggleEntry(this)">
-          <span class="entry-toggle">&#9654;</span>
-          <span class="entry-title">longstaff_schwartz</span>
-          <span class="entry-blurb">Least-squares Monte Carlo for American/Bermudan options</span>
-          <span class="entry-tags">
-            <span class="tag tag-py">Python</span>
-            <span class="tag tag-advanced">Advanced</span>
-          </span>
-        </div>
-        <div class="entry-body">
-          <div class="entry-explain">
-            <p>
-              Pricing an early-exercisable option by Monte Carlo is hard because
-              the exercise decision needs the <em>continuation value</em> &mdash; the
-              expected payoff from holding &mdash; which is not known forward in time.
-              Longstaff-Schwartz estimates it by regressing realised discounted
-              payoffs against the current state, working backward through time.
-            </p>
-            <p><em>Full implementation is a planned flagship entry.</em></p>
-          </div>
-          <div class="entry-soon">Implementation in progress &mdash; full file will appear here.</div>
-        </div>
-      </article>
-    </section>
-<section class="labs-section" id="linear-algebra">
-      <div class="labs-section-head">
-        <span class="labs-section-num">01</span>
-        <span class="labs-section-title">Linear Algebra</span>
-        <span class="labs-section-desc">Matrix and Linear Algebra code</span>
-      </div>
-
-      <article class="entry" id="pi_estimation">
-        <div class="entry-head" onclick="toggleEntry(this)">
-          <span class="entry-toggle">&#9654;</span>
-          <span class="entry-title">Estimating Pi using Monte Carlo</span>
-          <span class="entry-blurb"></span>
-          <span class="entry-tags">
-            <span class="tag tag-cpp">Python</span>
-            <span class="tag tag-foundational">Foundational</span>
-          </span>
-        </div>
-        <div class="entry-body">
-          <div class="entry-explain">
-            <p>
-              Simple python script to estimate and plot the value of Pi using Monte Carlo simulation on a unit radius circle.
-            </p>
-          </div>
-          <div class="entry-code">
-            <div class="entry-code-bar">
-              <span class="entry-code-file">python/estimate_pi.py</span>
-              <span class="entry-code-actions">
-                <button onclick="copyCode(this)">copy</button>
-                <a href="https://github.com/asharbutt/LibraryCode/blob/main/python/estimate_pi.py" target="_blank">view on github</a>
-              </span>
-            </div>
-<pre><code class="language-python">
-import numpy as np
+            <div class="entry-code">
+              <div class="entry-code-bar">
+                <span class="entry-code-file">python/estimate_pi.py</span>
+                <span class="entry-code-actions">
+                  <button onclick="copyCode(this)">copy</button>
+                  <a href="https://github.com/asharbutt/LibraryCode/blob/main/python/estimate_pi.py" target="_blank">view on github</a>
+                </span>
+              </div>
+<pre><code class="language-python">import numpy as np
 import matplotlib.pyplot as plt
 
 def estimate_pi():
@@ -832,7 +1182,7 @@ def estimate_pi():
     x = np.random.uniform(-1, 1, n)
     y = np.random.uniform(-1, 1, n)
 
-    inside_circle = np.pow(x,2) + np.power(y,2) <= 1 # condition for being within a unit circle. pythagoras th
+    inside_circle = np.pow(x,2) + np.power(y,2) &lt;= 1 # condition for being within a unit circle. pythagoras th
 
     total_inside = np.sum(inside_circle)
 
@@ -871,16 +1221,80 @@ def estimate_pi():
     ax_2.set_ylabel("Estimated $\\pi$")
     ax_2.set_xlabel("n")
 
-    plt.show()
-
- 
-</code></pre>
+    plt.show()</code></pre>
+            </div>
           </div>
-        </div>
-      </article>
-    </section>
+        </article>
+
+        <article class="entry planned" id="py-mc-european">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">Monte Carlo Engine</span>
+            <span class="entry-blurb">GBM paths, European payoff</span>
+            <span class="entry-tags"><span class="tag tag-py">Python</span><span class="tag tag-planned">Planned</span></span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain"><p>Vectorised GBM path generator with pluggable payoffs, returning price and standard error; antithetic variates. Checked against Black&ndash;Scholes.</p></div>
+            <div class="entry-soon">Planned &mdash; <code>python/monte_carlo.py</code></div>
+          </div>
+        </article>
+
+        <article class="entry planned" id="py-mc-asian">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">Arithmetic Asian Options</span>
+            <span class="entry-blurb">Geometric control variate</span>
+            <span class="entry-tags"><span class="tag tag-py">Python</span><span class="tag tag-planned">Planned</span></span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain"><p>Arithmetic-average payoff by simulation, using the closed-form geometric Asian as a control variate, with a variance-reduction comparison.</p></div>
+            <div class="entry-soon">Planned &mdash; <code>python/asian_arithmetic.py</code></div>
+          </div>
+        </article>
+
+        <article class="entry planned" id="py-mc-barrier">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">Barrier Options by Simulation</span>
+            <span class="entry-blurb">Brownian-bridge correction</span>
+            <span class="entry-tags"><span class="tag tag-py">Python</span><span class="tag tag-planned">Planned</span></span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain"><p>Discretely monitored paths with a Brownian-bridge crossing probability between steps to remove monitoring bias.</p></div>
+            <div class="entry-soon">Planned &mdash; <code>python/barrier_mc.py</code></div>
+          </div>
+        </article>
+
+        <article class="entry planned" id="py-lsmc">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">Longstaff&ndash;Schwartz</span>
+            <span class="entry-blurb">Least-squares MC for American options</span>
+            <span class="entry-tags"><span class="tag tag-py">Python</span><span class="tag tag-planned">Planned</span><span class="tag tag-advanced">Advanced</span></span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain"><p>Estimates the continuation value by regressing discounted future cash flows on basis functions of the current state, working backwards through time. Benchmarked against the binomial tree.</p></div>
+            <div class="entry-soon">Planned &mdash; <code>python/longstaff_schwartz.py</code></div>
+          </div>
+        </article>
+
+        <article class="entry planned" id="py-autocallable">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">Autocallable</span>
+            <span class="entry-blurb">Memory coupon, knock-in put</span>
+            <span class="entry-tags"><span class="tag tag-py">Python</span><span class="tag tag-planned">Planned</span><span class="tag tag-advanced">Advanced</span></span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain"><p>Observation-date autocall, memory coupons and a down-and-in put at maturity; reports expected life and autocall probabilities alongside price.</p></div>
+            <div class="entry-soon">Planned &mdash; <code>python/autocallable.py</code></div>
+          </div>
+        </article>
+      </section>
+    </div>
+
     <div class="labs-foot">
-      The collection grows as the speedrun progresses. The Streamlit dashboards
+      The collection grows as new pricers are built. The Streamlit dashboards
       on the <a href="projects.html">Projects</a> page are built on top of this code.
     </div>
 
@@ -893,7 +1307,7 @@ def estimate_pi():
   <div class="container">
     <span>&copy; 2026 Ashar Wakee Butt</span>
     <div class="footer-links">
-      <a href="https://github.com/" target="_blank">GitHub</a>
+      <a href="https://github.com/asharbutt" target="_blank">GitHub</a>
       <a href="https://linkedin.com/" target="_blank">LinkedIn</a>
     </div>
   </div>
@@ -901,10 +1315,7 @@ def estimate_pi():
 
 <!-- ════════════════════ SCRIPT ════════════════════ -->
 <script>
-  // Highlight all code blocks on load
-  document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('pre code').forEach(el => hljs.highlightElement(el));
-  });
+  const LANG_LABEL = { cpp: 'C++', py: 'Python' };
 
   // Expand / collapse a single code entry
   function toggleEntry(head) {
@@ -926,17 +1337,80 @@ def estimate_pi():
     });
   }
 
-  // Sidebar links: open the target entry, then scroll to it
-  document.querySelectorAll('.labs-link-item a').forEach(link => {
-    link.addEventListener('click', e => {
-      const id = link.getAttribute('href').slice(1);
-      const target = document.getElementById(id);
-      if (target && target.classList.contains('entry')) {
-        e.preventDefault();
-        target.classList.add('open');
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+  // Count built vs total entries inside an element
+  function counts(el) {
+    const all = el.querySelectorAll('.entry').length;
+    const planned = el.querySelectorAll('.entry.planned').length;
+    return { built: all - planned, all };
+  }
+
+  // Build the sidebar from the sections of the active language
+  function buildSidebar(lang) {
+    const pane = document.getElementById('pane-' + lang);
+    const host = document.getElementById('sidebar-cats');
+    host.innerHTML = '';
+    document.getElementById('sidebar-sub').textContent =
+      LANG_LABEL[lang] + ' — numerical methods, implemented from scratch.';
+
+    pane.querySelectorAll('.labs-section').forEach(section => {
+      const c = counts(section);
+      const cat = document.createElement('div');
+      cat.className = 'labs-cat';
+      cat.innerHTML =
+        '<div class="labs-cat-title" onclick="toggleCat(this)">' +
+          '<span class="chevron">&#9660;</span> ' + section.dataset.title +
+          '<span class="labs-cat-count">' + c.built + '/' + c.all + '</span>' +
+        '</div><ul class="labs-link-list"></ul>';
+      const list = cat.querySelector('ul');
+      section.querySelectorAll('.entry').forEach(entry => {
+        const li = document.createElement('li');
+        li.className = 'labs-link-item' + (entry.classList.contains('planned') ? ' is-planned' : '');
+        const a = document.createElement('a');
+        a.href = '#' + entry.id;
+        a.textContent = entry.querySelector('.entry-title').textContent;
+        a.addEventListener('click', e => { e.preventDefault(); openEntry(entry); });
+        li.appendChild(a);
+        list.appendChild(li);
+      });
+      host.appendChild(cat);
     });
+  }
+
+  // Show one language pane and rebuild the sidebar for it
+  function switchLang(lang) {
+    document.querySelectorAll('.lang-pane').forEach(p =>
+      p.classList.toggle('active', p.dataset.lang === lang));
+    document.querySelectorAll('.lang-btn').forEach(b =>
+      b.classList.toggle('active', b.dataset.lang === lang));
+    buildSidebar(lang);
+  }
+
+  // Open an entry (switching language if needed) and scroll to it
+  function openEntry(entry) {
+    const pane = entry.closest('.lang-pane');
+    if (!pane.classList.contains('active')) switchLang(pane.dataset.lang);
+    entry.classList.add('open');
+    history.replaceState(null, '', '#' + entry.id);
+    entry.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('pre code').forEach(el => hljs.highlightElement(el));
+
+    // Built/total counts on the language buttons
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      const c = counts(document.getElementById('pane-' + btn.dataset.lang));
+      btn.querySelector('.lang-count').textContent = c.built + '/' + c.all;
+    });
+
+    // Deep links like labs.html#py-bsm open the right tab and entry
+    const target = location.hash && document.getElementById(location.hash.slice(1));
+    if (target && target.classList.contains('entry')) {
+      switchLang(target.closest('.lang-pane').dataset.lang);
+      setTimeout(() => openEntry(target), 50);
+    } else {
+      switchLang('cpp');
+    }
   });
 </script>
 
