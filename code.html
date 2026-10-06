@@ -954,7 +954,7 @@ def newton_raphson_implied_volatility(contract: id.OptionContract, data: md.Mark
           </div>
           <div class="entry-body">
             <div class="entry-explain">
-              <p>Closed-form European price, delta, gamma, vega, theta and rho with a continuous dividend yield. Uses the Contract, MarketData and day-count modules.</p>
+              <p>Closed-form European price, delta, gamma, vega, theta and rho with a continuous dividend yield. Uses the Contract, MarketData and day-count modules, return struct with results</p>
             </div>
             <div class="entry-code">
               <div class="entry-code-bar">
@@ -964,46 +964,51 @@ def newton_raphson_implied_volatility(contract: id.OptionContract, data: md.Mark
                   <a href="https://github.com/asharbutt/LibraryCode/blob/main/python/black_scholes.py" target="_blank">view on github</a>
                 </span>
               </div>
-<pre><code class="language-python">from scipy.stats import norm
-from marketData import *
-import contract_id_class as id
+<pre><code class="language-python">
+from parameter_files import daycount_convention
+from parameter_files.marketData import *
+from parameter_files.tradeParameters import vanillaEquityOption
+from parameter_files.daycount_convention import *
 import numpy as np
-import daycountConventionCalculator as cd
+from scipy.stats import norm
 
-def bs_price(contract: id.OptionContract, data: MarketData):
-    data.timeMaturity = cd.daycount(data.valDate, contract.dateMaturity, data.dayCountConvention)
-    d1 = (np.log(data.spot / contract.Strike) + (data.interestRate - data.divYield + 0.5 * data.vol*data.vol)*data.timeMaturity)/ (data.vol*np.sqrt(data.timeMaturity))
-    d2 = d1 - (data.vol*np.sqrt(data.timeMaturity))
-    return contract.optionType*data.spot*np.exp(-data.divYield*data.timeMaturity)*norm.cdf(contract.optionType* d1) - contract.optionType*contract.Strike*np.exp(-data.interestRate*data.timeMaturity)*norm.cdf(contract.optionType* d2)
 
-def delta(contract: id.OptionContract, data: MarketData):
-    data.timeMaturity = cd.daycount(data.valDate, contract.dateMaturity, data.dayCountConvention)
-    d1 = (np.log(data.spot / contract.Strike) + (data.interestRate - data.divYield + 0.5 * data.vol*data.vol)*data.timeMaturity)/ (data.vol*np.sqrt(data.timeMaturity))
-    return contract.optionType*np.exp(-data.divYield*cd.daycount(data.valDate, contract.dateMaturity, data.dayCountConvention))*norm.cdf(contract.optionType*d1)
+def black_scholes(md: market_data, pd: vanillaEquityOption):
+    if md.vol_type == "fixed_vol": # if the volatility type is set to fixed, then just use the volatility from the market_data dictionary, otherwise call a vol function
+        volatility = md.volatility
+    if pd.is_call == True:
+        payoff_type = 1
+    else:
+        payoff_type = -1
 
-def gamma(contract: id.OptionContract, data: MarketData):
-    data.timeMaturity = cd.daycount(data.valDate, contract.dateMaturity, data.dayCountConvention)
-    d1 = (np.log(data.spot / contract.Strike) + (data.interestRate - data.divYield + 0.5 * data.vol*data.vol)*data.timeMaturity)/ (data.vol*np.sqrt(data.timeMaturity))
-    return norm.pdf(d1) /(data.spot*np.sqrt(cd.daycount(data.valDate, contract.dateMaturity, data.dayCountConvention))*data.vol)
+    maturity = daycount(md.val_date, pd.maturity, pd.dayCountConvention)
+    d1 = (np.log(md.spot / pd.strike) + (md.interest_rate - md.divYield + 0.5 * np.pow(volatility, 2)) * maturity)/ (volatility * np.sqrt(maturity))
+    d2 = d1 - volatility * np.sqrt(maturity)
 
-def vega(contract: id.OptionContract, data: MarketData):
-    data.timeMaturity = cd.daycount(data.valDate, contract.dateMaturity, data.dayCountConvention)
-    d1 = (np.log(data.spot / contract.Strike) + (data.interestRate - data.divYield + 0.5 * data.vol*data.vol)*data.timeMaturity)/ (data.vol*np.sqrt(data.timeMaturity))
-    return data.spot * np.exp(-data.divYield*cd.daycount(data.valDate, contract.dateMaturity, data.dayCountConvention))*norm.pdf(d1) * np.sqrt(cd.daycount(data.valDate, contract.dateMaturity, data.dayCountConvention))
+    option_value = payoff_type * md.spot * np.exp(-md.div_yield*maturity)*norm.cdf(payoff_type * d1) - payoff_type*pd.strike*np.exp(- md.interest_rate * maturity) *norm.cdf(payoff_type * d2)
 
-def theta(contract: id.OptionContract, data: MarketData):
-    data.timeMaturity = cd.daycount(data.valDate, contract.dateMaturity, data.dayCountConvention)
-    d1 = (np.log(data.spot / contract.Strike) + (
-                data.interestRate - data.divYield + 0.5 * data.vol * data.vol) * data.timeMaturity) / (
-                     data.vol * np.sqrt(data.timeMaturity))
-    d2 = d1 - (data.vol*np.sqrt(data.timeMaturity))
-    return -(data.vol * data.spot * norm.pdf(d1))/(2*np.sqrt(cd.daycount(data.valDate, contract.dateMaturity, data.dayCountConvention))) - contract.optionType * data.interestRate * contract.Strike*np.exp(-data.interestRate*cd.daycount(data.valDate, contract.dateMaturity, data.dayCountConvention))*norm.cdf(contract.optionType*d2)
+    delta = payoff_type * np.exp(-md.div_yield*maturity)*norm.cdf(payoff_type * d1)
+    vega = md.spot * np.exp(-md.div_yield*maturity)*norm.pdf(d1) * np.sqrt(maturity) / 100
+    gamma = (np.exp(-md.div_yield*maturity)*norm.pdf(d1)) / (volatility * np.sqrt(maturity)) / 100
 
-def rho(contract: id.OptionContract, data: MarketData):
-    data.timeMaturity = cd.daycount(data.valDate, contract.dateMaturity, data.dayCountConvention)
-    d1 = (np.log(data.spot / contract.Strike) + (data.interestRate - data.divYield + 0.5 * data.vol*data.vol)*data.timeMaturity)/ (data.vol*np.sqrt(data.timeMaturity))
-    d2 = d1 - (data.vol*np.sqrt(data.timeMaturity))
-    return contract.optionType*contract.Strike*data.timeMaturity*np.exp(-data.interestRate*data.timeMaturity)*norm.cdf(contract.optionType*d2)</code></pre>
+    theta = (
+    -(md.spot * np.exp(-md.div_yield * maturity) * norm.pdf(d1) * md.volatility) / (2 * np.sqrt(maturity))
+    - payoff_type * md.interest_rate * pd.strike
+      * np.exp(-md.interest_rate * maturity) * norm.cdf(payoff_type * d2)
+    + payoff_type * md.div_yield * md.spot
+      * np.exp(-md.div_yield * maturity) * norm.cdf(payoff_type * d1)) / 365
+    log_file_output = {
+        "option_value": option_value,
+        "d1": d1,
+        "d2": d2,
+        "Probability of ITM": norm.cdf(payoff_type * d2),
+        "Delta": delta,
+        "Vega %": vega,
+        "Gamma per unit": gamma,
+        "Theta per day" : theta
+    }
+    return log_file_output
+</code></pre>
             </div>
           </div>
         </article>
@@ -1039,13 +1044,63 @@ def rho(contract: id.OptionContract, data: MarketData):
             <span class="entry-toggle">&#9654;</span>
             <span class="entry-title">Digital Options</span>
             <span class="entry-blurb">Cash- and asset-or-nothing</span>
-            <span class="entry-tags"><span class="tag tag-py">Python</span><span class="tag tag-planned">Planned</span></span>
+            <span class="entry-tags"><span class="tag tag-py">Python</span></span>
           </div>
           <div class="entry-body">
             <div class="entry-explain"><p>Cash-or-nothing $e^{-rT}N(d_2)$ and asset-or-nothing $S e^{-qT}N(d_1)$, with a call-spread replication check.</p></div>
-            <div class="entry-soon">Planned &mdash; <code>python/digital.py</code></div>
+            <div class="entry-code">
+              <div class="entry-code-bar">
+                <span class="entry-code-file">python/black_scholes.py</span>
+                <span class="entry-code-actions">
+                  <button onclick="copyCode(this)">copy</button>
+                  <a href="https://github.com/asharbutt/LibraryCode/blob/main/python/black_scholes.py" target="_blank">view on github</a>
+                </span>
+              </div>
+<pre><code class="language-python">
+from parameter_files import daycount_convention
+from parameter_files.marketData import *
+from parameter_files.tradeParameters import *
+from parameter_files.daycount_convention import *
+import numpy as np
+from scipy.stats import norm
+
+def digital_cash_or_nothing(md: market_data, pd: digitalOption):
+    if md.vol_type == "fixed_vol": # if the volatility type is set to fixed, then just use the volatility from the market_data dictionary, otherwise call a vol function
+        volatility = md.volatility
+    if pd.is_call == True:
+        payoff_type = 1
+    else:
+        payoff_type = -1
+    maturity = daycount(md.val_date, pd.maturity, pd.dayCountConvention)
+    d1 = (np.log(md.spot / pd.strike) + (md.interest_rate - md.div_yield + 0.5 * np.pow(volatility, 2)) * maturity)/ (volatility * np.sqrt(maturity))
+    d2 = d1 - volatility * np.sqrt(maturity)
+
+    option_value = payoff_type*pd.fixed_payout*np.exp(- md.interest_rate * maturity) *norm.cdf(payoff_type * d2)
+    log_file_output = {
+        "option_value": option_value
+    }
+    return log_file_output
+
+def digital_asset_or_nothing(md: market_data, pd: digitalOption):
+    if md.vol_type == "fixed_vol": # if the volatility type is set to fixed, then just use the volatility from the market_data dictionary, otherwise call a vol function
+        volatility = md.volatility
+    if pd.is_call == True:
+        payoff_type = 1
+    else:
+        payoff_type = -1
+    maturity = daycount(md.val_date, pd.maturity, pd.dayCountConvention)
+    d1 = (np.log(md.spot / pd.strike) + (md.interest_rate - md.div_yield + 0.5 * np.pow(volatility, 2)) * maturity)/ (volatility * np.sqrt(maturity))
+
+    option_value = payoff_type*np.exp(- md.div_yield * maturity) *norm.cdf(payoff_type * d1)*md.spot
+    log_file_output = {
+        "option_value": option_value
+    }
+    return log_file_output
+</code></pre>
+            </div>
           </div>
         </article>
+
 
         <article class="entry planned" id="py-barrier-closed">
           <div class="entry-head" onclick="toggleEntry(this)">
