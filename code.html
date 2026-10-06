@@ -82,11 +82,10 @@
       <div class="labs-eyebrow">The Lab</div>
       <h1>Numerical methods,<br>built from <em>first principles</em>.</h1>
       <p>
-        A growing pricing library written from scratch in C++ and Python &mdash;
+        A pricing library written in C++ and Python -
         closed-form, tree, finite-difference and Monte Carlo methods for vanilla and
         exotic products. Each entry expands to show the implementation and a note on
         how it works. Faded entries are planned and will be filled in as they're built.
-        The full code, with tests, is mirrored on
         <a href="https://github.com/asharbutt/LibraryCode" target="_blank">GitHub</a>.
       </p>
     </div>
@@ -237,7 +236,7 @@ namespace Matrix{
           </div>
           <div class="entry-body">
             <div class="entry-explain"><p>Standard normal pdf and cdf (via <code>std::erfc</code>), used by every closed-form pricer.</p></div>
-            <div class="entry-soon">Planned &mdash; <code>include/statistics.hpp</code></div>
+            <div class="entry-soon">Planned; <code>include/statistics.hpp</code></div>
           </div>
         </article>
       </section>
@@ -259,7 +258,7 @@ namespace Matrix{
           </div>
           <div class="entry-body">
             <div class="entry-explain"><p>Box&ndash;Muller transform on top of <code>std::mt19937_64</code>, with a fixed seed option for reproducible Monte Carlo.</p></div>
-            <div class="entry-soon">Planned &mdash; <code>include/random.hpp</code></div>
+            <div class="entry-soon">Planned & ; <code>include/random.hpp</code></div>
           </div>
         </article>
 
@@ -272,7 +271,7 @@ namespace Matrix{
           </div>
           <div class="entry-body">
             <div class="entry-explain"><p>Newton&ndash;Raphson on the Black&ndash;Scholes price using vega, falling back to bisection when vega is small (deep ITM/OTM).</p></div>
-            <div class="entry-soon">Planned &mdash; <code>include/implied_vol.hpp</code></div>
+            <div class="entry-soon">Planned & ; <code>include/implied_vol.hpp</code></div>
           </div>
         </article>
 
@@ -285,7 +284,7 @@ namespace Matrix{
           </div>
           <div class="entry-body">
             <div class="entry-explain"><p>Factorises a correlation matrix as $LL^T$ to generate correlated normals, e.g. asset and FX paths for quanto Monte Carlo.</p></div>
-            <div class="entry-soon">Planned &mdash; <code>include/cholesky.hpp</code></div>
+            <div class="entry-soon">Planned & ; <code>include/cholesky.hpp</code></div>
           </div>
         </article>
       </section>
@@ -360,7 +359,7 @@ double theta(const option_parameters::OptionContract&amp; c, const option_parame
           </div>
           <div class="entry-body">
             <div class="entry-explain"><p>Forward rate $F = S\,e^{(r_d - r_f)T}$ and mark-to-market of an existing forward, $N\,(F - K)\,e^{-r_d T}$.</p></div>
-            <div class="entry-soon">Planned &mdash; <code>include/fx_forward.hpp</code></div>
+            <div class="entry-soon">Planned & ; <code>include/fx_forward.hpp</code></div>
           </div>
         </article>
 
@@ -373,7 +372,7 @@ double theta(const option_parameters::OptionContract&amp; c, const option_parame
           </div>
           <div class="entry-body">
             <div class="entry-explain"><p>Black&ndash;Scholes with the foreign rate as the dividend yield, plus FX delta conventions (spot vs forward, premium-adjusted).</p></div>
-            <div class="entry-soon">Planned &mdash; <code>include/garman_kohlhagen.hpp</code></div>
+            <div class="entry-soon">Planned & ; <code>include/garman_kohlhagen.hpp</code></div>
           </div>
         </article>
 
@@ -386,7 +385,7 @@ double theta(const option_parameters::OptionContract&amp; c, const option_parame
           </div>
           <div class="entry-body">
             <div class="entry-explain"><p>Cash-or-nothing $e^{-rT}N(d_2)$ and asset-or-nothing $S e^{-qT}N(d_1)$, with a call-spread replication check.</p></div>
-            <div class="entry-soon">Planned &mdash; <code>include/digital.hpp</code></div>
+            <div class="entry-soon">Planned & ; <code>include/digital.hpp</code></div>
           </div>
         </article>
 
@@ -399,7 +398,7 @@ double theta(const option_parameters::OptionContract&amp; c, const option_parame
           </div>
           <div class="entry-body">
             <div class="entry-explain"><p>Continuously monitored up/down, in/out calls and puts, with rebates and the Broadie&ndash;Glasserman&ndash;Kou adjustment for discrete monitoring. Applies to equity and FX barriers.</p></div>
-            <div class="entry-soon">Planned &mdash; <code>include/barrier.hpp</code></div>
+            <div class="entry-soon">Planned & ; <code>include/barrier.hpp</code></div>
           </div>
         </article>
 
@@ -412,7 +411,7 @@ double theta(const option_parameters::OptionContract&amp; c, const option_parame
           </div>
           <div class="entry-body">
             <div class="entry-explain"><p>The geometric average of a GBM is lognormal, so it prices exactly with an adjusted drift and vol. Used as the control variate for the arithmetic Asian.</p></div>
-            <div class="entry-soon">Planned &mdash; <code>include/asian_geometric.hpp</code></div>
+            <div class="entry-soon">Planned & ; <code>include/asian_geometric.hpp</code></div>
           </div>
         </article>
 
@@ -425,7 +424,7 @@ double theta(const option_parameters::OptionContract&amp; c, const option_parame
           </div>
           <div class="entry-body">
             <div class="entry-explain"><p>Generalised Black&ndash;Scholes with carry $b = r_f - q - \rho\sigma_S\sigma_X$, discounted at $r_d$, with correlation and FX-vol sensitivities.</p></div>
-            <div class="entry-soon">Planned &mdash; <code>include/quanto.hpp</code></div>
+            <div class="entry-soon">Planned & ; <code>include/quanto.hpp</code></div>
           </div>
         </article>
       </section>
@@ -569,7 +568,7 @@ namespace american_binomial {
           </div>
           <div class="entry-body">
             <div class="entry-explain"><p>Three-branch lattice (Boyle) with smoother convergence than CRR; the natural bridge to explicit finite differences.</p></div>
-            <div class="entry-soon">Planned &mdash; <code>include/tree_methods.hpp</code></div>
+            <div class="entry-soon">Planned & ; <code>include/tree_methods.hpp</code></div>
           </div>
         </article>
 
@@ -582,7 +581,7 @@ namespace american_binomial {
           </div>
           <div class="entry-body">
             <div class="entry-explain"><p>Zeroes node values beyond the barrier during rollback; shows the sawtooth convergence and how aligning nodes with the barrier fixes it. Benchmarked against the closed form.</p></div>
-            <div class="entry-soon">Planned &mdash; <code>include/tree_methods.hpp</code></div>
+            <div class="entry-soon">Planned & ; <code>include/tree_methods.hpp</code></div>
           </div>
         </article>
 
@@ -595,7 +594,7 @@ namespace american_binomial {
           </div>
           <div class="entry-body">
             <div class="entry-explain"><p>Equity tree with conversion, call and put features; splits value into cash-only (discounted with credit spread) and equity components.</p></div>
-            <div class="entry-soon">Planned &mdash; <code>include/convertible_bond.hpp</code></div>
+            <div class="entry-soon">Planned & ; <code>include/convertible_bond.hpp</code></div>
           </div>
         </article>
       </section>
@@ -617,7 +616,7 @@ namespace american_binomial {
           </div>
           <div class="entry-body">
             <div class="entry-explain"><p>Explicit scheme on a spot/time grid, with the stability condition on $\Delta t$ and early exercise applied at each step.</p></div>
-            <div class="entry-soon">Planned &mdash; <code>include/finite_difference.hpp</code></div>
+            <div class="entry-soon">Planned & ; <code>include/finite_difference.hpp</code></div>
           </div>
         </article>
 
@@ -630,7 +629,7 @@ namespace american_binomial {
           </div>
           <div class="entry-body">
             <div class="entry-explain"><p>Unconditionally stable, second-order scheme; American options via PSOR. Barriers handled by placing a grid boundary at the barrier.</p></div>
-            <div class="entry-soon">Planned &mdash; <code>include/finite_difference.hpp</code></div>
+            <div class="entry-soon">Planned & ; <code>include/finite_difference.hpp</code></div>
           </div>
         </article>
       </section>
@@ -652,7 +651,7 @@ namespace american_binomial {
           </div>
           <div class="entry-body">
             <div class="entry-explain"><p>Streaming path generator with pluggable payoffs, returning price and standard error; antithetic variates. Checked against Black&ndash;Scholes.</p></div>
-            <div class="entry-soon">Planned &mdash; <code>include/monte_carlo.hpp</code></div>
+            <div class="entry-soon">Planned & ; <code>include/monte_carlo.hpp</code></div>
           </div>
         </article>
 
@@ -665,7 +664,7 @@ namespace american_binomial {
           </div>
           <div class="entry-body">
             <div class="entry-explain"><p>Arithmetic-average payoff by simulation, using the closed-form geometric Asian as a control variate to cut variance.</p></div>
-            <div class="entry-soon">Planned &mdash; <code>include/asian_arithmetic.hpp</code></div>
+            <div class="entry-soon">Planned & ; <code>include/asian_arithmetic.hpp</code></div>
           </div>
         </article>
 
@@ -678,7 +677,7 @@ namespace american_binomial {
           </div>
           <div class="entry-body">
             <div class="entry-explain"><p>Discretely monitored paths with a Brownian-bridge crossing probability between steps to remove monitoring bias.</p></div>
-            <div class="entry-soon">Planned &mdash; <code>include/monte_carlo.hpp</code></div>
+            <div class="entry-soon">Planned & ; <code>include/monte_carlo.hpp</code></div>
           </div>
         </article>
 
@@ -691,7 +690,7 @@ namespace american_binomial {
           </div>
           <div class="entry-body">
             <div class="entry-explain"><p>Estimates the continuation value by regressing discounted future cash flows on basis functions of the current state, working backwards through time. Benchmarked against the American tree.</p></div>
-            <div class="entry-soon">Planned &mdash; <code>include/longstaff_schwartz.hpp</code></div>
+            <div class="entry-soon">Planned & ; <code>include/longstaff_schwartz.hpp</code></div>
           </div>
         </article>
 
@@ -704,7 +703,7 @@ namespace american_binomial {
           </div>
           <div class="entry-body">
             <div class="entry-explain"><p>Observation-date autocall, memory coupons and a down-and-in put at maturity; reports expected life and autocall probabilities alongside price.</p></div>
-            <div class="entry-soon">Planned &mdash; <code>include/autocallable.hpp</code></div>
+            <div class="entry-soon">Planned & ; <code>include/autocallable.hpp</code></div>
           </div>
         </article>
       </section>
@@ -1022,7 +1021,7 @@ def black_scholes(md: market_data, pd: vanillaEquityOption):
           </div>
           <div class="entry-body">
             <div class="entry-explain"><p>Forward rate $F = S\,e^{(r_d - r_f)T}$ and mark-to-market of an existing forward, $N\,(F - K)\,e^{-r_d T}$.</p></div>
-            <div class="entry-soon">Planned &mdash; <code>python/fx_forward.py</code></div>
+            <div class="entry-soon">Planned & ; <code>python/fx_forward.py</code></div>
           </div>
         </article>
 
@@ -1035,7 +1034,7 @@ def black_scholes(md: market_data, pd: vanillaEquityOption):
           </div>
           <div class="entry-body">
             <div class="entry-explain"><p>Black&ndash;Scholes with the foreign rate as the dividend yield, plus FX delta conventions (spot vs forward, premium-adjusted).</p></div>
-            <div class="entry-soon">Planned &mdash; <code>python/garman_kohlhagen.py</code></div>
+            <div class="entry-soon">Planned & ; <code>python/garman_kohlhagen.py</code></div>
           </div>
         </article>
 
@@ -1111,7 +1110,7 @@ def digital_asset_or_nothing(md: market_data, pd: digitalOption):
           </div>
           <div class="entry-body">
             <div class="entry-explain"><p>Continuously monitored up/down, in/out calls and puts, with rebates and the Broadie&ndash;Glasserman&ndash;Kou adjustment for discrete monitoring. Applies to equity and FX barriers.</p></div>
-            <div class="entry-soon">Planned &mdash; <code>python/barrier.py</code></div>
+            <div class="entry-soon">Planned & ; <code>python/barrier.py</code></div>
           </div>
         </article>
 
@@ -1124,7 +1123,7 @@ def digital_asset_or_nothing(md: market_data, pd: digitalOption):
           </div>
           <div class="entry-body">
             <div class="entry-explain"><p>The geometric average of a GBM is lognormal, so it prices exactly with an adjusted drift and vol. Used as the control variate for the arithmetic Asian.</p></div>
-            <div class="entry-soon">Planned &mdash; <code>python/asian_geometric.py</code></div>
+            <div class="entry-soon">Planned & ; <code>python/asian_geometric.py</code></div>
           </div>
         </article>
 
@@ -1137,7 +1136,7 @@ def digital_asset_or_nothing(md: market_data, pd: digitalOption):
           </div>
           <div class="entry-body">
             <div class="entry-explain"><p>Generalised Black&ndash;Scholes with carry $b = r_f - q - \rho\sigma_S\sigma_X$, discounted at $r_d$, with correlation and FX-vol sensitivities.</p></div>
-            <div class="entry-soon">Planned &mdash; <code>python/quanto.py</code></div>
+            <div class="entry-soon">Planned & ; <code>python/quanto.py</code></div>
           </div>
         </article>
       </section>
@@ -1159,7 +1158,7 @@ def digital_asset_or_nothing(md: market_data, pd: digitalOption):
           </div>
           <div class="entry-body">
             <div class="entry-explain"><p>Vectorised NumPy CRR tree with an early-exercise flag, plus a convergence plot against Black&ndash;Scholes.</p></div>
-            <div class="entry-soon">Planned &mdash; <code>python/binomial_tree.py</code></div>
+            <div class="entry-soon">Planned & ; <code>python/binomial_tree.py</code></div>
           </div>
         </article>
 
@@ -1172,7 +1171,7 @@ def digital_asset_or_nothing(md: market_data, pd: digitalOption):
           </div>
           <div class="entry-body">
             <div class="entry-explain"><p>Three-branch lattice (Boyle) with smoother convergence than CRR.</p></div>
-            <div class="entry-soon">Planned &mdash; <code>python/trinomial_tree.py</code></div>
+            <div class="entry-soon">Planned & ; <code>python/trinomial_tree.py</code></div>
           </div>
         </article>
 
@@ -1185,7 +1184,7 @@ def digital_asset_or_nothing(md: market_data, pd: digitalOption):
           </div>
           <div class="entry-body">
             <div class="entry-explain"><p>Zeroes node values beyond the barrier during rollback and plots the sawtooth convergence against the closed form.</p></div>
-            <div class="entry-soon">Planned &mdash; <code>python/barrier_tree.py</code></div>
+            <div class="entry-soon">Planned & ; <code>python/barrier_tree.py</code></div>
           </div>
         </article>
 
@@ -1198,7 +1197,7 @@ def digital_asset_or_nothing(md: market_data, pd: digitalOption):
           </div>
           <div class="entry-body">
             <div class="entry-explain"><p>Equity tree with conversion, call and put features; splits value into cash-only (discounted with credit spread) and equity components.</p></div>
-            <div class="entry-soon">Planned &mdash; <code>python/convertible_bond.py</code></div>
+            <div class="entry-soon">Planned & ; <code>python/convertible_bond.py</code></div>
           </div>
         </article>
       </section>
@@ -1220,7 +1219,7 @@ def digital_asset_or_nothing(md: market_data, pd: digitalOption):
           </div>
           <div class="entry-body">
             <div class="entry-explain"><p>Crank&ndash;Nicolson with <code>scipy.linalg.solve_banded</code>; American options via PSOR and barriers via grid boundaries.</p></div>
-            <div class="entry-soon">Planned &mdash; <code>python/finite_difference.py</code></div>
+            <div class="entry-soon">Planned & ; <code>python/finite_difference.py</code></div>
           </div>
         </article>
       </section>
@@ -1316,7 +1315,7 @@ def estimate_pi():
           </div>
           <div class="entry-body">
             <div class="entry-explain"><p>Vectorised GBM path generator with pluggable payoffs, returning price and standard error; antithetic variates. Checked against Black&ndash;Scholes.</p></div>
-            <div class="entry-soon">Planned &mdash; <code>python/monte_carlo.py</code></div>
+            <div class="entry-soon">Planned & ; <code>python/monte_carlo.py</code></div>
           </div>
         </article>
 
@@ -1329,7 +1328,7 @@ def estimate_pi():
           </div>
           <div class="entry-body">
             <div class="entry-explain"><p>Arithmetic-average payoff by simulation, using the closed-form geometric Asian as a control variate, with a variance-reduction comparison.</p></div>
-            <div class="entry-soon">Planned &mdash; <code>python/asian_arithmetic.py</code></div>
+            <div class="entry-soon">Planned & ; <code>python/asian_arithmetic.py</code></div>
           </div>
         </article>
 
@@ -1342,7 +1341,7 @@ def estimate_pi():
           </div>
           <div class="entry-body">
             <div class="entry-explain"><p>Discretely monitored paths with a Brownian-bridge crossing probability between steps to remove monitoring bias.</p></div>
-            <div class="entry-soon">Planned &mdash; <code>python/barrier_mc.py</code></div>
+            <div class="entry-soon">Planned & ; <code>python/barrier_mc.py</code></div>
           </div>
         </article>
 
@@ -1355,7 +1354,7 @@ def estimate_pi():
           </div>
           <div class="entry-body">
             <div class="entry-explain"><p>Estimates the continuation value by regressing discounted future cash flows on basis functions of the current state, working backwards through time. Benchmarked against the binomial tree.</p></div>
-            <div class="entry-soon">Planned &mdash; <code>python/longstaff_schwartz.py</code></div>
+            <div class="entry-soon">Planned & ; <code>python/longstaff_schwartz.py</code></div>
           </div>
         </article>
 
@@ -1368,7 +1367,7 @@ def estimate_pi():
           </div>
           <div class="entry-body">
             <div class="entry-explain"><p>Observation-date autocall, memory coupons and a down-and-in put at maturity; reports expected life and autocall probabilities alongside price.</p></div>
-            <div class="entry-soon">Planned &mdash; <code>python/autocallable.py</code></div>
+            <div class="entry-soon">Planned & ; <code>python/autocallable.py</code></div>
           </div>
         </article>
       </section>
