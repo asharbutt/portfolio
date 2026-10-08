@@ -747,6 +747,7 @@ namespace american_binomial {
                 </span>
               </div>
 <pre><code class="language-python">
+from dataclasses import dataclass
 from abc import ABC, abstractmethod
 from typing import Optional
 import numpy as np
@@ -793,6 +794,20 @@ class digitalOption(Trade):
         indicator_vector = np.heaviside(spot - self.strike, 0) if self.is_call else (self.strike - spot)
         return indicator_vector*self.fixed_payout
 
+class assetornothingOption(Trade):
+    tradeID: str
+    is_call: bool  # +1 for call, -1 for put
+    notional: float
+    strike: float
+    maturity: str # this should be a date, we calculate the daycount on the fly using a daycount conventions module
+    dayCountConvention: str
+    product_type = "digital_option"# single_equity_product
+    process_scheme = "euler"
+
+    def payoff(self, spot):
+        indicator_vector = np.heaviside(spot - self.strike, 0) if self.is_call else (self.strike - spot)
+        return indicator_vector*self.fixed_payout
+
 </code></pre>
             </div>
           </div>
@@ -821,15 +836,12 @@ class digitalOption(Trade):
                 </span>
               </div>
 <pre><code class="language-python">from dataclasses import dataclass
-from dataclasses import dataclass
 from typing import Optional
 
 @dataclass
 class market_data: # We maintain this class as optional, which is updated on the fly. In reality, i think we would assume that a market data module inputs the information into here live
     spot: Optional[float] = None
     repo_rate: Optional[float] = None
-    vol_type: Optional[str] = None # set to either: fixed_vol, local_vol, stochastic_vol, local_stochastic_vol
-    volatility: Optional[float] = None
     interest_rate: Optional[float] = None
     div_yield: Optional[float] = None
     val_date: Optional[str] = None
@@ -871,6 +883,53 @@ def daycount(startDate, endDate, convention):
         return (endDate - startDate).days / 365
     elif convention == "30360":
         return None</code></pre>
+            </div>
+          </div>
+        </article>
+ <article class="entry" id="py-volfetcher">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">Vol Fetcher Class</span>
+            <span class="entry-blurb">Vol object to feed into pricers</span>
+            <span class="entry-tags">
+              <span class="tag tag-py">Python</span>
+              <span class="tag tag-foundational">Foundational</span>
+            </span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain">
+              <p>Vol fetching object passed to pricer, can retrieve fixed vol or other models</p>
+            </div>
+            <div class="entry-code">
+              <div class="entry-code-bar">
+                <span class="entry-code-file">python/vol_fetcher.py</span>
+                <span class="entry-code-actions">
+                  <button onclick="copyCode(this)">copy</button>
+                  <a href="https://github.com/asharbutt/LibraryCode/blob/main/python/marketData.py" target="_blank">view on github</a>
+                </span>
+              </div>
+<pre><code class="language-python">
+  import numpy as np
+import tradeParameters as pd
+from abc import ABC, abstractmethod
+
+class vol_fetcher(ABC):
+    @abstractmethod
+    def retrieve_vol(self, spot, maturity):
+        ...
+
+class fixed_vol_fetcher(vol_fetcher):
+    def __init__(self, vol):
+        self.vol = vol
+    def retrieve_vol(self, spot, maturity):
+        return self.vol
+
+class local_vol_fetcher(vol_fetcher):
+    def __init__(self, implied_vol_matrix):
+        self.implied_vol_matrix = implied_vol_matrix
+    def retrieve_vol(self,spot, maturity):
+        pass
+</code></pre>
             </div>
           </div>
         </article>
