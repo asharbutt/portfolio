@@ -3,19 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Code</title>
-
-<!-- Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,400;9..144,0,500;9..144,0,600;9..144,1,400&family=JetBrains+Mono:wght@400;500;600&family=Inter+Tight:wght@400;500;600&display=swap">
+<title>Numerical lab — Ashar Butt</title>
 
 <!-- Site styles + labs-specific styles -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="lab-styles.css">
 
 <!-- highlight.js — syntax highlighting -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 
 <!-- MathJax — lets you write $...$ maths in the explanation notes -->
@@ -23,44 +21,23 @@
   window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
 </script>
 <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
-<!-- Small additions on top of lab-styles.css: language switch + planned entries -->
-<style>
-  .lang-switch { display: flex; gap: 8px; margin: 28px 0 12px; flex-wrap: wrap; }
-  .lang-btn {
-    font-family: 'JetBrains Mono', monospace; font-size: 13px;
-    padding: 7px 16px; border-radius: 6px; cursor: pointer;
-    background: transparent; color: inherit;
-    border: 1px solid rgba(127, 127, 127, 0.35);
-  }
-  .lang-btn.active { border-color: currentColor; font-weight: 600; }
-  .lang-btn .lang-count { opacity: 0.55; margin-left: 8px; font-weight: 400; }
-  .lang-pane { display: none; }
-  .lang-pane.active { display: block; }
-  .lang-intro { opacity: 0.75; margin: 0 0 8px; }
-
-  .tag-planned {
-    background: transparent !important; color: inherit !important;
-    border: 1px dashed rgba(127, 127, 127, 0.6); opacity: 0.7;
-  }
-  .entry.planned .entry-title { opacity: 0.6; }
-  .labs-link-item.is-planned a { opacity: 0.5; }
-  .entry-soon code { font-family: 'JetBrains Mono', monospace; font-size: 0.9em; }
-</style>
 </head>
 <body>
 
 <!-- ════════════════════ NAV ════════════════════ -->
 <nav>
-  <div class="container">
-    <a href="index.html" class="nav-logo">Ashar Wakee Butt</a>
-    <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="labs.html" class="active">Labs</a>
-      <a href="projects.html">Streamlit Projects</a>
-      <a href="knowledge.html">Knowledge</a>
+    <div class="container">
+        <a class="nav-logo" href="index.html">Ashar Butt</a>
+        <div class="nav-links">
+            <a href="index.html">CV</a>
+            <a href="code.html" class="active">Numerical lab</a>
+            <a href="projects.html">Projects</a>
+            <a href="knowledge.html">Theory</a>
+            <div class="nav-divider"></div>
+            <a href="https://github.com/asharbutt" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://www.linkedin.com/in/ashar-wakee-butt-0b0a4319/" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
     </div>
-  </div>
 </nav>
 
 <main>
@@ -70,7 +47,7 @@
        Built automatically from the sections below (see script).
        Add an <article class="entry"> to a section and it appears here. -->
   <aside class="labs-sidebar">
-    <div class="labs-sidebar-title">Code Index</div>
+    <div class="labs-sidebar-title">Index</div>
     <div class="labs-sidebar-sub" id="sidebar-sub">Numerical methods, implemented from scratch.</div>
     <div id="sidebar-cats"></div>
   </aside>
@@ -79,8 +56,7 @@
   <div class="labs-content">
 
     <div class="labs-header">
-      <div class="labs-eyebrow">The Lab</div>
-      <h1>Numerical methods,<br>built from <em>first principles</em>.</h1>
+      <h1>Numerical lab</h1>
       <p>
         A pricing library written in C++ and Python -
         closed-form, tree, finite-difference and Monte Carlo methods for vanilla and
@@ -1567,7 +1543,7 @@ main()
     const host = document.getElementById('sidebar-cats');
     host.innerHTML = '';
     document.getElementById('sidebar-sub').textContent =
-      LANG_LABEL[lang] + ' — numerical methods, implemented from scratch.';
+      LANG_LABEL[lang] + ' implementations, built and planned.';
 
     pane.querySelectorAll('.labs-section').forEach(section => {
       const c = counts(section);
@@ -1575,7 +1551,7 @@ main()
       cat.className = 'labs-cat';
       cat.innerHTML =
         '<div class="labs-cat-title" onclick="toggleCat(this)">' +
-          '<span class="chevron">&#9660;</span> ' + section.dataset.title +
+          '<span class="chevron">&#9662;</span> ' + section.dataset.title +
           '<span class="labs-cat-count">' + c.built + '/' + c.all + '</span>' +
         '</div><ul class="labs-link-list"></ul>';
       const list = cat.querySelector('ul');
@@ -1612,7 +1588,7 @@ main()
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('pre code').forEach(el => hljs.highlightElement(el));
+    if (window.hljs) document.querySelectorAll('pre code').forEach(el => hljs.highlightElement(el));
 
     // Built/total counts on the language buttons
     document.querySelectorAll('.lang-btn').forEach(btn => {
