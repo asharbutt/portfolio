@@ -290,3 +290,8 @@
     .entry-body { padding-left: 0; }
     .labs-section-desc { width: 100%; }
 }
+
+/* Planned entries are empty shells until filled in: nothing to expand */
+.entry.planned .entry-head { cursor: default; }
+.entry.planned .entry-toggle { visibility: hidden; }
+.entry.planned .entry-body { display: none; }

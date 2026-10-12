@@ -207,12 +207,12 @@ namespace Matrix{
           <div class="entry-head" onclick="toggleEntry(this)">
             <span class="entry-toggle">&#9654;</span>
             <span class="entry-title">Statistics Header</span>
-            <span class="entry-blurb">Normal pdf / cdf</span>
+            <span class="entry-blurb"></span>
             <span class="entry-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-planned">Planned</span></span>
           </div>
           <div class="entry-body">
-            <div class="entry-explain"><p>Standard normal pdf and cdf (via <code>std::erfc</code>), used by every closed-form pricer.</p></div>
-            <div class="entry-soon">Planned; <code>include/statistics.hpp</code></div>
+            <div class="entry-explain"></div>
+            <div class="entry-soon"></div>
           </div>
         </article>
       </section>
@@ -229,12 +229,12 @@ namespace Matrix{
           <div class="entry-head" onclick="toggleEntry(this)">
             <span class="entry-toggle">&#9654;</span>
             <span class="entry-title">Normal Random Number Generator</span>
-            <span class="entry-blurb">Box&ndash;Muller</span>
+            <span class="entry-blurb"></span>
             <span class="entry-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-planned">Planned</span></span>
           </div>
           <div class="entry-body">
-            <div class="entry-explain"><p>Box&ndash;Muller transform on top of <code>std::mt19937_64</code>, with a fixed seed option for reproducible Monte Carlo.</p></div>
-            <div class="entry-soon">Planned & ; <code>include/random.hpp</code></div>
+            <div class="entry-explain"></div>
+            <div class="entry-soon"></div>
           </div>
         </article>
 
@@ -242,12 +242,12 @@ namespace Matrix{
           <div class="entry-head" onclick="toggleEntry(this)">
             <span class="entry-toggle">&#9654;</span>
             <span class="entry-title">Implied Volatility Solver</span>
-            <span class="entry-blurb">Newton&ndash;Raphson with bisection fallback</span>
+            <span class="entry-blurb"></span>
             <span class="entry-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-planned">Planned</span></span>
           </div>
           <div class="entry-body">
-            <div class="entry-explain"><p>Newton&ndash;Raphson on the Black&ndash;Scholes price using vega, falling back to bisection when vega is small (deep ITM/OTM).</p></div>
-            <div class="entry-soon">Planned & ; <code>include/implied_vol.hpp</code></div>
+            <div class="entry-explain"></div>
+            <div class="entry-soon"></div>
           </div>
         </article>
 
@@ -255,12 +255,12 @@ namespace Matrix{
           <div class="entry-head" onclick="toggleEntry(this)">
             <span class="entry-toggle">&#9654;</span>
             <span class="entry-title">Cholesky Decomposition</span>
-            <span class="entry-blurb">Correlated Brownian motions</span>
+            <span class="entry-blurb"></span>
             <span class="entry-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-planned">Planned</span></span>
           </div>
           <div class="entry-body">
-            <div class="entry-explain"><p>Factorises a correlation matrix as $LL^T$ to generate correlated normals, e.g. asset and FX paths for quanto Monte Carlo.</p></div>
-            <div class="entry-soon">Planned & ; <code>include/cholesky.hpp</code></div>
+            <div class="entry-explain"></div>
+            <div class="entry-soon"></div>
           </div>
         </article>
       </section>
@@ -330,12 +330,12 @@ double theta(const option_parameters::OptionContract&amp; c, const option_parame
           <div class="entry-head" onclick="toggleEntry(this)">
             <span class="entry-toggle">&#9654;</span>
             <span class="entry-title">FX Forward</span>
-            <span class="entry-blurb">Covered interest parity, MTM</span>
+            <span class="entry-blurb"></span>
             <span class="entry-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-planned">Planned</span></span>
           </div>
           <div class="entry-body">
-            <div class="entry-explain"><p>Forward rate $F = S\,e^{(r_d - r_f)T}$ and mark-to-market of an existing forward, $N\,(F - K)\,e^{-r_d T}$.</p></div>
-            <div class="entry-soon">Planned & ; <code>include/fx_forward.hpp</code></div>
+            <div class="entry-explain"></div>
+            <div class="entry-soon"></div>
           </div>
         </article>
 
@@ -343,12 +343,12 @@ double theta(const option_parameters::OptionContract&amp; c, const option_parame
           <div class="entry-head" onclick="toggleEntry(this)">
             <span class="entry-toggle">&#9654;</span>
             <span class="entry-title">FX Options (Garman&ndash;Kohlhagen)</span>
-            <span class="entry-blurb">European FX price and Greeks</span>
+            <span class="entry-blurb"></span>
             <span class="entry-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-planned">Planned</span></span>
           </div>
           <div class="entry-body">
-            <div class="entry-explain"><p>Black&ndash;Scholes with the foreign rate as the dividend yield, plus FX delta conventions (spot vs forward, premium-adjusted).</p></div>
-            <div class="entry-soon">Planned & ; <code>include/garman_kohlhagen.hpp</code></div>
+            <div class="entry-explain"></div>
+            <div class="entry-soon"></div>
           </div>
         </article>
 
@@ -356,12 +356,12 @@ double theta(const option_parameters::OptionContract&amp; c, const option_parame
           <div class="entry-head" onclick="toggleEntry(this)">
             <span class="entry-toggle">&#9654;</span>
             <span class="entry-title">Digital Options</span>
-            <span class="entry-blurb">Cash- and asset-or-nothing</span>
+            <span class="entry-blurb"></span>
             <span class="entry-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-planned">Planned</span></span>
           </div>
           <div class="entry-body">
-            <div class="entry-explain"><p>Cash-or-nothing $e^{-rT}N(d_2)$ and asset-or-nothing $S e^{-qT}N(d_1)$, with a call-spread replication check.</p></div>
-            <div class="entry-soon">Planned & ; <code>include/digital.hpp</code></div>
+            <div class="entry-explain"></div>
+            <div class="entry-soon"></div>
           </div>
         </article>
 
@@ -369,12 +369,12 @@ double theta(const option_parameters::OptionContract&amp; c, const option_parame
           <div class="entry-head" onclick="toggleEntry(this)">
             <span class="entry-toggle">&#9654;</span>
             <span class="entry-title">Barrier Options</span>
-            <span class="entry-blurb">Reiner&ndash;Rubinstein, all 8 types</span>
+            <span class="entry-blurb"></span>
             <span class="entry-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-planned">Planned</span></span>
           </div>
           <div class="entry-body">
-            <div class="entry-explain"><p>Continuously monitored up/down, in/out calls and puts, with rebates and the Broadie&ndash;Glasserman&ndash;Kou adjustment for discrete monitoring. Applies to equity and FX barriers.</p></div>
-            <div class="entry-soon">Planned & ; <code>include/barrier.hpp</code></div>
+            <div class="entry-explain"></div>
+            <div class="entry-soon"></div>
           </div>
         </article>
 
@@ -382,12 +382,12 @@ double theta(const option_parameters::OptionContract&amp; c, const option_parame
           <div class="entry-head" onclick="toggleEntry(this)">
             <span class="entry-toggle">&#9654;</span>
             <span class="entry-title">Geometric Asian Options</span>
-            <span class="entry-blurb">Exact closed form</span>
+            <span class="entry-blurb"></span>
             <span class="entry-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-planned">Planned</span></span>
           </div>
           <div class="entry-body">
-            <div class="entry-explain"><p>The geometric average of a GBM is lognormal, so it prices exactly with an adjusted drift and vol. Used as the control variate for the arithmetic Asian.</p></div>
-            <div class="entry-soon">Planned & ; <code>include/asian_geometric.hpp</code></div>
+            <div class="entry-explain"></div>
+            <div class="entry-soon"></div>
           </div>
         </article>
 
@@ -395,12 +395,12 @@ double theta(const option_parameters::OptionContract&amp; c, const option_parame
           <div class="entry-head" onclick="toggleEntry(this)">
             <span class="entry-toggle">&#9654;</span>
             <span class="entry-title">Quanto Options</span>
-            <span class="entry-blurb">Correlation-adjusted drift</span>
+            <span class="entry-blurb"></span>
             <span class="entry-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-planned">Planned</span></span>
           </div>
           <div class="entry-body">
-            <div class="entry-explain"><p>Generalised Black&ndash;Scholes with carry $b = r_f - q - \rho\sigma_S\sigma_X$, discounted at $r_d$, with correlation and FX-vol sensitivities.</p></div>
-            <div class="entry-soon">Planned & ; <code>include/quanto.hpp</code></div>
+            <div class="entry-explain"></div>
+            <div class="entry-soon"></div>
           </div>
         </article>
       </section>
@@ -539,12 +539,12 @@ namespace american_binomial {
           <div class="entry-head" onclick="toggleEntry(this)">
             <span class="entry-toggle">&#9654;</span>
             <span class="entry-title">Trinomial Tree</span>
-            <span class="entry-blurb">European and American</span>
+            <span class="entry-blurb"></span>
             <span class="entry-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-planned">Planned</span></span>
           </div>
           <div class="entry-body">
-            <div class="entry-explain"><p>Three-branch lattice (Boyle) with smoother convergence than CRR; the natural bridge to explicit finite differences.</p></div>
-            <div class="entry-soon">Planned & ; <code>include/tree_methods.hpp</code></div>
+            <div class="entry-explain"></div>
+            <div class="entry-soon"></div>
           </div>
         </article>
 
@@ -552,12 +552,12 @@ namespace american_binomial {
           <div class="entry-head" onclick="toggleEntry(this)">
             <span class="entry-toggle">&#9654;</span>
             <span class="entry-title">Barrier Options on a Tree</span>
-            <span class="entry-blurb">Knock-out with barrier-aligned nodes</span>
+            <span class="entry-blurb"></span>
             <span class="entry-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-planned">Planned</span></span>
           </div>
           <div class="entry-body">
-            <div class="entry-explain"><p>Zeroes node values beyond the barrier during rollback; shows the sawtooth convergence and how aligning nodes with the barrier fixes it. Benchmarked against the closed form.</p></div>
-            <div class="entry-soon">Planned & ; <code>include/tree_methods.hpp</code></div>
+            <div class="entry-explain"></div>
+            <div class="entry-soon"></div>
           </div>
         </article>
 
@@ -565,12 +565,12 @@ namespace american_binomial {
           <div class="entry-head" onclick="toggleEntry(this)">
             <span class="entry-toggle">&#9654;</span>
             <span class="entry-title">Convertible Bond</span>
-            <span class="entry-blurb">Tsiveriotis&ndash;Fernandes tree</span>
+            <span class="entry-blurb"></span>
             <span class="entry-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-planned">Planned</span><span class="tag tag-advanced">Advanced</span></span>
           </div>
           <div class="entry-body">
-            <div class="entry-explain"><p>Equity tree with conversion, call and put features; splits value into cash-only (discounted with credit spread) and equity components.</p></div>
-            <div class="entry-soon">Planned & ; <code>include/convertible_bond.hpp</code></div>
+            <div class="entry-explain"></div>
+            <div class="entry-soon"></div>
           </div>
         </article>
       </section>
@@ -587,12 +587,12 @@ namespace american_binomial {
           <div class="entry-head" onclick="toggleEntry(this)">
             <span class="entry-toggle">&#9654;</span>
             <span class="entry-title">Explicit Finite Difference</span>
-            <span class="entry-blurb">European and American</span>
+            <span class="entry-blurb"></span>
             <span class="entry-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-planned">Planned</span></span>
           </div>
           <div class="entry-body">
-            <div class="entry-explain"><p>Explicit scheme on a spot/time grid, with the stability condition on $\Delta t$ and early exercise applied at each step.</p></div>
-            <div class="entry-soon">Planned & ; <code>include/finite_difference.hpp</code></div>
+            <div class="entry-explain"></div>
+            <div class="entry-soon"></div>
           </div>
         </article>
 
@@ -600,12 +600,12 @@ namespace american_binomial {
           <div class="entry-head" onclick="toggleEntry(this)">
             <span class="entry-toggle">&#9654;</span>
             <span class="entry-title">Crank&ndash;Nicolson</span>
-            <span class="entry-blurb">Tridiagonal (Thomas) solver</span>
+            <span class="entry-blurb"></span>
             <span class="entry-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-planned">Planned</span></span>
           </div>
           <div class="entry-body">
-            <div class="entry-explain"><p>Unconditionally stable, second-order scheme; American options via PSOR. Barriers handled by placing a grid boundary at the barrier.</p></div>
-            <div class="entry-soon">Planned & ; <code>include/finite_difference.hpp</code></div>
+            <div class="entry-explain"></div>
+            <div class="entry-soon"></div>
           </div>
         </article>
       </section>
@@ -622,12 +622,12 @@ namespace american_binomial {
           <div class="entry-head" onclick="toggleEntry(this)">
             <span class="entry-toggle">&#9654;</span>
             <span class="entry-title">Monte Carlo Engine</span>
-            <span class="entry-blurb">GBM paths, European payoff</span>
+            <span class="entry-blurb"></span>
             <span class="entry-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-planned">Planned</span></span>
           </div>
           <div class="entry-body">
-            <div class="entry-explain"><p>Streaming path generator with pluggable payoffs, returning price and standard error; antithetic variates. Checked against Black&ndash;Scholes.</p></div>
-            <div class="entry-soon">Planned & ; <code>include/monte_carlo.hpp</code></div>
+            <div class="entry-explain"></div>
+            <div class="entry-soon"></div>
           </div>
         </article>
 
@@ -635,12 +635,12 @@ namespace american_binomial {
           <div class="entry-head" onclick="toggleEntry(this)">
             <span class="entry-toggle">&#9654;</span>
             <span class="entry-title">Arithmetic Asian Options</span>
-            <span class="entry-blurb">Geometric control variate</span>
+            <span class="entry-blurb"></span>
             <span class="entry-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-planned">Planned</span></span>
           </div>
           <div class="entry-body">
-            <div class="entry-explain"><p>Arithmetic-average payoff by simulation, using the closed-form geometric Asian as a control variate to cut variance.</p></div>
-            <div class="entry-soon">Planned & ; <code>include/asian_arithmetic.hpp</code></div>
+            <div class="entry-explain"></div>
+            <div class="entry-soon"></div>
           </div>
         </article>
 
@@ -648,12 +648,12 @@ namespace american_binomial {
           <div class="entry-head" onclick="toggleEntry(this)">
             <span class="entry-toggle">&#9654;</span>
             <span class="entry-title">Barrier Options by Simulation</span>
-            <span class="entry-blurb">Brownian-bridge correction</span>
+            <span class="entry-blurb"></span>
             <span class="entry-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-planned">Planned</span></span>
           </div>
           <div class="entry-body">
-            <div class="entry-explain"><p>Discretely monitored paths with a Brownian-bridge crossing probability between steps to remove monitoring bias.</p></div>
-            <div class="entry-soon">Planned & ; <code>include/monte_carlo.hpp</code></div>
+            <div class="entry-explain"></div>
+            <div class="entry-soon"></div>
           </div>
         </article>
 
@@ -661,12 +661,12 @@ namespace american_binomial {
           <div class="entry-head" onclick="toggleEntry(this)">
             <span class="entry-toggle">&#9654;</span>
             <span class="entry-title">Longstaff&ndash;Schwartz</span>
-            <span class="entry-blurb">Least-squares MC for American options</span>
+            <span class="entry-blurb"></span>
             <span class="entry-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-planned">Planned</span><span class="tag tag-advanced">Advanced</span></span>
           </div>
           <div class="entry-body">
-            <div class="entry-explain"><p>Estimates the continuation value by regressing discounted future cash flows on basis functions of the current state, working backwards through time. Benchmarked against the American tree.</p></div>
-            <div class="entry-soon">Planned & ; <code>include/longstaff_schwartz.hpp</code></div>
+            <div class="entry-explain"></div>
+            <div class="entry-soon"></div>
           </div>
         </article>
 
@@ -674,12 +674,12 @@ namespace american_binomial {
           <div class="entry-head" onclick="toggleEntry(this)">
             <span class="entry-toggle">&#9654;</span>
             <span class="entry-title">Autocallable</span>
-            <span class="entry-blurb">Memory coupon, knock-in put</span>
+            <span class="entry-blurb"></span>
             <span class="entry-tags"><span class="tag tag-cpp">C++</span><span class="tag tag-planned">Planned</span><span class="tag tag-advanced">Advanced</span></span>
           </div>
           <div class="entry-body">
-            <div class="entry-explain"><p>Observation-date autocall, memory coupons and a down-and-in put at maturity; reports expected life and autocall probabilities alongside price.</p></div>
-            <div class="entry-soon">Planned & ; <code>include/autocallable.hpp</code></div>
+            <div class="entry-explain"></div>
+            <div class="entry-soon"></div>
           </div>
         </article>
       </section>
@@ -1057,12 +1057,12 @@ def black_scholes(md: market_data, pd: vanillaEquityOption, vo: vol_fetcher):
           <div class="entry-head" onclick="toggleEntry(this)">
             <span class="entry-toggle">&#9654;</span>
             <span class="entry-title">FX Forward</span>
-            <span class="entry-blurb">Covered interest parity, MTM</span>
+            <span class="entry-blurb"></span>
             <span class="entry-tags"><span class="tag tag-py">Python</span><span class="tag tag-planned">Planned</span></span>
           </div>
           <div class="entry-body">
-            <div class="entry-explain"><p>Forward rate $F = S\,e^{(r_d - r_f)T}$ and mark-to-market of an existing forward, $N\,(F - K)\,e^{-r_d T}$.</p></div>
-            <div class="entry-soon">Planned & ; <code>python/fx_forward.py</code></div>
+            <div class="entry-explain"></div>
+            <div class="entry-soon"></div>
           </div>
         </article>
 
@@ -1070,12 +1070,12 @@ def black_scholes(md: market_data, pd: vanillaEquityOption, vo: vol_fetcher):
           <div class="entry-head" onclick="toggleEntry(this)">
             <span class="entry-toggle">&#9654;</span>
             <span class="entry-title">FX Options (Garman&ndash;Kohlhagen)</span>
-            <span class="entry-blurb">European FX price and Greeks</span>
+            <span class="entry-blurb"></span>
             <span class="entry-tags"><span class="tag tag-py">Python</span><span class="tag tag-planned">Planned</span></span>
           </div>
           <div class="entry-body">
-            <div class="entry-explain"><p>Black&ndash;Scholes with the foreign rate as the dividend yield, plus FX delta conventions (spot vs forward, premium-adjusted).</p></div>
-            <div class="entry-soon">Planned & ; <code>python/garman_kohlhagen.py</code></div>
+            <div class="entry-explain"></div>
+            <div class="entry-soon"></div>
           </div>
         </article>
 
@@ -1158,12 +1158,12 @@ def digital_asset_or_nothing(md: market_data, pd: digitalOption, vo: vol_fetcher
           <div class="entry-head" onclick="toggleEntry(this)">
             <span class="entry-toggle">&#9654;</span>
             <span class="entry-title">Barrier Options</span>
-            <span class="entry-blurb">Reiner&ndash;Rubinstein, all 8 types</span>
+            <span class="entry-blurb"></span>
             <span class="entry-tags"><span class="tag tag-py">Python</span><span class="tag tag-planned">Planned</span></span>
           </div>
           <div class="entry-body">
-            <div class="entry-explain"><p>Continuously monitored up/down, in/out calls and puts, with rebates and the Broadie&ndash;Glasserman&ndash;Kou adjustment for discrete monitoring. Applies to equity and FX barriers.</p></div>
-            <div class="entry-soon">Planned & ; <code>python/barrier.py</code></div>
+            <div class="entry-explain"></div>
+            <div class="entry-soon"></div>
           </div>
         </article>
 
@@ -1171,12 +1171,12 @@ def digital_asset_or_nothing(md: market_data, pd: digitalOption, vo: vol_fetcher
           <div class="entry-head" onclick="toggleEntry(this)">
             <span class="entry-toggle">&#9654;</span>
             <span class="entry-title">Geometric Asian Options</span>
-            <span class="entry-blurb">Exact closed form</span>
+            <span class="entry-blurb"></span>
             <span class="entry-tags"><span class="tag tag-py">Python</span><span class="tag tag-planned">Planned</span></span>
           </div>
           <div class="entry-body">
-            <div class="entry-explain"><p>The geometric average of a GBM is lognormal, so it prices exactly with an adjusted drift and vol. Used as the control variate for the arithmetic Asian.</p></div>
-            <div class="entry-soon">Planned & ; <code>python/asian_geometric.py</code></div>
+            <div class="entry-explain"></div>
+            <div class="entry-soon"></div>
           </div>
         </article>
 
@@ -1184,12 +1184,12 @@ def digital_asset_or_nothing(md: market_data, pd: digitalOption, vo: vol_fetcher
           <div class="entry-head" onclick="toggleEntry(this)">
             <span class="entry-toggle">&#9654;</span>
             <span class="entry-title">Quanto Options</span>
-            <span class="entry-blurb">Correlation-adjusted drift</span>
+            <span class="entry-blurb"></span>
             <span class="entry-tags"><span class="tag tag-py">Python</span><span class="tag tag-planned">Planned</span></span>
           </div>
           <div class="entry-body">
-            <div class="entry-explain"><p>Generalised Black&ndash;Scholes with carry $b = r_f - q - \rho\sigma_S\sigma_X$, discounted at $r_d$, with correlation and FX-vol sensitivities.</p></div>
-            <div class="entry-soon">Planned & ; <code>python/quanto.py</code></div>
+            <div class="entry-explain"></div>
+            <div class="entry-soon"></div>
           </div>
         </article>
       </section>
@@ -1206,12 +1206,12 @@ def digital_asset_or_nothing(md: market_data, pd: digitalOption, vo: vol_fetcher
           <div class="entry-head" onclick="toggleEntry(this)">
             <span class="entry-toggle">&#9654;</span>
             <span class="entry-title">Binomial Tree</span>
-            <span class="entry-blurb">European and American (CRR)</span>
+            <span class="entry-blurb"></span>
             <span class="entry-tags"><span class="tag tag-py">Python</span><span class="tag tag-planned">Planned</span></span>
           </div>
           <div class="entry-body">
-            <div class="entry-explain"><p>Vectorised NumPy CRR tree with an early-exercise flag, plus a convergence plot against Black&ndash;Scholes.</p></div>
-            <div class="entry-soon">Planned & ; <code>python/binomial_tree.py</code></div>
+            <div class="entry-explain"></div>
+            <div class="entry-soon"></div>
           </div>
         </article>
 
@@ -1219,12 +1219,12 @@ def digital_asset_or_nothing(md: market_data, pd: digitalOption, vo: vol_fetcher
           <div class="entry-head" onclick="toggleEntry(this)">
             <span class="entry-toggle">&#9654;</span>
             <span class="entry-title">Trinomial Tree</span>
-            <span class="entry-blurb">European and American</span>
+            <span class="entry-blurb"></span>
             <span class="entry-tags"><span class="tag tag-py">Python</span><span class="tag tag-planned">Planned</span></span>
           </div>
           <div class="entry-body">
-            <div class="entry-explain"><p>Three-branch lattice (Boyle) with smoother convergence than CRR.</p></div>
-            <div class="entry-soon">Planned & ; <code>python/trinomial_tree.py</code></div>
+            <div class="entry-explain"></div>
+            <div class="entry-soon"></div>
           </div>
         </article>
 
@@ -1232,12 +1232,12 @@ def digital_asset_or_nothing(md: market_data, pd: digitalOption, vo: vol_fetcher
           <div class="entry-head" onclick="toggleEntry(this)">
             <span class="entry-toggle">&#9654;</span>
             <span class="entry-title">Barrier Options on a Tree</span>
-            <span class="entry-blurb">Knock-out with barrier-aligned nodes</span>
+            <span class="entry-blurb"></span>
             <span class="entry-tags"><span class="tag tag-py">Python</span><span class="tag tag-planned">Planned</span></span>
           </div>
           <div class="entry-body">
-            <div class="entry-explain"><p>Zeroes node values beyond the barrier during rollback and plots the sawtooth convergence against the closed form.</p></div>
-            <div class="entry-soon">Planned & ; <code>python/barrier_tree.py</code></div>
+            <div class="entry-explain"></div>
+            <div class="entry-soon"></div>
           </div>
         </article>
 
@@ -1245,12 +1245,12 @@ def digital_asset_or_nothing(md: market_data, pd: digitalOption, vo: vol_fetcher
           <div class="entry-head" onclick="toggleEntry(this)">
             <span class="entry-toggle">&#9654;</span>
             <span class="entry-title">Convertible Bond</span>
-            <span class="entry-blurb">Tsiveriotis&ndash;Fernandes tree</span>
+            <span class="entry-blurb"></span>
             <span class="entry-tags"><span class="tag tag-py">Python</span><span class="tag tag-planned">Planned</span><span class="tag tag-advanced">Advanced</span></span>
           </div>
           <div class="entry-body">
-            <div class="entry-explain"><p>Equity tree with conversion, call and put features; splits value into cash-only (discounted with credit spread) and equity components.</p></div>
-            <div class="entry-soon">Planned & ; <code>python/convertible_bond.py</code></div>
+            <div class="entry-explain"></div>
+            <div class="entry-soon"></div>
           </div>
         </article>
       </section>
@@ -1267,12 +1267,12 @@ def digital_asset_or_nothing(md: market_data, pd: digitalOption, vo: vol_fetcher
           <div class="entry-head" onclick="toggleEntry(this)">
             <span class="entry-toggle">&#9654;</span>
             <span class="entry-title">Crank&ndash;Nicolson</span>
-            <span class="entry-blurb">European, American and barrier</span>
+            <span class="entry-blurb"></span>
             <span class="entry-tags"><span class="tag tag-py">Python</span><span class="tag tag-planned">Planned</span></span>
           </div>
           <div class="entry-body">
-            <div class="entry-explain"><p>Crank&ndash;Nicolson with <code>scipy.linalg.solve_banded</code>; American options via PSOR and barriers via grid boundaries.</p></div>
-            <div class="entry-soon">Planned & ; <code>python/finite_difference.py</code></div>
+            <div class="entry-explain"></div>
+            <div class="entry-soon"></div>
           </div>
         </article>
       </section>
@@ -1436,12 +1436,12 @@ main()
           <div class="entry-head" onclick="toggleEntry(this)">
             <span class="entry-toggle">&#9654;</span>
             <span class="entry-title">Arithmetic Asian Options</span>
-            <span class="entry-blurb">Geometric control variate</span>
+            <span class="entry-blurb"></span>
             <span class="entry-tags"><span class="tag tag-py">Python</span><span class="tag tag-planned">Planned</span></span>
           </div>
           <div class="entry-body">
-            <div class="entry-explain"><p>Arithmetic-average payoff by simulation, using the closed-form geometric Asian as a control variate, with a variance-reduction comparison.</p></div>
-            <div class="entry-soon">Planned & ; <code>python/asian_arithmetic.py</code></div>
+            <div class="entry-explain"></div>
+            <div class="entry-soon"></div>
           </div>
         </article>
 
@@ -1449,12 +1449,12 @@ main()
           <div class="entry-head" onclick="toggleEntry(this)">
             <span class="entry-toggle">&#9654;</span>
             <span class="entry-title">Barrier Options by Simulation</span>
-            <span class="entry-blurb">Brownian-bridge correction</span>
+            <span class="entry-blurb"></span>
             <span class="entry-tags"><span class="tag tag-py">Python</span><span class="tag tag-planned">Planned</span></span>
           </div>
           <div class="entry-body">
-            <div class="entry-explain"><p>Discretely monitored paths with a Brownian-bridge crossing probability between steps to remove monitoring bias.</p></div>
-            <div class="entry-soon">Planned & ; <code>python/barrier_mc.py</code></div>
+            <div class="entry-explain"></div>
+            <div class="entry-soon"></div>
           </div>
         </article>
 
@@ -1462,12 +1462,12 @@ main()
           <div class="entry-head" onclick="toggleEntry(this)">
             <span class="entry-toggle">&#9654;</span>
             <span class="entry-title">Longstaff&ndash;Schwartz</span>
-            <span class="entry-blurb">Least-squares MC for American options</span>
+            <span class="entry-blurb"></span>
             <span class="entry-tags"><span class="tag tag-py">Python</span><span class="tag tag-planned">Planned</span><span class="tag tag-advanced">Advanced</span></span>
           </div>
           <div class="entry-body">
-            <div class="entry-explain"><p>Estimates the continuation value by regressing discounted future cash flows on basis functions of the current state, working backwards through time. Benchmarked against the binomial tree.</p></div>
-            <div class="entry-soon">Planned & ; <code>python/longstaff_schwartz.py</code></div>
+            <div class="entry-explain"></div>
+            <div class="entry-soon"></div>
           </div>
         </article>
 
@@ -1475,12 +1475,12 @@ main()
           <div class="entry-head" onclick="toggleEntry(this)">
             <span class="entry-toggle">&#9654;</span>
             <span class="entry-title">Autocallable</span>
-            <span class="entry-blurb">Memory coupon, knock-in put</span>
+            <span class="entry-blurb"></span>
             <span class="entry-tags"><span class="tag tag-py">Python</span><span class="tag tag-planned">Planned</span><span class="tag tag-advanced">Advanced</span></span>
           </div>
           <div class="entry-body">
-            <div class="entry-explain"><p>Observation-date autocall, memory coupons and a down-and-in put at maturity; reports expected life and autocall probabilities alongside price.</p></div>
-            <div class="entry-soon">Planned & ; <code>python/autocallable.py</code></div>
+            <div class="entry-explain"></div>
+            <div class="entry-soon"></div>
           </div>
         </article>
       </section>
