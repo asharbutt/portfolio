@@ -6,7 +6,9 @@
 <div class="kb-content-body">
 
     <h3>Introduction</h3>
-    <p>Asian options are options which look at the average of a underlying asset price over a certain period. These can be fixed strike options, where the strike of the option is fixed and thus the payoff is: $$A_{C} = (A_{t} - K)^{+}$$, or floating strike, where the average becomes the strike itself: $$A_{C} = (S_{T} - A_{T})^{+}$$</p>
+    <p>Asian options are options which look at the average of a underlying asset price over a certain period. These can be fixed strike options, where the strike of the option is fixed and thus the payoff is: $$A_{C} = (A_{t} - K)^{+}$$, or floating strike, where the average becomes the strike itself: $$A_{C} = (S_{T} - A_{T})^{+}$$. These usually come in two types of averaging: arithmetic and geometric. The geometric asina option is simple to price, as the distribution of a geometric average of lognormal variables is known, and so a closed form exists. However, arithmetic asians are far more common in the market, and are a little tricker to price as the distribution of a sum of lognormals is not known.</p>
+
+    <p>The easiest way (but the most time consuming) is to use a Monte Carlo simulation. You can simulate the paths of the underlying many times, calculate the average and then evaluate the payoff. For one off pricing, this is convenient and easy, however, computationally expensive across a portfolio, especially when for greeks re-val.</p>
     <pre>
 # Your Python or C++ code example here
 def example():
