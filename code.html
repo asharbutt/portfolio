@@ -385,6 +385,48 @@ int main()
             <div class="entry-soon"></div>
           </div>
         </article>
+      
+        <article class="entry" id="cpp-linear-interp">
+          <div class="entry-head" onclick="toggleEntry(this)">
+            <span class="entry-toggle">&#9654;</span>
+            <span class="entry-title">Linear Interpolation</span>
+            <span class="entry-blurb"></span>
+            <span class="entry-tags">
+              <span class="tag tag-cpp">C++</span>
+            </span>
+          </div>
+          <div class="entry-body">
+            <div class="entry-explain"></div>
+            <div class="entry-code">
+              <div class="entry-code-bar">
+                <span class="entry-code-file">cpp/include/interpolation.hpp</span>
+                <span class="entry-code-actions">
+                  <button onclick="copyCode(this)">copy</button>
+                  <a href="https://github.com/asharbutt/LibraryCode/blob/main/cpp/include/interpolation.hpp" target="_blank">view on github</a>
+                </span>
+              </div>
+<pre><code class="language-cpp">double linear_interp(double x1, const std::vector&lt;double&gt;&amp; x, const std::vector&lt;double&gt;&amp; y) { // assumes sorted vectors
+    // boundary checks:
+    if (x1&lt;x[0] || x1 &gt; x.back()) {
+        throw std::invalid_argument("Input value is out of interpolation bounds");
+    }
+    else if (x1 == x.back()) {
+        return y.back();
+    }
+    
+    // first search for index where x1 should sit:
+    int left = 0;
+    for (int i = 0; i &lt; x.size(); i++) {
+        if (x1 &lt; x[i]) {
+            left = i-1;
+            break;
+        }
+    }
+    return y[left] + ((x1 - x[left]) * (y[left + 1] - y[left])) / (x[left + 1] - x[left]);
+}</code></pre>
+            </div>
+          </div>
+        </article>
       </section>
 
       <!-- ─────────── C++ · 03 Closed Form ─────────── -->
