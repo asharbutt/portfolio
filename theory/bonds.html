@@ -1,0 +1,39 @@
+---
+layout: page
+title: "Bond Valuation and Pricing"
+mathjax: true
+---
+
+<p class="entry-meta">Interest Rates, last updated March 2026</p>
+{% raw %}
+<h3>Bond Theory</h3>
+
+  <p>A Bond is a financial instrument issued in order to raise capital through debt. The issuer will issue a bond at "Face Value" and sell to a buyer, who is essentially "lending" money to the issuer. The issuer will then repay the face value of the bond back to the buyer at maturity, usually with a periodic coupon payment, serving as interest on the loan. The current value of the bond is then the sum of the present value of all the cashflows (which includes the repayment of the face value of the loan at maturity). We can represent the value of the bond therefore as: </p>
+
+  <p>$$\boxed{B = \sum c_{i} D(0,t_{i})}$$</p>
+
+  <p>Where $D(0,t_{i})$ is the discount factor from today (or valuation date) to the date of the cashflow payment. The bond yield is the current annualised rate used to discount all the cashflows back to get todays Bond price. Under continious compounding, the yield is some constant y such that: </p>
+
+  <p>$$\boxed{B = \sum c_{i} e^{-yt_{i}}}$$</p>
+
+<p>We can use an iterative method such as Newton Raphson where $f(y)=B_{mkt} - B_{calc}(y)$ to find the yield. We can see this yield as the annual return that the market or investors demand to hold that bond. The bond gets issued at the coupon rate, which the issuer pays, but when the bond trades on the secondary market, its price changes away from its original face value. The yield is the new rate that the buyers think the bond will yield if bought now. There is an inverse relationship between the bond yield and the bond price. As we see in the above 
+yield equation, as the bond price goes up, the yield goes down. If the yield goes up, the bond price goes down. As we are using an exponential here, the bond price exhibits convexity (i.e the bond price is an increasing function of the yield). </p>
+
+    <h2>Bond Sensitivities</h2>
+<p>We are interested in seeing how the bond price reacts to underlying changes in the yield curve. The first order sensitivity is the Bond Duration. There are two types of Duration: The Macaulay duration, and the modified duration. </p>
+
+    <p>The Macaulay duration measures on average how many years it takes to recoup your investment by weighting the present value of the cashflows by their payment dates, and then dividing by the Bond Price:</p>
+
+    <p>$$D_{Mac} = \frac{\sum t_{i} PV_{i}}{\sum PV_{i}}$$</p>
+<p>For a zero coupon bond, given that there are no payments in between now and the maturity, the Duration is equal to the years left to maturity of the bond. For coupon paying bonds, given you get payments in the interim, you are able to recoup your investments before maturity. If the bond pays higher coupons than another bond with the same maturity, then we know that the first bond will recoup its initial investment sooner than the second bond</p>
+
+    <p>How does this measure sensitivity? If your bond has a higher duration i.e. it will take longer to recoup your investment, then you have a longer period of exposure to interest rates. This means that you are more exposed to interest rates changing, and therefore your bond value has a higher chance of losing value. If rates go up, the discounting compounds and the PV of your coupon payments will be less, hence your bond with a 
+    longer maturity is more sensitive i.e. has a higher duration. Bonds with shorter maturities or higher coupon rates have a lower duration, as you are able to recoup your invesment earlier than their counterparts. </p>
+
+
+<p>The measure that shows actual sensitivity to yields is the Modified Duration, which can be calculated as: </p>
+
+    <p>$$D_{Mod} = - \frac{1}{B} \frac{\partial B}{\partial y}$$</p>
+{% endraw %}
+
+<p><a href="{{ '/theory.html' | relative_url }}">Back to Theory</a></p>

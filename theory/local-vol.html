@@ -1,0 +1,44 @@
+---
+layout: page
+title: "Local Volatility"
+mathjax: true
+---
+
+<p class="entry-meta">Volatility Modelling, last updated April 2026</p>
+{% raw %}
+<h3>Local Volatility</h3>
+<p>The issue with the classic Black-Scholes model is the assumption of a constant volatility to price options within all strike and expiry ranges. Market implied volatilities show that per expiry slice, the volatilities exhibit a skew (or smile), and the volatilities increase as the expiry increases. Naturally, we would expect the same option with a longer expiry to be pricier, as there is a longer window for potential movements.</p>
+<p>A classic non-parameterisation model is the local volatility model, where the volatility is a function of the spot and expiry, and thus the resulting BS-PDE uses a local volatility term rather than a fixed constant. We start off with the standard Black Scholes results: </p>
+
+<p>$$\begin{cases}
+  \frac{\partial V}{\partial t} + rS \frac{\partial V}{\partial S} + \frac{1}{2} \frac{\partial ^{2}V}{\partial S^{2}}S^{2}\sigma ^{2} - rV = 0 \\
+   H(T,S) = max(\pm 1(S-K),0)
+\end{cases}$$</p>
+
+  <p>Where $\pm 1$ represents whether the option is a call or a put. This is a backward Kolmogorov equation, as the condition is a terminal condition, and we evaluate the PDE backwards. </p>
+  <p>The local volatility model makes the connection between market implied densities and the associated SDE for the underlying process. The evolution of the probability density function is described by the Fokker-Plank PDE, which is a Kolmogorov forward PDE with an initial condition:</p>
+<p>$$\begin{cases}
+ \frac{\partial}{\partial t}f_{S(T)}(y) + \frac{\partial}{\partial y}[\mu (y,t)f_{S(T)}(y)] - \frac{1}{2}\frac{\partial ^{2}}{\partial y^{2}}[\sigma ^{2}(y,t)f_{S(T)}(y)] = 0 \\
+  f_{S(t_{0})}(y) = \delta (y=S_{0})
+\end{cases}$$</p>  
+
+    <p>The derivation process of the local volatility function uses the Fokker-Planck PDE, building the connection between the volatility surface (as the density function can be extracted from the volatility surface via Breeden-Litzenberger). A common formulation is given as Dupires formula, which can be written in terms of option prices:</p>
+
+<p>$$\sigma _{LV}(K,t) = \frac{\frac{\partial V}{\partial t} + qV + \frac{\partial V}{\partial K} (r-q)K}{\frac{1}{2}K^{2}\frac{\partial ^{2}V}{\partial K^{2}}}$$</p>
+<p>The formula can also be given in terms of implied volatility, which tends to be a lot more numerically stable due vol surfaces being more stable and also due to the computation of the first derivative having less room for error than a second derivative:</p>
+
+    <p>An issue with using the Dupires formula is the calculation of the derivatives. This requires us to have a smooth volatiltiy surface available in order to compute accurate derivatives, however, the market tends to have few liquid quotes for specific points. This means that we need to smooth the surface without allowing for arbitrage. There are some simple methods which CAN exhibit arbitrage, such as linear interpolation in strike, cubic in time with constraints, however, attaching constraints removes the dynamics of the actual volatility, and the resulting surface can be less realistic. Other methods include fitting some form of parametric model to the market surface, such as using Hagans formula from SABR. </p>
+<p>This can maintain arbitrage conditions, but tends to be computationally more intensive as you need to calibrate the model to the surface, and doing this for a number of surfaces can become expensive. </p>
+<h2>Volatility surface arbitrage conditions</h2>
+
+    <h3>Calender Spread Arbitrage</h3>
+    <p>Any option with a longer time to expiry must be worth more than the same option with less time to expiry such that: </p>
+    <p>$$V(S,t+h)-V(S,t) > 0$$</p>
+    <p>This makes sense as having a longer expiry means that there is a higher probability of option moves which could lead to the option ending ITM. This is more impactful on options that are ATM and less on option deep OTM. We can show this in the following graphs: </p>
+
+   <img src="../assets/option_price_delta_comparison.PNG" style="width: 750px; height: 300px;"/>
+    <p>The above figure shows the option price for a fixed spot against varying strikes, showing different levels of moneyness.</p>
+<p>We can see that the options with longer DTEs are costlier than their shorter DTE counterparts, and closer to ATM (where K = S = 100), the price difference becomes much larger for longer DTE options vs the shorter DTE options. This is because given we are ATM, longer time to expiry gives a higher probability of the option finishing ITM as compared to the short dated option. This extra value is known as the extrinsic value of the option, or the time value. For shorter dated options, this time value has decayed away and we are only left with the intrinsic value of the option (plus a little time value), meaning the option will be valued close to what its exercise value is.</p>
+{% endraw %}
+
+<p><a href="{{ '/theory.html' | relative_url }}">Back to Theory</a></p>

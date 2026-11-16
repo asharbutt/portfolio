@@ -1,0 +1,27 @@
+---
+layout: page
+title: "Forward Rate Agreements (FRAs)"
+mathjax: true
+---
+
+<p class="entry-meta">Interest Rates, last updated March 2026</p>
+{% raw %}
+<h3>Forward Rate Agreement</h3>
+
+    <p>A forward rate agreement, or FRA is a contract which allows two parties to exchange two rates at a future date. This usually involves the exchange of a fixed rate for a floating reference rate, which is decided on the fixing date. FRAs can be used to lock in and hedge interest rate exposure, allowing clients to convert exposure from floating to fixed, and vice versa.</p>
+
+    <p>FRAs are quoted by Start x End, for example 3 month x 6 month, meaning that in 3 months time, we observe or start the fixing of the reference rate, and then 3 months after we settle. For LIBOR, the way this works is that n days (usually 2 business days) before your FRA start, you observe the fixing. You then exchange the difference between the fixing rate and the fixed rate on the settlement date, which tends to be at the end of the reference period (3 months for a 3M-LIBOR, 6M for 6M-LIBOR). If not, compounding is usually involved.</p>
+
+<p>For LIBOR, the value of a FRA at fixing date $T_{i-1}$ can be written as: </p>
+
+    <p>$$FRA^{REC}(T_{i-1}) = \frac{N\tau _{i}[K - L(T_{i-1};T_{i-1}, T_{i})]}{1+\tau _{i}L(T_{i-1};T_{i-1}}$$</p>
+<p>Where $\tau _{i}$ is the daycount from period i-1 to i, i-1 is the fixing date or FRA start date, and i is the settlement date. We can replace the denominator with any discounting function $P(T_{i-1}, T_{i})$. The value of this FRA at any point before this can be written as: </p>
+
+    <p>$$FRA^{REC}(t) = N\tau _{i}[K - L(t;T_{i-1}, T_{i})]P(t, T_{i})$$</p>
+    <p>Where the floating rate now is a forward rate, or an expectation of the reference rate at a future date under the T-Forward measure. The FRA settlement can be the usual in-advance (which is usually the case for LIBOR or other in-advance rates) or in-arrears (which is the case for RFRs). The difference is that the in-advance rate is fixed on the fixing date and paid on settlement. The in-arrears rate for RFRs actually gets obsevred daily over the FRA period after the fixing start date and before the FRA start date (this is usually due to an observation shift added on, typically 2 days) and compounded until it is realised at the end of the fixing period, when it is paid out. </p>
+<p>At inception, FRAs have no value, and therfore the strike is equal to the forward rate at the time. One thing to note is that FRAs are bilateral agreements i.e. OTC, and so there is counterparty credit risk involved, meaning the risk of the other side defaulting is present in the contract. To counteract this, agreements CAN include initial margin, which is a buffer to soak up losses in the case the other side defaults, or variation margin, which is additional collateral posted if the MtM breaches some threshold.</p> 
+
+    <p>FRAs can be serial FRAs i.e. they start and end in a chain for example, 3x6, 6x9, 9x12, or be contigious, such as 4x7 or 8x11</p>
+{% endraw %}
+
+<p><a href="{{ '/theory.html' | relative_url }}">Back to Theory</a></p>

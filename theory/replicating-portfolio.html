@@ -1,0 +1,117 @@
+---
+layout: page
+title: "Black-Scholes: Replicating Portfolio"
+mathjax: true
+---
+
+<p class="entry-meta">Options Theory, last updated March 2026</p>
+{% raw %}
+<!-- knowledge/bs-derivation.html -->
+<!-- This file is loaded into the KB content area via fetch. -->
+<!-- It contains ONLY the inner content — no <html>, <head>, or <body> tags. -->
+<!-- LaTeX: use $ ... $ for inline and $$ ... $$ for display math. -->
+
+
+<div class="kb-content-body">
+
+    <h3>Black-Scholes: Replicating Portfolio</h3>
+
+<h2> No arbitrage theory </h2>
+<p>A contingent claim is a payoff under certain circumstances based on the movement of an underlying asset. A contingent claim is said to be attainable if the payoff can be replicated using a self-financing portfolio or trading strategy.</p>
+
+<p>A market is made of contingent claims, and is said to be complete if a unique Equivalent Martingale Measure exists. </p>
+
+    <p>The first fundamental theorem of asset pricing states that a market is arbitrage free if the risk neutral measure Q exists and is equivalent. The second theorem states that the market is complete if and only if the martingale measure is unique. For the second point, its important to understand that you can have a family of equivalent martingale measures for the same claim or payoff, but each has to be based on its OWN numeraire. If we have two EMMs on the same numeraire, then we are saying that adjusting by a tradeable risk-less refence asset can give us two different prices, which means we are no longer free of arbitrage. The EMM has to be UNIQUE to its OWN numeraire. Multiple EMMs on different numeraires can exist and all give the same price of the claim, and they will all then be connected by Girsanovs. </p>
+
+    <h2>A simple recipe to pricing</h2>
+<p>We provide a somewhat simplified recipe or list to pricing:</p>
+
+    <ul>
+  <li>1. For a contingent claim, ensure it is replicable using the assets in the market (for Black-Scholes, we replicate using the stock and a bank account). We need to ensure the market is complete i.e there are enough assets in the market to cover the risk factors in our claim.</li>
+  <li>2. If the market satisfies no artbitrage, an equivalent martingale measure known as the risk neutral measure exists such that the replicating portfolio is a martingale under said EMM (and therefore by extension the claim is also a martingale under said EMM). In our case, the discounted replicating portfolio is a martingale.</li>
+  <li>3. Find the numeraire that is appropriate for our problem and then convert from the real world measure to the EMM associated with the numeraire. in BS, the bank account is used, and the Q measure is the appropriate associated measure. For other problems such as pricing Forwards on Interest rates or swaps, different numeraires (and therefore different measures) are needed (ZCP for T-Forward, annuity for swap measure). We find the drift adjustment such that the Radon-Nikodym derivative (which is the ratio between the two densities and a Dolean-Dade exponential) is a true martingale (this is true if the drift adjustment fulfils Novikovs condition (or similar), meaning the exponential drift adjustment is integrable, and EZ=1)</li>
+<li>4. If fulfilled, then Girsanovs gives us the new Brownian motion under the EMM with the drift adjustment. We substitute this to get the dynamics of the underlying asset in the target EMM</li>
+<li>5. Given the numeraire adjusted claim is a martingale under the target EMM, we can then write the price of the numeraire adjusted claim today (or at any time t $\lt$ T) as the Expected value of the claim adjusted by the Numeraire. In our case, this means that the discounted claim is a martingale </li>
+<li>6. If we are able to derive the distribution of the underlying then we can directly evaluate the expectation (in the case of Black-Scholes, a close form solution exists to the stock, we can use this to derive the closed form Solution to the expectation, which is the BSM formula).</li>
+<li>7. A PDE may exist that is related to the expectation (Feynman-Kac provides a method to write the solution of a PDE as an expectation). This can then be solved numerically</li>
+<li>8. We can also try to evaluate the price of the claim using simulation. </li>
+</ul>
+<h2> Equivalent Martingale Measure </h2>
+
+<p>For a measure $\mathbb{P}$ on a probability space ($\Omega , \mathscr{F}$), a measure $$\mathbb{P}_{0}$$ is equivalent if they are mutually absolutely continious with respect to each other. This means: </p>
+
+<p>$$ \mathbb{P}_{0} (A) = 0 \ \text{when} \  \mathbb{P} (A) = 0 \ \forall \ \text{A} \ \in \Omega $$ </p>
+
+<p>If the equivalent martingale measure exists, then the ratio of the two measures can be described by the Radon-Nikodym derivative $\mathscr{L}$, given by: </p>
+
+<p>$$ \mathscr{L} = \frac{d\mathbb{P}_{0}}{d\mathbb{P}} $$ </p>
+
+<p>This comes from the relationship between the two measures: </p>
+
+<p>$$  \text{E}^{\mathbb{P}_{0}} [\text{A}] = \int_{\omega \in \ A} X (\omega) d \mathbb{P}_{0} (\omega)  $$ </p>
+
+<p>which can be re-written as: </p>
+
+<p> $$  \text{E}^{\mathbb{P}_{0}} [\text{A}] = \int_{\omega \in \ A} X (\omega) \mathscr{L} d \mathbb{P} (\omega)  $$ </p>
+    
+<h2> Replicating Portfolio for options </h2>
+    
+<p>We create a replicating portfolio $\Pi$ consisting of long one option V and short $\Delta$ shares S: $\Pi = V - \Delta \ S$. This is a delta hedged portfolio such that for small changes in S, the overall value of $\Pi$ does not change. S is governed by a Geometric Brownian Motion SDE of the form: </p>
+
+<p>$$dS = r \ dt + \sigma dW^{P}$$ </p>
+
+<p>We can use Ito's lemma to show the evolution of the option value itself: </p>
+
+<p>$$dV = \frac{\partial V}{\partial t}dt + \frac{\partial V}{\partial S} dS + \frac{1}{2} \frac{\partial^{2} V}{\partial S^{2}} dS^{2}$$ </p>
+
+<p>We know that $dS = r \ dt + \sigma dW$, and we know $dS^{2} = \sigma^{2} dt$ due to $dWdW = dt$ </p>
+
+<p>The above expansion can then be written as: </p>
+
+<p>$$dV = \frac{\partial V}{\partial t}dt + \frac{\partial V}{\partial S} r \ dt + \frac{\partial V}{\partial S} \sigma dW + \frac{1}{2} \frac{\partial^{2} V}{\partial S^{2}} dt$$ </p>
+
+<p>Which we can simplify to: </p>
+
+<p>$$dV = (\frac{\partial V}{\partial t} + \frac{\partial V}{\partial S} r + \frac{1}{2} \frac{\partial^{2} V}{\partial S^{2}}) dt + \frac{\partial V}{\partial S} \sigma dW$$ </p>
+
+<p>The delta hedged portfolio will grow by the risk free rate r, and we know that we have shorted delta amounts of the share, such that: </p>
+
+<p>$$\Delta \Pi = r (V - \frac{\partial V}{\partial S} S)dt$$ </p>
+
+<p>And we also know that the portfolio change is given by: $\Delta \Pi = dV - \frac{\partial V}{\partial S}dS$. Once we substitute in our Ito expansion of the option value, and equate to the risk-free return, we get the Black-Scholes PDE: </p>
+
+<p>$$\frac{\partial V}{\partial t} + \frac{\partial V}{\partial S} rS + \frac{1}{2} \sigma^2 S^{2} \frac{\partial^{2}V}{\partial S^{2}} \ - rV \ = \ 0$$ </p>
+
+<p>This PDE is the solution to the GBM SDE under no-arbitrage conditions and a risk neutral measure $\mathbb{Q}$ , and is a backward Kolmogorov equation  with a terminal/final condition $H(X,T) = max(S-K,0)$
+    
+    <h3>C++ Example</h3>
+    <pre>script type="text/plain">
+template <typename T> T norm_cdf(T x){ //templated to allow double or ints or floats as input
+    return 0.5 * std::erfc(-x / std::sqrt(2)); //Use gauss error function to approximate the normal cdf, divided by sqrt(2) to include it into the denominator of the CDF fraction
+    }
+
+template <typename T> T bs_call(T S, T K, T vol, T r, T q, T time){
+    T d_1 = (log(S/K) + (r - q + 0.5*vol*vol)*time)/(vol * sqrt(time));
+    T d_2 = d_1 - vol*sqrt(time);
+    return S*norm_cdf(d_1) - K*exp(-r*time)*norm_cdf(d_2);
+    }
+
+template <typename T> T bs_put(T S, T K, T vol, T r, T q, T time){
+    T d_1 = (log(S/K) + (r - q + 0.5*vol*vol)*time)/(vol * sqrt(time));
+    T d_2 = d_1 - vol*sqrt(time);
+    return -S*norm_cdf(-d_1) + K*exp(-r*time)*norm_cdf(-d_2);
+    }
+    
+int main(){
+    std::cout << bs_call<double>(100, 101, 0.3, 0.05, 0.0, 1) << std::endl;
+    std::cout << bs_put<double>(100, 101, 0.3, 0.05, 0.0, 1) << std::endl;
+    }
+
+    </script></pre>
+
+    <h3> Python Example </h3>
+        <pre>
+        </pre>
+{% endraw %}
+
+<p><a href="{{ '/theory.html' | relative_url }}">Back to Theory</a></p>

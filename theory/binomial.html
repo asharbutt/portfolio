@@ -1,0 +1,59 @@
+---
+layout: page
+title: "Binomial Model"
+mathjax: true
+---
+
+<p class="entry-meta">Options Theory, last updated March 2026</p>
+{% raw %}
+<h3>Binomial Model</h3>
+
+    <p>Under the Binomial process, the underlying follows a Binomial model. In this case, the underlying asset S, at every time step has two possible outcomes. We start off by assuming that the asset has a value of $S_{0}$ at $t_{0}$, and for every time step has two potential outcomes of $uS_{0}$ and $dS_{0}$ with a probability $p_{u}$ and $p_{d}$. We construct a replicating portfolio made up of $\delta$ amounts of S and a risk-less bond with a notional value of n, which grows at a rate of $e^{rT}$. This means that at the end of the time step, the value of the portfolio will either be $C_{u} = \delta uS_{0} + ne^{r\Delta T}$ or $C_{u} = \delta dS_{0} + ne^{r\Delta T}$</p>
+    <p>We can solve these two equations to get the value of $\delta$ and n, simply by substitution:</p>
+
+    <p>$$\delta uS_{0} - C_{u} = ne^{r\Delta T}$$</p>
+    <p>$$\delta dS_{0} - C_{d} = ne^{r\Delta T}$$</p>
+
+    <p>Therfore:</p>
+    
+    <p>$$\delta dS_{0} - C_{d} = \delta uS_{0} - C_{u}$$</p>
+
+    <p>$$\delta = \frac{C_{u}-C_{d}}{(u-d)S_{0}}$$</p>
+
+    <p>We do the same for n to get: $\frac{uC_{d}-dC_{u}}{(u-d)e^{r\Delta T}}$</p>
+
+    <p>Because this is a replicating portfolio, we expect that the value of the option at the start, V(0), is equal to the value of the portfolio at the start: $V(0) = \delta S_{0} + n$. Because the bond is a riskless bond, it is worth 1 at the start, and grows at the bank account rate. We can then substitute in our values derived above, such that:</p>
+
+    <p>$$V(0)=\delta S_{0}+n=S_{0}\frac{C_{u}-C_{d}}{(u-d)S_{0}} + \frac{uC_{d}-dC_{u}}{(u-d)e^{r\Delta T}}$$</p>
+
+    <p>$$V(0)=\frac{C_{u}-C_{d}}{(u-d)} + \frac{uC_{d}-dC_{u}}{(u-d)e^{r\Delta T}}$$</p>
+
+    <p>$$V(0)=e^{-r\Delta T}(\frac{e^{r\Delta T}C_{u}-e^{r\Delta T}C_{d}}{(u-d)} + \frac{uC_{d}-dC_{u}}{(u-d)})$$</p>
+    <p>We rearrange to collect the up and down option values on either side: </p>
+    <p>$$V(0)=e^{-r\Delta T}(\frac{e^{r\Delta T}C_{u}-dC_{u}}{(u-d)} + \frac{uC_{d}e^{r\Delta T}C_{d}}{(u-d)})$$</p>
+
+    <p>$$V(0)=e^{-r\Delta T}(\frac{e^{r\Delta T}-d}{(u-d)}C_{u} + \frac{u-e^{r\Delta T}}{(u-d)}C_{d})$$</p>
+
+    <p>If we then substitute the variable: $p=\frac{e^{r\Delta T}-d}{u-d}$, then we will get: </p>
+
+    <p>$$V(0)=e^{-r\Delta T}(pC_{u} + (1-p)C_{d})$$</p>
+
+   <p>We can consider p as the probability here under a certain measure, meaning that \(0 < p < 1\), and in order for that to hold, \(d < e^{r\Delta T} < u\)</p>
+    <p>Given that under the risk neutral measure, $E^{Q}[S_{\Delta T} \vert F_{t}]=S_{t}e^{r\Delta T}$. Given that under the Binomial process, the expected value is given by $puS_{0} + (1-p)dS_{0}$, we know that p is the probability of an up move under the risk neutral measure, and p is the associated probability measure. You can find a simple binomial pricer for European and American Options under the projects tab, but the idea is that we create a lattice of asset prices, starting from the initial price, computed to T, and then we compute the option price backwards. We first compute the payoffs at maturity, then work our way back using the above equation for option prices. WE discount until we get back to t=0.</p>
+    <p>We can make a simple adjustment to price American options, where at each node, we compare the computed option value against the intrinsic value i.e. the payoff at that point. Whichever is higher is used as the value of the option at that node. The Binomial model is the discrete time version of the continious equation, where as the number of steps approach infinite, the option price approaches that of Black-Scholes</p>
+
+    <h3>Selections of u and d</h3>
+    <p>The choice of u and d can alter the convergence rate and error rate of the option value to the Black Scholes model. </p>
+    <h2>Cox-Ross-Rubinstein</h2>
+    <p>An additional constraint of ud=1, and a moment matching condition for the equations $puS_{0} + (1-p)dS_{0}$ and $pu^{2}S_{0}^2 + (1-p)d^{2}S_{0}^2 = e^{(2r+\sigma ^{2})\Delta T}S_{0}$ gives us the following conditions in the form of the CRR model:</p>
+
+    <p>$$u = e^{\sigma \sqrt{\Delta T}}$$, $$d = e^{-\sigma \sqrt{\Delta T}}$$</p>
+
+    <p>Then an additional constraint is provided on the probability, p, which is given by: </p>
+
+    <p>$$p = \frac{1}{2} + \frac{v}{2\sigma}\sqrt{\Delta t}$$, where $$v = r - \frac{1}{2}\sigma^{2}$$</p>
+
+    <p>CRR states that ud=1 is a condition required to converge to Black-Scholes, however, there is plenty of literature available with a variety of different lattice parameterisation settings which allow for convergence, and realistically, the main condition needed for convergence on large time steps is for $e^{r\Delta T}$ to be between d and u, given that d and u are not changing form step to step (THIS IS KEY IF YOU ARE USING SOME FORM OF LOCAL VOL). This ensures the tree is recombinant i.e. an up and down move is equivalent to down and up, so the tree can reconcile at nodes</p>
+{% endraw %}
+
+<p><a href="{{ '/theory.html' | relative_url }}">Back to Theory</a></p>

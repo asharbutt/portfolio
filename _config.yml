@@ -1,0 +1,23 @@
+title: Ashar Butt
+description: A collection of my work
+baseurl: "/portfolio"
+url: "https://asharbutt.github.io"
+github_username: asharbutt
+linkedin_username: ashar-wakee-butt-0b0a4319
+
+theme: minima
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-redirect-from
+
+header_pages:
+  - code.md
+  - streamlit.md
+  - theory.md
+
+kramdown:
+  input: GFM
+  toc_levels: "2..3"
+  syntax_highlighter_opts:
+    disable: false

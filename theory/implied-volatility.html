@@ -1,0 +1,165 @@
+---
+layout: page
+title: "Implied Volatility"
+mathjax: true
+---
+
+<p class="entry-meta">Volatility Modelling, last updated March 2026</p>
+{% raw %}
+<h3>Black Scholes Volatility</h3>
+<p>The Black Scholes model assumes that a constant volatility is used when pricing options across the strike and maturity range. This is a misspecification in the model, as in reality, market prices exhibit a smile/skew behaviour. We can use the Black Scholes model to invert the market prices (which is standard practice in quoting the implied volatility) to find the implied volatility across the strike and maturity range, and we find that for a given maturity, your options exhibit a volatility smile/skew. The smile behaviour shows that the volatility on either side of the ATM (at-the-money) is higher than ATM. This is natural as OTM options are popular for both hedging and speculation purposes. Some assets exhibit a skew, which means that the volatility is higher on one side of the ATM than on the other. Most commonly, you see a negative skew, i.e. the implied volatility on the lower strikes is higher than on the higher strikes. This is due to the demand of deep OTM puts, which are used for protection against crashes. Some stocks exhibit a positive skew, where speculative demand pushes prices higher than protection.  </p>
+
+<p>The BS implied vol can be found by trying to find the volatility $\sigma_{BS}:C_{BS}=C_{mkt}$. For this we can employ a root finding method, where we are trying to find the root for the function: $C_{BS}-C_{mkt}=0$. The simplest root finding method we can employ is the Newton-Raphson method.</p>
+    
+<h2>Newton Raphson</h2>
+
+<p>We know the analytical closed form solution for the option price, which is the BS equation. We need to vary the volatility input until we can match the BS option price to the market price.</p>
+
+<p>We start with the simple approximation for the point derivative of a curve at $x_{0}$, estimated by: </p>
+
+<p> $$f'(x_{0}) = \frac{f(x_{0}+h) -f(_{x_0})}{h}$$</p>
+
+<p>If we say that the next step is $x_{n+1}=x_{0}+h$, then the above equation becomes: </p>
+
+<p> $$f'(x_{0}) = \frac{f(x_{n+1}) -f(_{x_0})}{h}$$</p>
+
+<p>Given we are trying to approximate the root i.e. the value of $x_{n+1}$ where $f(x_{n+1})=0$, then: $f'(x_{0}) = \frac{-f(_{x_0})}{h}$. We can rearrange this for h:</p>
+
+<p> $$h = -\frac{f(_{x_0})}{f'(x_{0})}$$</p>    
+
+<p>If we recall, our original formula is $x_{n+1} = x_{0} + h$, and substituting the above for h in give us:</p>
+<p>$$ x_{n+1} = x_{0} -\frac{f(_{x_0})}{f'(x_{0})}$$ </p>
+<p>Given we are trying to find the value of x_0 that makes the difference between our BS value and the market value 0, then $f(x) = V_{mkt} - V_{BS}(\sigma)$. Then, $f'(x) = -\frac{\partial V_{BS}(\sigma)}{\partial \sigma}$</p>
+<p>This is the Newton-Raphson Iterative root finding method, and converges to the solution IF our original guess for $x_{0}$ is in proximity of the solution, otherwise it diverges. We have a simple c++ implementation for this below:</p>
+
+    <h3>C++ Example of a Newton Raphson implementation</h3>
+<pre>
+template <typename F, typename DF>
+double newton_raphson(F f, DF df, double x0, double tol, int max_iter) {
+	double x = x0;
+	for (int i = 0; i < max_iter; i++) {
+		double dfx = df(x);
+
+		if (dfx < 1e-10) {
+			throw std::runtime_error("Derivative is close to 0");
+		}
+
+		double step_size = f(x) / dfx;
+		x -= step_size;
+		//std::cout << x << " " << step_size << "\n";
+		if (std::abs(step_size) < tol) {
+			return x;
+		}
+
+	}
+	throw std::runtime_error("Newton-Raphson did not converge");
+}
+
+    </pre>
+<p>Our original black scholes implementation is a class, so in order to evaluate the function which is $f(x)=C_{mkt}-C_{BS}$, we need to pass lambda functions as proxies into the template function, as we cannot pass class objects and members into template functions: </p>    
+			 <h3>Lambda functions to pass into Newton-Raphson function</h3>
+<pre>script type="text/plain">
+auto f = [&opt, &market_price](double vol) {
+	return market_price - opt.price_call(vol);
+};
+auto df = [&opt](double vol) {
+	return -opt.vega(vol);
+};
+     </script></pre>
+
+<p>The Newton-Raphson method converges quadratically, meaning that if we plot the sequence of iterations from the above algorithm, it will have the shape of a quadratic graph. We price an option with S=100, K=100, r=0.05, t=1, q=0.0, with an assumed market price of 8.4506. Our initial vol guess is x = 0.9, and our root finding method converges via the following sequence: </p>
+<table>
+  <tr><td>0.9</td></tr>
+  <tr><td>0.10478</td></tr>
+  <tr><td>0.147485</td></tr>
+  <tr><td>0.146152</td></tr>
+  <tr><td>0.146151</td></tr>
+</table>
+
+<p>However, if the market price is less, lets say 5 (which means that the option vol is extremely low, and it is most likely deep OTM), then our convergence fails due to the vega being extremely small.</p>
+			<p>We can also recreate this in python, though libraries such as scipy already have functions for both newton-raphson and bisection that will be far cleaner or easier to use: </p>
+
+			<pre><code>
+def newton_raphson(df, f, x_0, max_iterations):
+    tol = 1e-5
+    for i in range(max_iterations):
+        x_1 = x_0 - f(x_0) / df(x_0)
+        if abs(f(x_1)) < tol:
+            return x_1
+        x_0 = x_1
+
+    return None
+
+def vega(S, K, T, r):
+    vega = lambda x: S * norm._pdf(
+        (np.log(S / K) + (r + 0.5 * x ** 2) * T) / (x * np.sqrt(T))) * np.sqrt(T)
+    return vega
+
+
+def bs_price(type_flag, S, k, t, r, vol, q):
+    if type_flag == 'call':
+        type_val = 1
+    else:
+        type_val = -1
+
+    d1 = (np.log(S / k) + (r - q + vol * vol * 0.5) * t) / (vol * np.sqrt(t))
+    d2 = d1 - vol * np.sqrt(t)
+
+    return type_val * S * ndtr(type_val * d1) - type_val * k * np.exp(-r * t) * ndtr(type_val * d2)
+
+def build_implied_vol_surface(option_price_grid, strike_array, expiry_array, stock_price, r, initial_guess, max_iteration):
+    implied_vol_matrix = np.zeros((option_price_grid.shape[0], option_price_grid.shape[1]))
+    for index_i, i in enumerate(expiry_array):
+        for index_j, j in enumerate(strike_array):
+            f = lambda x, k=j, t=i / 365, index_i=index_i, index_j=index_j: bs_price("call", stock_price, k, t, r, x, 0) - \
+                                                                            option_price_grid[index_i, index_j]
+            df = vega(stock_price, j, i / 365, r)
+
+            imp_vol = newton_raphson(df, f, initial_guess, max_iteration)
+            if imp_vol is not None:
+                implied_vol_matrix[index_i, index_j] = imp_vol
+            else:
+                continue
+    return implied_vol_matrix
+  </code></pre>
+
+			<p>We can pass the following function to this with a sample option price matrix: </p>
+
+			<pre><code>
+def main():
+    option_price_matrix = np.array([
+        [41.2276, 31.6289, 22.4875, 14.2641, 7.6286, 3.1819, 0.9391, 0.1760, 0.0189],
+        [42.0251, 32.6736, 23.8686, 15.9903, 9.5079, 4.8135, 1.9752, 0.6225, 0.1428],
+        [43.1157, 34.0330, 25.5432, 17.9462, 11.5738, 6.6921, 3.3775, 1.4456, 0.5097],
+        [44.9805, 36.2431, 28.1117, 20.8011, 14.5281, 9.4626, 5.6720, 3.0854, 1.5019],
+        [46.8339, 38.3541, 30.4668, 23.3359, 17.1192, 11.9393, 7.8534, 4.8321, 2.7580],
+        [50.4191, 42.3026, 34.7354, 27.8252, 21.6711, 16.3500, 11.9041, 8.3319, 5.5845],
+        [53.8271, 45.9599, 38.6000, 31.8256, 25.7069, 20.2989, 15.6347, 11.7202, 8.5321],
+    ])
+    implied_vol_matrix = np.zeros((option_price_matrix.shape[0], option_price_matrix.shape[1]))
+    s = 500
+    r = 0.05
+    x_0 = 0.2
+    max_iter = 1000
+    strikes = np.array([460, 470, 480, 490, 500, 510, 520, 530, 540])
+    expiries = np.array([14, 21, 30, 45, 60, 90, 120])  # days
+
+    for index_i, i in enumerate(expiries):
+        for index_j, j in enumerate(strikes):
+            f = lambda x, k=j, t=i / 365, index_i=index_i, index_j=index_j: bs_price("call", s, k, t, r, x, 0) - \
+                                                                            option_price_matrix[index_i, index_j]
+            df = vega(s, j, i / 365, r)
+
+            imp_vol = newton_raphson(df, f, x_0, max_iter)
+            if imp_vol is not None:
+                implied_vol_matrix[index_i, index_j] = imp_vol
+            else:
+                continue
+    print(implied_vol_matrix)
+     </code></pre>
+			<p>Thhis gives us the following surface:</p>
+
+			<img src="../assets/implied_vol_surface.PNG"/>
+{% endraw %}
+
+<p><a href="{{ '/theory.html' | relative_url }}">Back to Theory</a></p>
